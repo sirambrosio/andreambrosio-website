@@ -43,10 +43,10 @@ export async function GET() {
       name: 'Andre Ambrósio',
       url: 'https://andreambrosio.com',
       sameAs: [
-        'https://brand.andreambrosio.com',
         'https://instagram.com/andreambrosio',
         'https://x.com/andreambrosio',
         'https://youtube.com/@andreambrosio',
+        'https://linkedin.com/in/andreambrosio',
       ],
     },
     usage_policy: {

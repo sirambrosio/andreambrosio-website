@@ -47,11 +47,11 @@ export function Footer() {
         </div>
 
         <div>
-          <div className="font-mono text-[9px] font-semibold tracking-[0.25em] uppercase text-champagne mb-3.5">Externo</div>
-          <a href="https://brand.andreambrosio.com" target="_blank" rel="noopener" className="block text-[12.5px] text-text-dim hover:text-champagne py-1 transition-colors">Brandbook ↗</a>
+          <div className="font-mono text-[9px] font-semibold tracking-[0.25em] uppercase text-champagne mb-3.5">Redes</div>
           <a href="https://instagram.com/andreambrosio" target="_blank" rel="noopener" className="block text-[12.5px] text-text-dim hover:text-champagne py-1 transition-colors">Instagram ↗</a>
           <a href="https://x.com/andreambrosio" target="_blank" rel="noopener" className="block text-[12.5px] text-text-dim hover:text-champagne py-1 transition-colors">X / Twitter ↗</a>
           <a href="https://youtube.com/@andreambrosio" target="_blank" rel="noopener" className="block text-[12.5px] text-text-dim hover:text-champagne py-1 transition-colors">YouTube ↗</a>
+          <a href="https://linkedin.com/in/andreambrosio" target="_blank" rel="noopener" className="block text-[12.5px] text-text-dim hover:text-champagne py-1 transition-colors">LinkedIn ↗</a>
         </div>
       </div>
 

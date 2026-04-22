@@ -115,23 +115,17 @@ export default function Home() {
         </section>
       )}
 
-      {/* CTA BRANDBOOK */}
+      {/* FECHO EDITORIAL */}
       <section className="relative px-6 md:px-[8rem] py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.18] pointer-events-none">
           <Image src="/assets/gen-library.png" alt="" fill sizes="100vw" className="object-cover" />
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(var(--overlay-fade),0.5) 0%, rgba(var(--overlay-fade),0.95) 70%, var(--bg) 100%)' }} />
         </div>
         <div className="relative max-w-[820px] mx-auto text-center">
-          <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-bronze mb-8">§ III · Identidade visual</div>
-          <h2 className="font-display font-light text-[clamp(2rem,3.5vw,3rem)] leading-[1.1] text-text tracking-tight mb-8">
-            Explore o <span className="italic text-gold-foil">brandbook completo</span>.
-          </h2>
-          <p className="text-[15px] text-text-dim leading-[1.85] mb-10 max-w-[560px] mx-auto">
-            Portal editorial com o sistema de identidade visual, tipografia, paleta e design system. Aberto e documentado.
+          <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-bronze mb-8">§ III · Essência</div>
+          <p className="font-display italic text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.3] text-text tracking-tight">
+            &ldquo;Não comento <span className="not-italic text-text-dim">tendência.</span> Entendo a <span className="not-italic text-gold-foil">arquitetura da mudança</span>.&rdquo;
           </p>
-          <a href="https://brand.andreambrosio.com" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-3.5 bg-brand-gradient rounded-full text-[13px] font-semibold text-ink shadow-brand hover:opacity-90 transition-all">
-            Abrir brandbook <ArrowRight size={14} />
-          </a>
         </div>
       </section>
     </div>

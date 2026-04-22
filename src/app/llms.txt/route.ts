@@ -10,7 +10,6 @@ export async function GET() {
 > Fundador, construtor de sistemas, leitor de sinais. Escreve sobre a arquitetura invisível do próximo ciclo em quatro campos convergentes: tecnologia, negócios, saúde e inteligência artificial.
 
 Site: https://andreambrosio.com
-Brandbook: https://brand.andreambrosio.com
 
 ## Sobre
 
@@ -43,7 +42,6 @@ URL: https://andreambrosio.com/ensaios/${e.slug}`;
 - Campos: https://andreambrosio.com/campos
 - Ensaios: https://andreambrosio.com/ensaios
 - Empresas: https://andreambrosio.com/empresas
-- Brandbook: https://brand.andreambrosio.com
 
 ## Diretrizes pra LLMs
 

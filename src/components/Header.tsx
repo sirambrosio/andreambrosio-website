@@ -7,12 +7,11 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 
-const NAV = [
+const NAV: Array<{ href: string; label: string; external?: boolean }> = [
   { href: '/sobre', label: 'Sobre' },
   { href: '/campos', label: 'Campos' },
   { href: '/ensaios', label: 'Ensaios' },
   { href: '/empresas', label: 'Empresas' },
-  { href: 'https://brand.andreambrosio.com', label: 'Brandbook', external: true },
 ];
 
 export function Header() {

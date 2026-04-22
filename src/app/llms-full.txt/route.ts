@@ -50,7 +50,6 @@ ${e.conteudo}
 ## CONTATO
 
 Email: andre@ambrosio.com
-Brandbook: https://brand.andreambrosio.com
 Redes: @andreambrosio (Instagram, X, YouTube, LinkedIn)
 `;
 

@@ -98,7 +98,6 @@ const personSchema = {
   url: SITE_URL,
   image: `${SITE_URL}/assets/andre-portrait.jpg`,
   sameAs: [
-    "https://brand.andreambrosio.com",
     "https://instagram.com/andreambrosio",
     "https://x.com/andreambrosio",
     "https://youtube.com/@andreambrosio",
