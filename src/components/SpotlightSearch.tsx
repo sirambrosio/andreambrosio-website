@@ -129,10 +129,10 @@ export function SpotlightSearch({ docs, labels, variant = 'button' }: Props) {
           type="button"
           onClick={() => setOpen(true)}
           aria-label={labels.placeholder}
-          className="inline-flex items-center gap-2 h-9 pl-3 pr-2 rounded-full border border-border-strong text-text-dim hover:text-champagne hover:border-champagne transition-colors"
+          title={labels.placeholder}
+          className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-border-strong text-text-dim hover:text-champagne hover:border-champagne transition-colors"
         >
-          <Search size={14} strokeWidth={1.8} />
-          <span className="hidden lg:inline text-[12px]">{labels.placeholder.replace(/[.·…]+$/, '')}</span>
+          <Search size={15} strokeWidth={1.8} />
           <kbd className="hidden lg:inline-flex items-center font-mono text-[9px] tracking-wider px-1.5 py-0.5 rounded bg-surface-alt border border-border text-text-dimmer">⌘K</kbd>
         </button>
       ) : (

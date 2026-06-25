@@ -50,17 +50,18 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 h-[86px] z-[999] flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 h-[86px] z-[999] transition-all duration-300 ${
           scrolled ? 'bg-bg/95 backdrop-blur-xl border-b border-border shadow-sm' : 'bg-transparent border-b border-transparent'
         }`}
       >
+        <div className="max-w-[1280px] mx-auto h-full flex items-center justify-between px-6 md:px-8">
         <Link href={homeHref} className="flex items-center" aria-label={t.homeLabel}>
           {mounted && (
-            <Image src={logoSrc} alt="Andre Ambrósio" width={320} height={72} priority className="h-[56px] md:h-[64px] w-auto" />
+            <Image src={logoSrc} alt="Andre Ambrósio" width={320} height={72} priority className="h-[42px] md:h-[48px] w-auto" />
           )}
         </Link>
 
-        <nav aria-label="nav" className="hidden md:flex items-center gap-6 h-full">
+        <nav aria-label="nav" className="hidden md:flex items-center gap-5 h-full">
           {nav.map((item) => {
             const isActive = pathname === item.href || (!!item.children && pathname.startsWith(item.href));
             if (item.children) {
@@ -139,6 +140,7 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
+        </div>
         </div>
       </header>
 
