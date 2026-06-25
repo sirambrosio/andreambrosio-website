@@ -12,6 +12,7 @@ import { ArrowLeft } from 'lucide-react';
 import { ReadingProgress } from '@/components/ReadingProgress';
 import { ArticleSidebar } from '@/components/journal/ArticleSidebar';
 import { ArticleRightRail } from '@/components/journal/ArticleRightRail';
+import { MobileArticleBar } from '@/components/journal/MobileArticleBar';
 import { KeyTakeaways } from '@/components/journal/KeyTakeaways';
 import { ArticleFAQ } from '@/components/journal/ArticleFAQ';
 import { AuthorCard } from '@/components/journal/AuthorCard';
@@ -133,7 +134,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
       {/* HERO */}
-      <header className="relative px-6 md:px-[8rem] pt-24 pb-20 overflow-hidden border-b border-border">
+      <header className="relative px-6 md:px-12 lg:px-[8rem] pt-24 pb-20 overflow-hidden border-b border-border">
         {e.imagem && (
           <div className="absolute inset-0 opacity-[0.14] pointer-events-none">
             <Image src={e.imagem} alt="" fill sizes="100vw" className="object-cover" />
@@ -163,7 +164,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
 
       {/* CORPO — sidebar esquerda + artigo + right rail (esquema VoySpark) */}
       <section className="px-6 md:px-10 py-16">
-        <div className="max-w-[1340px] mx-auto lg:grid lg:grid-cols-[225px_minmax(0,1fr)] xl:grid-cols-[225px_minmax(0,720px)_300px] lg:gap-12 lg:justify-center">
+        <div className="max-w-[1340px] mx-auto lg:grid lg:grid-cols-[210px_minmax(0,720px)] xl:grid-cols-[220px_minmax(0,720px)_300px] lg:gap-10 xl:gap-12 lg:justify-center">
           <ArticleSidebar
             slug={e.slug}
             date={e.data}
@@ -174,12 +175,16 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
             labels={{ by: lab('by', locale), min: d.ensaios.min, save: lab('save', locale), font: lab('font', locale), toc: lab('toc', locale), share: lab('share', locale) }}
           />
           <div id="article-prose" className="max-w-[720px] w-full mx-auto">
+            <MobileArticleBar
+              slug={e.slug}
+              toc={toc}
+              shareUrl={articleUrl}
+              title={e.titulo}
+              labels={{ save: lab('save', locale), font: lab('font', locale), toc: lab('toc', locale), share: lab('share', locale) }}
+            />
             <KeyTakeaways items={extra?.takeaways ?? []} label={lab('takeaways', locale)} />
             <div className="prose-editorial">
               <MDXRemote source={e.conteudo} components={mdxComponents} />
-            </div>
-            <div className="lg:hidden">
-              <ShareButtons url={articleUrl} title={e.titulo} label={lab('share', locale)} />
             </div>
             <ArticleFAQ faqs={extra?.faq ?? []} label={lab('faq', locale)} />
             <AuthorCard label={lab('author', locale)} bio={d.sobre.lead} />
@@ -194,7 +199,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
 
       {/* RELACIONADOS (no rail em xl; aqui embaixo abaixo de xl) */}
       {related.length > 0 && (
-        <section className="px-6 md:px-[8rem] py-16 border-t border-border xl:hidden">
+        <section className="px-6 md:px-12 lg:px-[8rem] py-16 border-t border-border xl:hidden">
           <div className="max-w-[820px] mx-auto">
             <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8">{relatedLabel}</div>
             <div className="grid md:grid-cols-2 gap-4">
@@ -211,7 +216,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
       )}
 
       {/* FIM + NEWSLETTER CTA (rail cobre xl) */}
-      <section className="px-6 md:px-[8rem] py-20 bg-surface border-t border-border">
+      <section className="px-6 md:px-12 lg:px-[8rem] py-20 bg-surface border-t border-border">
         <div className="max-w-[820px] mx-auto">
           <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8 text-center">{d.ensaios.fim}</div>
           <div className="rounded-[24px] border border-champagne/20 bg-bg p-8 md:p-10 text-center xl:hidden">
