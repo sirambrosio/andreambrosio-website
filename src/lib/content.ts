@@ -3,6 +3,7 @@
  * Campos, empresas e metadados dos ensaios em 8 idiomas.
  */
 import type { Locale } from '@/lib/i18n';
+import EXTRA_JSON from './ensaio-extra.json';
 
 export type CampoSlug = 'tecnologia' | 'negocios' | 'saude' | 'ia';
 
@@ -200,53 +201,7 @@ export interface EnsaioExtra {
   faq: { q: string; a: string }[];
 }
 
-export const ENSAIO_EXTRA: Record<string, Partial<Record<Locale, EnsaioExtra>>> = {
-  'arquitetura-invisivel': {
-    pt: {
-      takeaways: [
-        'O modelo de saúde atual é **reativo por construção**: só age depois que o sintoma aparece.',
-        'A próxima camada é **infraestrutura de leitura biológica contínua** — não mais um app.',
-        'A IA torna tratável o volume de dados que um humano não consegue ler: vira **camada de decisão**.',
-        'Saúde deixa de ser **evento** e vira **ambiente**, contínuo como energia ou internet.',
-      ],
-      faq: [
-        { q: 'Isso substitui o médico?', a: 'Não. A medicina episódica continua existindo — mas como último recurso, não como primeiro ponto de contato. A leitura contínua antecipa o que hoje só se vê tarde.' },
-        { q: 'Que dados são lidos?', a: 'Biomarcadores, sono, glicemia, inflamação, variabilidade cardíaca — a sua linha de base, todos os dias, para detectar desvios antes de virarem sintoma clínico.' },
-        { q: 'Por que isso só agora?', a: 'Sensores contínuos somados a uma IA capaz de correlacionar milhares de pontos diários tornaram a leitura biológica viável pela primeira vez.' },
-      ],
-    },
-  },
-  'camada-decisao-ia': {
-    pt: {
-      takeaways: [
-        'Usar IA como **ferramenta** = tarefas pontuais (chatbot, resumo). Construir sobre IA como **camada** = o produto decide.',
-        'Como ferramenta, a IA vive em **endpoints**; como camada, vive em **cada decisão** do produto.',
-        'A vantagem não está mais na **interface**, e sim na capacidade de ler contexto e ajustar.',
-        'O próximo ciclo separa **quem construiu sistema** de **quem comprou ferramenta**.',
-      ],
-      faq: [
-        { q: 'Qual a diferença prática?', a: 'Remover a IA de um produto-ferramenta não o quebra. Removê-la de um produto-camada, sim — ela é parte da infraestrutura.' },
-        { q: 'Essa vantagem é copiável?', a: 'A capacidade acumulada (dados + aprendizado contínuo) não é copiável por quem só consome uma API.' },
-        { q: 'Quanto tempo até a separação?', a: '3–5 anos. É a mesma lógica de cloud contra software local nos anos 2010 — quem tratou como infraestrutura ganhou.' },
-      ],
-    },
-  },
-  'erro-estrutural-negocios': {
-    pt: {
-      takeaways: [
-        'Por 50 anos a vantagem veio de **eficiência**; ela virou commodity e deixou de diferenciar.',
-        'A nova vantagem é **arquitetura**: em que camada o negócio vive e o que ele acumula.',
-        'Três perguntas: em que **camada** vive, **quem precisa** dele pra operar, o que **acumula** no tempo.',
-        'Eficiência virou **requisito, não vantagem** — e organizações rígidas demais não se reconfiguram.',
-      ],
-      faq: [
-        { q: 'Eficiência não importa mais?', a: 'Importa como requisito básico. O que ela deixou de ser é diferencial — qualquer empresa séria já é eficiente.' },
-        { q: 'O que significa "camada"?', a: 'Onde o negócio opera na pilha de valor: produto final, ferramenta ou infraestrutura. Cada camada tem lógica econômica distinta.' },
-        { q: 'Tem exemplos?', a: 'Stripe, Cloudflare e Anthropic ganham por terem escolhido a camada de infraestrutura — não por serem mais eficientes que os concorrentes.' },
-      ],
-    },
-  },
-};
+export const ENSAIO_EXTRA = EXTRA_JSON as Record<string, Partial<Record<Locale, EnsaioExtra>>>;
 
 export function getEnsaioExtra(slug: string, locale: Locale): EnsaioExtra | null {
   return ENSAIO_EXTRA[slug]?.[locale] ?? null;

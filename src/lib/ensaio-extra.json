@@ -1,0 +1,536 @@
+{
+  "arquitetura-invisivel": {
+    "pt": {
+      "takeaways": [
+        "O modelo de saúde atual é **reativo por construção**: só age depois que o sintoma aparece.",
+        "A próxima camada é **infraestrutura de leitura biológica contínua** — não mais um app.",
+        "A IA torna tratável o volume de dados que um humano não consegue ler: vira **camada de decisão**.",
+        "Saúde deixa de ser **evento** e vira **ambiente**, contínuo como energia ou internet."
+      ],
+      "faq": [
+        {
+          "q": "Isso substitui o médico?",
+          "a": "Não. A medicina episódica continua existindo — mas como último recurso, não como primeiro ponto de contato. A leitura contínua antecipa o que hoje só se vê tarde."
+        },
+        {
+          "q": "Que dados são lidos?",
+          "a": "Biomarcadores, sono, glicemia, inflamação, variabilidade cardíaca — a sua linha de base, todos os dias, para detectar desvios antes de virarem sintoma clínico."
+        },
+        {
+          "q": "Por que isso só agora?",
+          "a": "Sensores contínuos somados a uma IA capaz de correlacionar milhares de pontos diários tornaram a leitura biológica viável pela primeira vez."
+        }
+      ]
+    },
+    "en": {
+      "takeaways": [
+        "Today's health model is **reactive by design**: it only acts after the symptom shows up.",
+        "The next layer is **continuous biological-reading infrastructure** — not just another app.",
+        "AI makes tractable a volume of data no human can read: it becomes the **decision layer**.",
+        "Health stops being an **event** and becomes an **environment**, as continuous as power or the internet."
+      ],
+      "faq": [
+        {
+          "q": "Does this replace the doctor?",
+          "a": "No. Episodic medicine still exists — but as a last resort, not the first point of contact. Continuous reading anticipates what today we only catch too late."
+        },
+        {
+          "q": "What data is being read?",
+          "a": "Biomarkers, sleep, blood glucose, inflammation, heart rate variability — your baseline, every day, to detect deviations before they turn into clinical symptoms."
+        },
+        {
+          "q": "Why is this only happening now?",
+          "a": "Continuous sensors paired with an AI capable of correlating thousands of daily data points have made biological reading viable for the first time."
+        }
+      ]
+    },
+    "es": {
+      "takeaways": [
+        "El modelo de salud actual es **reactivo por construcción**: solo actúa después de que el síntoma aparece.",
+        "La próxima capa es **infraestructura de lectura biológica continua** — ya no una app.",
+        "La IA vuelve tratable el volumen de datos que un humano no puede leer: se convierte en **capa de decisión**.",
+        "La salud deja de ser **evento** y se convierte en **entorno**, continuo como la energía o internet."
+      ],
+      "faq": [
+        {
+          "q": "¿Esto sustituye al médico?",
+          "a": "No. La medicina episódica sigue existiendo — pero como último recurso, no como primer punto de contacto. La lectura continua anticipa lo que hoy solo se ve tarde."
+        },
+        {
+          "q": "¿Qué datos se leen?",
+          "a": "Biomarcadores, sueño, glucemia, inflamación, variabilidad cardíaca — tu línea de base, todos los días, para detectar desviaciones antes de que se conviertan en síntoma clínico."
+        },
+        {
+          "q": "¿Por qué recién ahora?",
+          "a": "Los sensores continuos sumados a una IA capaz de correlacionar miles de puntos diarios volvieron viable la lectura biológica por primera vez."
+        }
+      ]
+    },
+    "zh": {
+      "takeaways": [
+        "当前的医疗模式**在构造上就是被动的**：只有在症状出现之后才会采取行动。",
+        "下一层是**连续的生物读取基础设施**——而不再是一个 app。",
+        "人工智能让人类无法读取的海量数据变得可处理：它成为**决策层**。",
+        "健康不再是**事件**，而成为**环境**，像电力或互联网一样连续不断。"
+      ],
+      "faq": [
+        {
+          "q": "这会取代医生吗？",
+          "a": "不会。情景式医疗依然存在——但作为最后的手段，而非第一接触点。连续读取能提前预见那些如今只有等到很晚才被发现的问题。"
+        },
+        {
+          "q": "会读取哪些数据？",
+          "a": "生物标志物、睡眠、血糖、炎症、心率变异性——你的基线，每一天，以便在偏差演变成临床症状之前就将其侦测出来。"
+        },
+        {
+          "q": "为什么直到现在才实现？",
+          "a": "连续传感器，加上一个能够关联每日数千个数据点的人工智能，第一次让生物读取变得切实可行。"
+        }
+      ]
+    },
+    "fr": {
+      "takeaways": [
+        "Le modèle de santé actuel est **réactif par conception** : il n'agit qu'une fois le symptôme apparu.",
+        "La prochaine couche est une **infrastructure de lecture biologique continue** — non plus une simple application.",
+        "L'IA rend traitable le volume de données qu'un humain ne peut lire : elle devient **couche de décision**.",
+        "La santé cesse d'être un **événement** pour devenir un **environnement**, continu comme l'énergie ou internet."
+      ],
+      "faq": [
+        {
+          "q": "Cela remplace-t-il le médecin ?",
+          "a": "Non. La médecine épisodique continue d'exister — mais comme dernier recours, et non comme premier point de contact. La lecture continue anticipe ce que l'on ne voit aujourd'hui que trop tard."
+        },
+        {
+          "q": "Quelles données sont lues ?",
+          "a": "Les biomarqueurs, le sommeil, la glycémie, l'inflammation, la variabilité cardiaque — votre ligne de base, chaque jour, pour détecter les écarts avant qu'ils ne deviennent un symptôme clinique."
+        },
+        {
+          "q": "Pourquoi seulement maintenant ?",
+          "a": "L'arrivée des capteurs continus, conjuguée à une IA capable de corréler des milliers de points quotidiens, a rendu la lecture biologique viable pour la première fois."
+        }
+      ]
+    },
+    "de": {
+      "takeaways": [
+        "Das heutige Gesundheitsmodell ist **von Grund auf reaktiv**: Es handelt erst, wenn das Symptom bereits da ist.",
+        "Die nächste Schicht ist **eine Infrastruktur zur kontinuierlichen biologischen Auslesung** – keine weitere App.",
+        "Die KI macht jenes Datenvolumen handhabbar, das ein Mensch nicht lesen kann: Sie wird zur **Entscheidungsschicht**.",
+        "Gesundheit hört auf, ein **Ereignis** zu sein, und wird zur **Umgebung**, kontinuierlich wie Energie oder Internet."
+      ],
+      "faq": [
+        {
+          "q": "Ersetzt das den Arzt?",
+          "a": "Nein. Die episodische Medizin bleibt bestehen – aber als letzter Ausweg, nicht als erster Berührungspunkt. Die kontinuierliche Auslesung nimmt vorweg, was man heute erst spät erkennt."
+        },
+        {
+          "q": "Welche Daten werden ausgelesen?",
+          "a": "Biomarker, Schlaf, Blutzucker, Entzündung, Herzfrequenzvariabilität – Ihre Ausgangslinie, jeden Tag, um Abweichungen zu erkennen, bevor sie zum klinischen Symptom werden."
+        },
+        {
+          "q": "Warum erst jetzt?",
+          "a": "Kontinuierliche Sensoren in Verbindung mit einer KI, die Tausende täglicher Datenpunkte korrelieren kann, haben die biologische Auslesung zum ersten Mal überhaupt möglich gemacht."
+        }
+      ]
+    },
+    "ja": {
+      "takeaways": [
+        "現在の医療モデルは**構造的に受動的**である——症状が現れてからしか動かない。",
+        "次に来る層は**連続的な生体読み取りインフラ**であり、もはや単なるアプリではない。",
+        "AIは人間には読めないデータ量を扱える状態にする——それが**意思決定の層**となる。",
+        "医療は**出来事**であることをやめ、電力やインターネットのように連続した**環境**になる。"
+      ],
+      "faq": [
+        {
+          "q": "これは医師に取って代わるのか?",
+          "a": "いいえ。エピソード的な医療は依然として存在し続ける——ただし最初の接点としてではなく、最後の手段としてだ。連続的な読み取りは、今日では手遅れになってからしか見えないものを先回りして捉える。"
+        },
+        {
+          "q": "どんなデータが読み取られるのか?",
+          "a": "バイオマーカー、睡眠、血糖値、炎症、心拍変動——あなたのベースラインを毎日読み取り、臨床的な症状になる前に逸脱を検知する。"
+        },
+        {
+          "q": "なぜ今になってなのか?",
+          "a": "連続的なセンサーに、毎日数千ものデータ点を相関づけられるAIが加わったことで、生体の読み取りが初めて現実のものとなったからだ。"
+        }
+      ]
+    },
+    "ru": {
+      "takeaways": [
+        "Нынешняя модель здравоохранения **реактивна по своей конструкции**: она вступает в действие лишь после того, как симптом уже проявился.",
+        "Следующий слой — это **инфраструктура непрерывного считывания биологических данных**, а не очередное приложение.",
+        "ИИ делает обозримым тот объём данных, который человек прочесть не в силах: он превращается в **слой принятия решений**.",
+        "Здоровье перестаёт быть **событием** и становится **средой** — непрерывной, как электричество или интернет."
+      ],
+      "faq": [
+        {
+          "q": "Заменит ли это врача?",
+          "a": "Нет. Эпизодическая медицина продолжит существовать — но как последняя инстанция, а не как первая точка контакта. Непрерывное считывание предвосхищает то, что сегодня замечают слишком поздно."
+        },
+        {
+          "q": "Какие данные считываются?",
+          "a": "Биомаркеры, сон, уровень глюкозы, воспаление, вариабельность сердечного ритма — ваша базовая линия, каждый день, чтобы уловить отклонения прежде, чем они превратятся в клинический симптом."
+        },
+        {
+          "q": "Почему это становится возможным только сейчас?",
+          "a": "Непрерывные датчики в сочетании с ИИ, способным сопоставлять тысячи ежедневных показателей, впервые сделали биологическое считывание практически осуществимым."
+        }
+      ]
+    }
+  },
+  "camada-decisao-ia": {
+    "pt": {
+      "takeaways": [
+        "Usar IA como **ferramenta** = tarefas pontuais (chatbot, resumo). Construir sobre IA como **camada** = o produto decide.",
+        "Como ferramenta, a IA vive em **endpoints**; como camada, vive em **cada decisão** do produto.",
+        "A vantagem não está mais na **interface**, e sim na capacidade de ler contexto e ajustar.",
+        "O próximo ciclo separa **quem construiu sistema** de **quem comprou ferramenta**."
+      ],
+      "faq": [
+        {
+          "q": "Qual a diferença prática?",
+          "a": "Remover a IA de um produto-ferramenta não o quebra. Removê-la de um produto-camada, sim — ela é parte da infraestrutura."
+        },
+        {
+          "q": "Essa vantagem é copiável?",
+          "a": "A capacidade acumulada (dados + aprendizado contínuo) não é copiável por quem só consome uma API."
+        },
+        {
+          "q": "Quanto tempo até a separação?",
+          "a": "3–5 anos. É a mesma lógica de cloud contra software local nos anos 2010 — quem tratou como infraestrutura ganhou."
+        }
+      ]
+    },
+    "en": {
+      "takeaways": [
+        "Using AI as a **tool** means discrete tasks (chatbot, summaries). Building on AI as a **layer** means the product itself decides.",
+        "As a tool, AI lives at **endpoints**; as a layer, it lives inside **every decision** the product makes.",
+        "The advantage no longer lies in the **interface**, but in the ability to read context and adjust.",
+        "The next cycle separates **those who built a system** from **those who bought a tool**."
+      ],
+      "faq": [
+        {
+          "q": "What's the practical difference?",
+          "a": "Pull the AI out of a tool-style product and nothing breaks. Pull it out of a layer-style product and it does — the AI is part of the infrastructure."
+        },
+        {
+          "q": "Is that advantage copyable?",
+          "a": "The accumulated capability (data plus continuous learning) can't be copied by anyone who only consumes an API."
+        },
+        {
+          "q": "How long until the split happens?",
+          "a": "Three to five years. It's the same logic as cloud versus on-premise software in the 2010s — whoever treated it as infrastructure won."
+        }
+      ]
+    },
+    "es": {
+      "takeaways": [
+        "Usar IA como **herramienta** = tareas puntuales (chatbot, resumen). Construir sobre IA como **capa** = el producto decide.",
+        "Como herramienta, la IA vive en **endpoints**; como capa, vive en **cada decisión** del producto.",
+        "La ventaja ya no está en la **interfaz**, sino en la capacidad de leer el contexto y ajustar.",
+        "El próximo ciclo separa a **quien construyó un sistema** de **quien compró una herramienta**."
+      ],
+      "faq": [
+        {
+          "q": "¿Cuál es la diferencia práctica?",
+          "a": "Quitar la IA de un producto-herramienta no lo rompe. Quitarla de un producto-capa, sí: es parte de la infraestructura."
+        },
+        {
+          "q": "¿Esta ventaja es copiable?",
+          "a": "La capacidad acumulada (datos + aprendizaje continuo) no es copiable por quien solo consume una API."
+        },
+        {
+          "q": "¿Cuánto tiempo hasta la separación?",
+          "a": "3-5 años. Es la misma lógica de la nube frente al software local en los años 2010: quien la trató como infraestructura ganó."
+        }
+      ]
+    },
+    "zh": {
+      "takeaways": [
+        "把 AI 当作**工具** = 处理零散任务（聊天机器人、摘要）。在 AI 之上构建**底层架构** = 让产品自己做决策。",
+        "作为工具时，AI 存在于**接口端点**；作为底层架构时，它存在于产品的**每一个决策**中。",
+        "优势不再在于**界面**，而在于读取语境并据此调整的能力。",
+        "下一个周期会把**构建了系统的人**和**购买了工具的人**区分开来。"
+      ],
+      "faq": [
+        {
+          "q": "实际差别在哪里？",
+          "a": "把 AI 从一个\"工具型\"产品里移除，产品不会崩。但从一个\"底层架构型\"产品里移除它，就会崩——因为它是基础设施的一部分。"
+        },
+        {
+          "q": "这种优势可以被复制吗？",
+          "a": "沉淀下来的能力（数据 + 持续学习）无法被那些只是消费 API 的人复制。"
+        },
+        {
+          "q": "多久之后会出现这种分化？",
+          "a": "三到五年。这和 2010 年代云对阵本地软件是同一套逻辑——把它当作基础设施的人赢了。"
+        }
+      ]
+    },
+    "fr": {
+      "takeaways": [
+        "Utiliser l'IA comme **outil** = tâches ponctuelles (chatbot, résumé). Bâtir sur l'IA comme **couche** = le produit décide.",
+        "Comme outil, l'IA vit dans des **endpoints** ; comme couche, elle vit dans **chaque décision** du produit.",
+        "L'avantage n'est plus dans l'**interface**, mais dans la capacité à lire le contexte et à ajuster.",
+        "Le prochain cycle sépare **ceux qui ont bâti un système** de **ceux qui ont acheté un outil**."
+      ],
+      "faq": [
+        {
+          "q": "Quelle est la différence concrète ?",
+          "a": "Retirer l'IA d'un produit-outil ne le brise pas. La retirer d'un produit-couche, si — elle fait partie de l'infrastructure."
+        },
+        {
+          "q": "Cet avantage est-il copiable ?",
+          "a": "La capacité accumulée (données + apprentissage continu) n'est pas copiable par celui qui se contente de consommer une API."
+        },
+        {
+          "q": "Combien de temps avant la séparation ?",
+          "a": "3 à 5 ans. C'est la même logique que le cloud face au logiciel local dans les années 2010 — ceux qui l'ont traité comme une infrastructure ont gagné."
+        }
+      ]
+    },
+    "de": {
+      "takeaways": [
+        "KI als **Werkzeug** einzusetzen = einzelne Aufgaben (Chatbot, Zusammenfassung). Auf KI als **Schicht** zu bauen = das Produkt entscheidet.",
+        "Als Werkzeug lebt die KI in **Endpoints**; als Schicht lebt sie in **jeder Entscheidung** des Produkts.",
+        "Der Vorteil liegt nicht mehr in der **Oberfläche**, sondern in der Fähigkeit, Kontext zu lesen und anzupassen.",
+        "Der nächste Zyklus trennt **jene, die ein System gebaut haben** von **jenen, die ein Werkzeug gekauft haben**."
+      ],
+      "faq": [
+        {
+          "q": "Was ist der praktische Unterschied?",
+          "a": "Die KI aus einem Werkzeug-Produkt zu entfernen, zerbricht es nicht. Sie aus einem Schicht-Produkt zu entfernen, schon — sie ist Teil der Infrastruktur."
+        },
+        {
+          "q": "Ist dieser Vorteil kopierbar?",
+          "a": "Die akkumulierte Fähigkeit (Daten + kontinuierliches Lernen) ist nicht kopierbar von denen, die nur eine API konsumieren."
+        },
+        {
+          "q": "Wie lange dauert es bis zur Trennung?",
+          "a": "3–5 Jahre. Es ist dieselbe Logik von Cloud gegen lokale Software in den 2010er-Jahren — wer sie als Infrastruktur behandelte, gewann."
+        }
+      ]
+    },
+    "ja": {
+      "takeaways": [
+        "AIを**ツール**として使う = 個別の作業（チャットボット、要約）。AIを**レイヤー**として上に構築する = 製品そのものが意思決定する。",
+        "ツールとしてのAIは**エンドポイント**に住まう。レイヤーとしては、製品の**あらゆる意思決定**のなかに住まう。",
+        "優位性はもはや**インターフェース**にはなく、コンテキストを読み取り調整する能力にある。",
+        "次のサイクルは、**システムを構築した者**と**ツールを買った者**を分ける。"
+      ],
+      "faq": [
+        {
+          "q": "実務上の違いは何か？",
+          "a": "ツール型の製品からAIを取り除いても、それは壊れない。レイヤー型の製品から取り除けば壊れる——AIがインフラの一部だからだ。"
+        },
+        {
+          "q": "この優位性は複製可能か？",
+          "a": "蓄積された能力（データ＋継続的な学習）は、APIをただ消費するだけの者には複製できない。"
+        },
+        {
+          "q": "分かれるまでどれくらいかかるか？",
+          "a": "3〜5年。それは2010年代のクラウド対ローカルソフトウェアと同じ論理だ——インフラとして扱った者が勝った。"
+        }
+      ]
+    },
+    "ru": {
+      "takeaways": [
+        "Использовать ИИ как **инструмент** — это разовые задачи (чат-бот, краткое изложение). Строить на ИИ как на **слое** — это когда решения принимает сам продукт.",
+        "Как инструмент, ИИ живёт в **отдельных эндпоинтах**; как слой — он живёт в **каждом решении** продукта.",
+        "Преимущество больше не в **интерфейсе**, а в способности считывать контекст и подстраиваться под него.",
+        "Следующий цикл отделит **тех, кто построил систему**, от **тех, кто купил инструмент**."
+      ],
+      "faq": [
+        {
+          "q": "В чём практическая разница?",
+          "a": "Уберите ИИ из продукта-инструмента — и он не сломается. Уберите его из продукта-слоя — сломается: ИИ здесь часть инфраструктуры."
+        },
+        {
+          "q": "Можно ли скопировать это преимущество?",
+          "a": "Накопленную способность (данные плюс непрерывное обучение) невозможно скопировать тому, кто лишь потребляет API."
+        },
+        {
+          "q": "Сколько времени до разделения?",
+          "a": "От 3 до 5 лет. Это та же логика, что и облако против локального софта в 2010-х, — выиграл тот, кто отнёсся к этому как к инфраструктуре."
+        }
+      ]
+    }
+  },
+  "erro-estrutural-negocios": {
+    "pt": {
+      "takeaways": [
+        "Por 50 anos a vantagem veio de **eficiência**; ela virou commodity e deixou de diferenciar.",
+        "A nova vantagem é **arquitetura**: em que camada o negócio vive e o que ele acumula.",
+        "Três perguntas: em que **camada** vive, **quem precisa** dele pra operar, o que **acumula** no tempo.",
+        "Eficiência virou **requisito, não vantagem** — e organizações rígidas demais não se reconfiguram."
+      ],
+      "faq": [
+        {
+          "q": "Eficiência não importa mais?",
+          "a": "Importa como requisito básico. O que ela deixou de ser é diferencial — qualquer empresa séria já é eficiente."
+        },
+        {
+          "q": "O que significa \"camada\"?",
+          "a": "Onde o negócio opera na pilha de valor: produto final, ferramenta ou infraestrutura. Cada camada tem lógica econômica distinta."
+        },
+        {
+          "q": "Tem exemplos?",
+          "a": "Stripe, Cloudflare e Anthropic ganham por terem escolhido a camada de infraestrutura — não por serem mais eficientes que os concorrentes."
+        }
+      ]
+    },
+    "en": {
+      "takeaways": [
+        "For 50 years, advantage came from **efficiency**; it has become a commodity and no longer differentiates.",
+        "The new advantage is **architecture**: which layer a business lives in and what it accumulates.",
+        "Three questions: which **layer** it lives in, **who needs it** to operate, and what it **accumulates** over time.",
+        "Efficiency became a **requirement, not an advantage** — and organizations that are too rigid can't reconfigure."
+      ],
+      "faq": [
+        {
+          "q": "Does efficiency no longer matter?",
+          "a": "It matters as a baseline requirement. What it stopped being is a differentiator — any serious company is already efficient."
+        },
+        {
+          "q": "What does \"layer\" mean?",
+          "a": "Where the business operates in the value stack: end product, tool, or infrastructure. Each layer has its own distinct economic logic."
+        },
+        {
+          "q": "Are there examples?",
+          "a": "Stripe, Cloudflare, and Anthropic win because they chose the infrastructure layer — not because they're more efficient than their competitors."
+        }
+      ]
+    },
+    "es": {
+      "takeaways": [
+        "Durante 50 años la ventaja vino de la **eficiencia**; se volvió un commodity y dejó de diferenciar.",
+        "La nueva ventaja es la **arquitectura**: en qué capa vive el negocio y qué acumula.",
+        "Tres preguntas: en qué **capa** vive, **quién lo necesita** para operar, qué **acumula** con el tiempo.",
+        "La eficiencia se volvió un **requisito, no una ventaja**, y las organizaciones demasiado rígidas no se reconfiguran."
+      ],
+      "faq": [
+        {
+          "q": "¿La eficiencia ya no importa?",
+          "a": "Importa como requisito básico. Lo que dejó de ser es un diferencial: cualquier empresa seria ya es eficiente."
+        },
+        {
+          "q": "¿Qué significa \"capa\"?",
+          "a": "Dónde opera el negocio dentro de la pila de valor: producto final, herramienta o infraestructura. Cada capa tiene una lógica económica distinta."
+        },
+        {
+          "q": "¿Hay ejemplos?",
+          "a": "Stripe, Cloudflare y Anthropic ganan por haber elegido la capa de infraestructura, no por ser más eficientes que sus competidores."
+        }
+      ]
+    },
+    "zh": {
+      "takeaways": [
+        "五十年来，优势一直来自**效率**；如今它已沦为商品，不再带来差异化。",
+        "新的优势是**架构**：生意活在哪一层，以及它积累的是什么。",
+        "三个问题：活在哪一**层**、**谁需要**它才能运转、随时间**积累**的是什么。",
+        "效率已变成**门槛，而非优势**——过于僵化的组织无法重新配置自己。"
+      ],
+      "faq": [
+        {
+          "q": "效率不再重要了吗？",
+          "a": "它作为基本门槛仍然重要。它不再是的，是差异化——任何一家正经的公司本就高效。"
+        },
+        {
+          "q": "\"层级\"是什么意思？",
+          "a": "指生意在价值堆栈中的位置：最终产品、工具，还是基础设施。每一层都有截然不同的经济逻辑。"
+        },
+        {
+          "q": "有例子吗？",
+          "a": "Stripe、Cloudflare 和 Anthropic 之所以取胜，是因为选择了基础设施这一层——而非因为它们比竞争对手更高效。"
+        }
+      ]
+    },
+    "fr": {
+      "takeaways": [
+        "Pendant 50 ans, l'avantage est venu de l'**efficacité** ; elle est devenue une commodité et ne différencie plus.",
+        "Le nouvel avantage, c'est l'**architecture** : sur quelle couche vit l'affaire et ce qu'elle accumule.",
+        "Trois questions : sur quelle **couche** elle vit, **qui a besoin** d'elle pour fonctionner, ce qu'elle **accumule** dans le temps.",
+        "L'efficacité est devenue un **prérequis, pas un avantage** — et les organisations trop rigides ne se reconfigurent pas."
+      ],
+      "faq": [
+        {
+          "q": "L'efficacité ne compte-t-elle plus ?",
+          "a": "Elle compte comme prérequis de base. Ce qu'elle a cessé d'être, c'est un facteur de différenciation — toute entreprise sérieuse est déjà efficace."
+        },
+        {
+          "q": "Que signifie « couche » ?",
+          "a": "L'endroit où l'affaire opère dans la chaîne de valeur : produit final, outil ou infrastructure. Chaque couche obéit à une logique économique distincte."
+        },
+        {
+          "q": "Y a-t-il des exemples ?",
+          "a": "Stripe, Cloudflare et Anthropic l'emportent parce qu'elles ont choisi la couche de l'infrastructure — non parce qu'elles sont plus efficaces que leurs concurrents."
+        }
+      ]
+    },
+    "de": {
+      "takeaways": [
+        "50 Jahre lang kam der Vorsprung aus **Effizienz**; sie ist zur Massenware geworden und unterscheidet nicht mehr.",
+        "Der neue Vorsprung ist **Architektur**: in welcher Schicht das Geschäft lebt und was es ansammelt.",
+        "Drei Fragen: in welcher **Schicht** es lebt, **wer es braucht**, um zu arbeiten, und was es im Lauf der Zeit **ansammelt**.",
+        "Effizienz ist zur **Voraussetzung geworden, nicht zum Vorteil** — und zu starre Organisationen lassen sich nicht neu konfigurieren."
+      ],
+      "faq": [
+        {
+          "q": "Spielt Effizienz keine Rolle mehr?",
+          "a": "Sie zählt als Grundvoraussetzung. Was sie aufgehört hat zu sein, ist ein Unterscheidungsmerkmal — jedes ernstzunehmende Unternehmen ist bereits effizient."
+        },
+        {
+          "q": "Was bedeutet „Schicht\"?",
+          "a": "Wo das Geschäft im Wertschöpfungsstapel arbeitet: Endprodukt, Werkzeug oder Infrastruktur. Jede Schicht folgt einer eigenen ökonomischen Logik."
+        },
+        {
+          "q": "Gibt es Beispiele?",
+          "a": "Stripe, Cloudflare und Anthropic gewinnen, weil sie die Infrastrukturschicht gewählt haben — nicht weil sie effizienter sind als ihre Wettbewerber."
+        }
+      ]
+    },
+    "ja": {
+      "takeaways": [
+        "50年間、優位は**効率**から生まれてきた。だがそれはコモディティとなり、もはや差別化しなくなった。",
+        "新しい優位は**アーキテクチャ**にある——事業がどのレイヤーで生き、何を蓄積するか。",
+        "三つの問い——どの**レイヤー**で生きているか、事業を回すのに**誰が必要とするか**、時間とともに何を**蓄積するか**。",
+        "効率は**優位ではなく前提条件**に変わった——そして硬直しすぎた組織は再構成できない。"
+      ],
+      "faq": [
+        {
+          "q": "効率はもう重要ではないのですか?",
+          "a": "基本的な前提条件としては重要です。重要でなくなったのは差別化の要素としての側面です——まともな企業はすでに効率的だからです。"
+        },
+        {
+          "q": "「レイヤー」とは何を意味しますか?",
+          "a": "価値のスタックの中で事業がどこで動いているか、ということです——最終製品、ツール、あるいはインフラストラクチャ。レイヤーごとに経済の論理は異なります。"
+        },
+        {
+          "q": "具体例はありますか?",
+          "a": "Stripe、Cloudflare、Anthropicは、競合より効率的だから勝っているのではなく、インフラストラクチャのレイヤーを選んだから勝っているのです。"
+        }
+      ]
+    },
+    "ru": {
+      "takeaways": [
+        "На протяжении 50 лет преимущество давала **эффективность**; теперь она стала товаром массового спроса и перестала отличать одних от других.",
+        "Новое преимущество — это **архитектура**: на каком уровне живёт бизнес и что он накапливает.",
+        "Три вопроса: на каком **уровне** он живёт, **кому он нужен**, чтобы работать, что он **накапливает** со временем.",
+        "Эффективность стала **требованием, а не преимуществом** — а слишком жёсткие организации не способны перестраиваться."
+      ],
+      "faq": [
+        {
+          "q": "Разве эффективность больше не имеет значения?",
+          "a": "Имеет — как базовое требование. Чем она перестала быть, так это отличительным признаком: любая серьёзная компания уже эффективна."
+        },
+        {
+          "q": "Что значит «уровень»?",
+          "a": "Это место, которое бизнес занимает в цепочке создания ценности: конечный продукт, инструмент или инфраструктура. У каждого уровня своя экономическая логика."
+        },
+        {
+          "q": "Есть примеры?",
+          "a": "Stripe, Cloudflare и Anthropic выигрывают потому, что выбрали уровень инфраструктуры, — а не потому, что они эффективнее конкурентов."
+        }
+      ]
+    }
+  }
+}
