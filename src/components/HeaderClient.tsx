@@ -5,13 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import { SpotlightSearch, type SpotlightLabels } from './SpotlightSearch';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import type { SearchDoc } from '@/lib/search';
 import type { Locale } from '@/lib/i18n';
 
-interface NavItem { href: string; label: string }
+interface NavChild { href: string; label: string; sub?: string }
+interface NavItem { href: string; label: string; children?: NavChild[] }
 interface Props {
   locale: Locale;
   homeHref: string;
@@ -59,9 +60,32 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
           )}
         </Link>
 
-        <nav aria-label="nav" className="hidden md:flex items-center gap-7 h-full">
+        <nav aria-label="nav" className="hidden md:flex items-center gap-6 h-full">
           {nav.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = pathname === item.href || (!!item.children && pathname.startsWith(item.href));
+            if (item.children) {
+              return (
+                <div key={item.href} className="relative h-full flex items-center group">
+                  <Link
+                    href={item.href}
+                    className={`h-full flex items-center gap-1 text-[13px] font-medium transition-colors ${isActive ? 'text-champagne font-semibold' : 'text-text-dim group-hover:text-champagne'}`}
+                  >
+                    {item.label}
+                    <ChevronDown size={13} className="transition-transform group-hover:rotate-180" />
+                  </Link>
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                    <div className="w-[300px] rounded-2xl bg-surface border border-border-strong shadow-brand-lg p-2">
+                      {item.children.map((c) => (
+                        <Link key={c.href} href={c.href} className="block px-4 py-2.5 rounded-xl hover:bg-surface-alt transition-colors group/item">
+                          <span className="block text-[13.5px] text-text group-hover/item:text-champagne transition-colors">{c.label}</span>
+                          {c.sub && <span className="block text-[11px] text-text-dim mt-0.5">{c.sub}</span>}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
             return (
               <Link
                 key={item.href}
@@ -121,14 +145,29 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
       {mobileOpen && (
         <div className="fixed inset-0 top-[86px] bg-bg/98 backdrop-blur-md z-[998] p-6 overflow-y-auto pb-10 flex flex-col gap-1 md:hidden">
           {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setMobileOpen(false)}
-              className="text-[14.5px] font-medium text-text-dim py-3 border-b border-border hover:text-champagne"
-            >
-              {item.label}
-            </Link>
+            <div key={item.href} className="border-b border-border">
+              <Link
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="block text-[14.5px] font-medium text-text-dim py-3 hover:text-champagne"
+              >
+                {item.label}
+              </Link>
+              {item.children && (
+                <div className="pl-4 pb-2 flex flex-col gap-0.5">
+                  {item.children.map((c) => (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="text-[13px] text-text-dimmer py-1.5 hover:text-champagne"
+                    >
+                      {c.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           ))}
           <div className="pt-6">
             <LanguageSwitcher currentLocale={locale} variant="header" label={t.language} />

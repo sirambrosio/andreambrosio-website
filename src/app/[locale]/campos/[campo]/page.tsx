@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { getCampo, getCampos, CAMPO_ORDER, type CampoSlug } from '@/lib/content';
 import { getEnsaiosPorCampo } from '@/lib/ensaios';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, hreflangAlternates, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, localeHref, hreflangAlternates, SITE_URL, type Locale } from '@/lib/i18n';
 
 export function generateStaticParams() {
   return CAMPO_ORDER.map((campo) => ({ campo }));
@@ -38,8 +38,19 @@ export default async function CampoPage({ params }: { params: Promise<{ locale: 
   const idx = CAMPO_ORDER.indexOf(campo);
   const romano = ['I', 'II', 'III', 'IV'][idx];
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: d.nav.inicio, item: `${SITE_URL}/${locale}` },
+      { '@type': 'ListItem', position: 2, name: d.nav.campos, item: `${SITE_URL}/${locale}/campos` },
+      { '@type': 'ListItem', position: 3, name: c.nome, item: `${SITE_URL}/${locale}/campos/${c.slug}` },
+    ],
+  };
+
   return (
     <div className="bg-bg text-text">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* HERO */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden border-b border-border">
         <div className="absolute inset-0 opacity-[0.25] pointer-events-none">

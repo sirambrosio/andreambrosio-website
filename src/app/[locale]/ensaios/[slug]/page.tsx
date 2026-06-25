@@ -8,6 +8,7 @@ import { campoNome } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
 import { asLocale, isLocale, localeHref, hreflangAlternates, SITE_URL, type Locale } from '@/lib/i18n';
 import { ArrowLeft } from 'lucide-react';
+import { ReadingProgress } from '@/components/ReadingProgress';
 
 export function generateStaticParams() {
   return getAllEnsaios().map((e) => ({ slug: e.slug }));
@@ -19,6 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = raw as Locale;
   const e = getEnsaio(slug, locale);
   if (!e) return {};
+  const tag = campoNome(e.campo, locale);
+  const og = `/og?title=${encodeURIComponent(e.titulo)}&subtitle=${encodeURIComponent(e.subtitulo ?? '')}&tag=${encodeURIComponent(tag)}`;
   return {
     title: e.titulo,
     description: e.resumo,
@@ -29,10 +32,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: e.resumo,
       publishedTime: e.data,
       authors: ['Andre Ambrósio'],
-      tags: [campoNome(e.campo, locale)],
-      images: e.imagem ? [e.imagem] : undefined,
+      tags: [tag],
+      images: [{ url: og, width: 1200, height: 630, alt: e.titulo }],
     },
-    twitter: { card: 'summary_large_image', title: e.titulo, description: e.resumo },
+    twitter: { card: 'summary_large_image', title: e.titulo, description: e.resumo, images: [og] },
   };
 }
 
@@ -61,6 +64,20 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
 
   const campo = campoNome(e.campo, locale);
 
+  const all = getAllEnsaios(locale).filter((x) => x.slug !== e.slug);
+  const related = [...all.filter((x) => x.campo === e.campo), ...all.filter((x) => x.campo !== e.campo)].slice(0, 2);
+  const relatedLabel = ({ pt: 'Continue lendo', en: 'Keep reading', es: 'Sigue leyendo', zh: '继续阅读', fr: 'Continuez la lecture', de: 'Weiterlesen', ja: '続けて読む' } as Record<Locale, string>)[locale];
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: d.nav.inicio, item: `${SITE_URL}/${locale}` },
+      { '@type': 'ListItem', position: 2, name: d.nav.ensaios, item: `${SITE_URL}/${locale}/ensaios` },
+      { '@type': 'ListItem', position: 3, name: e.titulo, item: `${SITE_URL}/${locale}/ensaios/${e.slug}` },
+    ],
+  };
+
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -76,7 +93,9 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
 
   return (
     <article className="bg-bg text-text min-h-screen">
+      <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* HERO */}
       <header className="relative px-6 md:px-[8rem] pt-24 pb-20 overflow-hidden border-b border-border">
@@ -119,6 +138,24 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
           <MDXRemote source={e.conteudo} components={mdxComponents} />
         </div>
       </section>
+
+      {/* RELACIONADOS */}
+      {related.length > 0 && (
+        <section className="px-6 md:px-[8rem] py-16 border-t border-border">
+          <div className="max-w-[820px] mx-auto">
+            <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8">{relatedLabel}</div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {related.map((r) => (
+                <Link key={r.slug} href={localeHref(`/ensaios/${r.slug}`, locale)} className="group rounded-[18px] border border-border bg-surface p-7 hover:border-champagne transition-all">
+                  <div className="font-mono text-[9px] tracking-[0.2em] uppercase text-champagne mb-3">{campoNome(r.campo, locale)}</div>
+                  <h3 className="font-display font-light text-[1.375rem] leading-[1.2] text-text tracking-tight group-hover:text-champagne transition-colors mb-2">{r.titulo}</h3>
+                  {r.subtitulo && <p className="text-[13px] text-text-dim leading-relaxed">{r.subtitulo}</p>}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* FOOTER ARTIGO */}
       <footer className="px-6 md:px-[8rem] py-20 bg-surface border-t border-border">

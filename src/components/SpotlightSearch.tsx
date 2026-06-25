@@ -73,9 +73,14 @@ export function SpotlightSearch({ docs, labels, variant = 'button' }: Props) {
   // ⌘K / Ctrl+K global
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      const typing = !!t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setOpen((o) => !o);
+      } else if (e.key === '/' && !typing) {
+        e.preventDefault();
+        setOpen(true);
       }
     };
     window.addEventListener('keydown', onKey);

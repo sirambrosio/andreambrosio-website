@@ -5,6 +5,7 @@ import { getAllEnsaios } from '@/lib/ensaios';
 import { getCampos, campoNome } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
 import { asLocale, localeHref } from '@/lib/i18n';
+import { NewsletterCapture } from '@/components/NewsletterCapture';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const locale = asLocale((await params).locale);
@@ -49,6 +50,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 {d.home.ctaAbout} →
               </Link>
             </div>
+
+            {/* CAPTURA NO HERO */}
+            <div className="mt-12 pt-9 border-t border-border max-w-[460px]">
+              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-3">{d.footer.newsletterTitle}</p>
+              <NewsletterCapture
+                variant="hero"
+                labels={{
+                  placeholder: d.footer.newsletterPlaceholder,
+                  submit: d.footer.newsletterSubmit,
+                  success: d.footer.newsletterSuccess,
+                  error: d.footer.newsletterError,
+                }}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -56,7 +71,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {/* CAMPOS */}
       <section className="px-6 md:px-[5rem] py-24 md:py-32 bg-surface border-y border-border">
         <div className="max-w-[1200px] mx-auto">
-          <div className="mb-20 text-center">
+          <div className="mb-20 text-center" data-reveal>
             <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-bronze mb-8">§ I · {d.home.camposEyebrow}</div>
             <h2 className="font-display font-light text-[clamp(2rem,4vw,3.5rem)] leading-[1] tracking-[-0.02em] text-text">
               {d.home.camposTitle}
@@ -83,7 +98,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       {ensaios.length > 0 && (
         <section className="px-6 md:px-[8rem] py-24 md:py-32">
           <div className="max-w-[1100px] mx-auto">
-            <div className="flex items-end justify-between mb-14 flex-wrap gap-4">
+            <div className="flex items-end justify-between mb-14 flex-wrap gap-4" data-reveal>
               <div>
                 <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-bronze mb-6">§ II · {d.home.ensaiosEyebrow}</div>
                 <h2 className="font-display font-light text-[clamp(2rem,3.5vw,3rem)] leading-[1.05] text-text tracking-tight">{d.home.ensaiosTitle}</h2>
@@ -117,7 +132,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <Image src="/assets/gen-library.png" alt="" fill sizes="100vw" className="object-cover" />
           <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(var(--overlay-fade),0.5) 0%, rgba(var(--overlay-fade),0.95) 70%, var(--bg) 100%)' }} />
         </div>
-        <div className="relative max-w-[820px] mx-auto text-center">
+        <div className="relative max-w-[820px] mx-auto text-center" data-reveal>
           <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-bronze mb-8">§ III · {d.home.ctaBannerEyebrow}</div>
           <p className="font-display italic text-[clamp(1.75rem,3vw,2.75rem)] leading-[1.3] text-gold-foil tracking-tight">
             “{d.home.ctaBannerTitle}”

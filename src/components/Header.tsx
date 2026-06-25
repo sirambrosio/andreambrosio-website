@@ -1,15 +1,26 @@
 import { getDict } from '@/lib/dictionary';
 import { getSearchIndex } from '@/lib/search';
+import { getCampos } from '@/lib/content';
 import { localeHref, type Locale } from '@/lib/i18n';
 import { HeaderClient } from './HeaderClient';
 
 export function Header({ locale }: { locale: Locale }) {
   const d = getDict(locale);
   const docs = getSearchIndex(locale);
+  const campos = getCampos(locale);
 
   const nav = [
+    { href: localeHref('/', locale), label: d.nav.inicio },
     { href: localeHref('/sobre', locale), label: d.nav.sobre },
-    { href: localeHref('/campos', locale), label: d.nav.campos },
+    {
+      href: localeHref('/campos', locale),
+      label: d.nav.campos,
+      children: campos.map((c) => ({
+        href: localeHref(`/campos/${c.slug}`, locale),
+        label: c.nome,
+        sub: c.subtitulo,
+      })),
+    },
     { href: localeHref('/ensaios', locale), label: d.nav.ensaios },
     { href: localeHref('/empresas', locale), label: d.nav.empresas },
   ];

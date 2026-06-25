@@ -50,6 +50,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Tudo exceto: _next, api, e qualquer path com ponto (assets/robots/sitemap/llms/mcp)
-  matcher: ['/((?!_next|api|.*\\.).*)'],
+  // Tudo exceto: _next, api, og (route de imagem), e qualquer path com ponto
+  // (assets/robots/sitemap/llms/mcp/manifest/feed)
+  matcher: ['/((?!_next|api|og|.*\\.).*)'],
 };

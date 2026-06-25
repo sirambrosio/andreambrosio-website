@@ -5,13 +5,15 @@ import { ArrowRight, Check } from 'lucide-react';
 
 interface Props {
   labels: { placeholder: string; submit: string; success: string; error: string };
+  /** footer = sobre fundo escuro (cream) · hero = theme-aware (surface/text) */
+  variant?: 'footer' | 'hero';
 }
 
 /**
  * Captura de e-mail. O front está completo; para persistir de fato, plugar um
  * endpoint em onSubmit (ex.: POST /api/subscribe). Hoje guarda local + confirma.
  */
-export function NewsletterCapture({ labels }: Props) {
+export function NewsletterCapture({ labels, variant = 'footer' }: Props) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'ok' | 'err'>('idle');
 
@@ -34,16 +36,28 @@ export function NewsletterCapture({ labels }: Props) {
     }
   }
 
+  const isHero = variant === 'hero';
+
   if (state === 'ok') {
     return (
-      <div className="inline-flex items-center gap-2 text-[13px] text-champagne">
+      <div className={`inline-flex items-center gap-2 text-[13px] ${isHero ? 'text-champagne' : 'text-champagne'}`}>
         <Check size={15} /> {labels.success}
       </div>
     );
   }
 
+  const inputBase = isHero
+    ? 'bg-surface text-text placeholder:text-text-dimmer'
+    : 'bg-cream/[0.04] text-cream placeholder:text-cream/40';
+  const inputBorder =
+    state === 'err'
+      ? 'border-bronze'
+      : isHero
+        ? 'border-border-strong focus:border-champagne'
+        : 'border-cream/15 focus:border-champagne';
+
   return (
-    <form onSubmit={submit} className="flex items-center gap-2 w-full max-w-[420px]">
+    <form onSubmit={submit} className="flex items-center gap-2 w-full max-w-[440px]">
       <input
         type="email"
         value={email}
@@ -53,9 +67,7 @@ export function NewsletterCapture({ labels }: Props) {
         }}
         placeholder={labels.placeholder}
         aria-label={labels.placeholder}
-        className={`flex-1 h-11 px-4 rounded-full bg-cream/[0.04] border text-[13px] text-cream placeholder:text-cream/40 outline-none transition-colors ${
-          state === 'err' ? 'border-bronze' : 'border-cream/15 focus:border-champagne'
-        }`}
+        className={`flex-1 h-11 px-4 rounded-full border text-[13px] outline-none transition-colors ${inputBase} ${inputBorder}`}
       />
       <button
         type="submit"
