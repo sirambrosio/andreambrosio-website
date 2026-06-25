@@ -4,29 +4,54 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getAllEnsaios, getEnsaio } from '@/lib/ensaios';
-import { campoNome } from '@/lib/content';
+import { campoNome, getEnsaioExtra } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
 import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
-import { localeHref, hreflangAlternates } from '@/lib/route-translations';
+import { localeHref, localeUrl, hreflangAlternates } from '@/lib/route-translations';
 import { ArrowLeft } from 'lucide-react';
 import { ReadingProgress } from '@/components/ReadingProgress';
+import { ArticleTOC } from '@/components/journal/ArticleTOC';
+import { KeyTakeaways } from '@/components/journal/KeyTakeaways';
+import { ArticleFAQ } from '@/components/journal/ArticleFAQ';
+import { AuthorCard } from '@/components/journal/AuthorCard';
+import { ShareButtons } from '@/components/journal/ShareButtons';
+import { NewsletterCapture } from '@/components/NewsletterCapture';
+
+const L = {
+  toc: { pt: 'Índice', en: 'Contents', es: 'Contenido', zh: '目录', fr: 'Sommaire', de: 'Inhalt', ja: '目次', ru: 'Содержание' },
+  takeaways: { pt: 'Pontos-chave', en: 'Key points', es: 'Puntos clave', zh: '要点', fr: 'Points clés', de: 'Kernpunkte', ja: '要点', ru: 'Ключевые мысли' },
+  faq: { pt: 'Perguntas frequentes', en: 'FAQ', es: 'Preguntas frecuentes', zh: '常见问题', fr: 'Questions fréquentes', de: 'Häufige Fragen', ja: 'よくある質問', ru: 'Частые вопросы' },
+  author: { pt: 'Sobre o autor', en: 'About the author', es: 'Sobre el autor', zh: '关于作者', fr: "À propos de l'auteur", de: 'Über den Autor', ja: '著者について', ru: 'Об авторе' },
+  share: { pt: 'Compartilhar', en: 'Share', es: 'Compartir', zh: '分享', fr: 'Partager', de: 'Teilen', ja: 'シェア', ru: 'Поделиться' },
+} as const;
+const lab = (k: keyof typeof L, l: Locale) => L[k][l];
+
+const slug = (s: string) =>
+  s.trim().toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-+|-+$/g, '') || 'secao';
+
+function textOf(c: unknown): string {
+  if (typeof c === 'string') return c;
+  if (Array.isArray(c)) return c.map(textOf).join('');
+  if (c && typeof c === 'object' && 'props' in c) return textOf((c as { props?: { children?: unknown } }).props?.children);
+  return '';
+}
 
 export function generateStaticParams() {
   return getAllEnsaios().map((e) => ({ slug: e.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
-  const { locale: raw, slug } = await params;
+  const { locale: raw, slug: s } = await params;
   if (!isLocale(raw)) return {};
   const locale = raw as Locale;
-  const e = getEnsaio(slug, locale);
+  const e = getEnsaio(s, locale);
   if (!e) return {};
   const tag = campoNome(e.campo, locale);
   const og = `/og?title=${encodeURIComponent(e.titulo)}&subtitle=${encodeURIComponent(e.subtitulo ?? '')}&tag=${encodeURIComponent(tag)}`;
   return {
     title: e.titulo,
     description: e.resumo,
-    alternates: { canonical: localeHref(`/ensaios/${slug}`, locale), languages: hreflangAlternates(`/ensaios/${slug}`) },
+    alternates: { canonical: localeHref(`/ensaios/${s}`, locale), languages: hreflangAlternates(`/ensaios/${s}`) },
     openGraph: {
       type: 'article',
       title: e.titulo,
@@ -42,8 +67,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 const mdxComponents = {
   h1: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...p} className="font-display font-light text-[clamp(2rem,3.5vw,3rem)] leading-[1.05] tracking-tight text-text mt-16 mb-6" />,
-  h2: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h2 {...p} className="font-display font-light text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.15] tracking-tight text-text mt-14 mb-5" />,
-  h3: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h3 {...p} className="font-display font-normal text-[1.375rem] leading-[1.25] text-text mt-10 mb-4 tracking-tight" />,
+  h2: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h2 id={slug(textOf(p.children))} {...p} className="font-display font-light text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.15] tracking-tight text-text mt-14 mb-5 scroll-mt-[110px]" />,
+  h3: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h3 id={slug(textOf(p.children))} {...p} className="font-display font-normal text-[1.375rem] leading-[1.25] text-text mt-10 mb-4 tracking-tight scroll-mt-[110px]" />,
   p: (p: React.HTMLAttributes<HTMLParagraphElement>) => <p {...p} className="text-[1.0625rem] leading-[1.85] text-text mb-6 font-body" />,
   ul: (p: React.HTMLAttributes<HTMLUListElement>) => <ul {...p} className="space-y-3 mb-8 text-[1.0625rem] leading-[1.8] text-text pl-6 [&>li]:list-disc [&>li]:marker:text-champagne" />,
   ol: (p: React.HTMLAttributes<HTMLOListElement>) => <ol {...p} className="space-y-3 mb-8 text-[1.0625rem] leading-[1.8] text-text pl-6 [&>li]:list-decimal [&>li]:marker:text-champagne" />,
@@ -57,46 +82,51 @@ const mdxComponents = {
 };
 
 export default async function EnsaioPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
-  const { locale: rawLocale, slug } = await params;
+  const { locale: rawLocale, slug: s } = await params;
   const locale: Locale = asLocale(rawLocale);
   const d = getDict(locale);
-  const e = getEnsaio(slug, locale);
+  const e = getEnsaio(s, locale);
   if (!e) notFound();
 
   const campo = campoNome(e.campo, locale);
+  const extra = getEnsaioExtra(e.slug, locale);
+  const articleUrl = localeUrl(`/ensaios/${e.slug}`, locale);
+
+  // índice (TOC) a partir dos H2 do corpo
+  const toc = Array.from(e.conteudo.matchAll(/^##\s+(.+)$/gm)).map((m) => {
+    const text = m[1].trim();
+    return { id: slug(text), text };
+  });
 
   const all = getAllEnsaios(locale).filter((x) => x.slug !== e.slug);
   const related = [...all.filter((x) => x.campo === e.campo), ...all.filter((x) => x.campo !== e.campo)].slice(0, 2);
   const relatedLabel = ({ pt: 'Continue lendo', en: 'Keep reading', es: 'Sigue leyendo', zh: '继续阅读', fr: 'Continuez la lecture', de: 'Weiterlesen', ja: '続けて読む', ru: 'Продолжить чтение' } as Record<Locale, string>)[locale];
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: d.nav.inicio, item: `${SITE_URL}/${locale}` },
-      { '@type': 'ListItem', position: 2, name: d.nav.ensaios, item: `${SITE_URL}/${locale}/ensaios` },
-      { '@type': 'ListItem', position: 3, name: e.titulo, item: `${SITE_URL}/${locale}/ensaios/${e.slug}` },
-    ],
-  };
-
   const articleSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: e.titulo,
-    description: e.resumo,
-    inLanguage: 'pt-BR',
+    '@context': 'https://schema.org', '@type': 'Article',
+    headline: e.titulo, description: e.resumo, inLanguage: 'pt-BR',
     author: { '@type': 'Person', name: 'Andre Ambrósio' },
-    datePublished: e.data,
-    articleSection: campo,
-    url: `${SITE_URL}/${locale}/ensaios/${e.slug}`,
+    datePublished: e.data, articleSection: campo, url: articleUrl,
     image: e.imagem ? `${SITE_URL}${e.imagem}` : undefined,
   };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: d.nav.inicio, item: localeUrl('/', locale) },
+      { '@type': 'ListItem', position: 2, name: d.nav.ensaios, item: localeUrl('/ensaios', locale) },
+      { '@type': 'ListItem', position: 3, name: e.titulo, item: articleUrl },
+    ],
+  };
+  const faqSchema = extra?.faq?.length
+    ? { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: extra.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
+    : null;
 
   return (
     <article className="bg-bg text-text min-h-screen">
       <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
       {/* HERO */}
       <header className="relative px-6 md:px-[8rem] pt-24 pb-20 overflow-hidden border-b border-border">
@@ -117,14 +147,8 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
             <span className="text-text-dimmer">·</span>
             <span className="text-text-dimmer">{e.tempo_leitura} {d.ensaios.minLeitura}</span>
           </div>
-          <h1 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.025em] text-text mb-6">
-            {e.titulo}
-          </h1>
-          {e.subtitulo && (
-            <p className="font-display italic text-[clamp(1.125rem,1.75vw,1.5rem)] leading-[1.4] text-text-dim max-w-[680px]">
-              {e.subtitulo}
-            </p>
-          )}
+          <h1 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.025em] text-text mb-6">{e.titulo}</h1>
+          {e.subtitulo && <p className="font-display italic text-[clamp(1.125rem,1.75vw,1.5rem)] leading-[1.4] text-text-dim max-w-[680px]">{e.subtitulo}</p>}
           {e.metaLocalized && (
             <p className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-bronze border border-bronze/30 rounded-full px-3 py-1">
               🇧🇷 {d.ensaios.originalNote}
@@ -133,10 +157,19 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
         </div>
       </header>
 
-      {/* CONTENT */}
-      <section className="px-6 md:px-[8rem] py-20">
-        <div className="max-w-[720px] mx-auto prose-editorial">
-          <MDXRemote source={e.conteudo} components={mdxComponents} />
+      {/* CORPO (TOC lateral + artigo) */}
+      <section className="px-6 md:px-10 py-16">
+        <div className="max-w-[1060px] mx-auto lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-14">
+          <ArticleTOC items={toc} label={lab('toc', locale)} />
+          <div className="max-w-[720px]">
+            <KeyTakeaways items={extra?.takeaways ?? []} label={lab('takeaways', locale)} />
+            <div className="prose-editorial">
+              <MDXRemote source={e.conteudo} components={mdxComponents} />
+            </div>
+            <ShareButtons url={articleUrl} title={e.titulo} label={lab('share', locale)} />
+            <ArticleFAQ faqs={extra?.faq ?? []} label={lab('faq', locale)} />
+            <AuthorCard label={lab('author', locale)} bio={d.sobre.lead} />
+          </div>
         </div>
       </section>
 
@@ -158,21 +191,19 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
         </section>
       )}
 
-      {/* FOOTER ARTIGO */}
-      <footer className="px-6 md:px-[8rem] py-20 bg-surface border-t border-border">
-        <div className="max-w-[720px] mx-auto">
+      {/* NEWSLETTER CTA */}
+      <section className="px-6 md:px-[8rem] py-20 bg-surface border-t border-border">
+        <div className="max-w-[820px] mx-auto">
           <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8 text-center">{d.ensaios.fim}</div>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <Link href={localeHref(`/campos/${e.campo}`, locale)} className="text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors">
-              ← {d.ensaios.maisEm} {campo}
-            </Link>
-            <Link href={localeHref('/ensaios', locale)} className="inline-flex items-center gap-3 text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-champagne hover:text-text transition-colors group">
-              {d.ensaios.todos}
-              <span className="w-[24px] h-[1px] bg-current transition-all group-hover:w-[48px]" />
-            </Link>
+          <div className="rounded-[24px] border border-champagne/20 bg-bg p-8 md:p-10 text-center">
+            <h2 className="font-display font-light text-[clamp(1.5rem,2.5vw,2.25rem)] text-text tracking-tight mb-2">{d.footer.newsletterTitle}</h2>
+            <p className="text-[14px] text-text-dim mb-6 max-w-[480px] mx-auto">{d.footer.newsletterLead}</p>
+            <div className="flex justify-center">
+              <NewsletterCapture variant="hero" labels={{ placeholder: d.footer.newsletterPlaceholder, submit: d.footer.newsletterSubmit, success: d.footer.newsletterSuccess, error: d.footer.newsletterError }} />
+            </div>
           </div>
         </div>
-      </footer>
+      </section>
     </article>
   );
 }
