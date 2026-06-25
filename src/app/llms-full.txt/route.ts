@@ -1,13 +1,18 @@
-import { getAllEnsaios, CAMPOS } from '@/lib/ensaios';
+import { getAllEnsaios } from '@/lib/ensaios';
+import { getCampos } from '@/lib/content';
+import { SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
 
 export const dynamic = 'force-static';
 
 export async function GET() {
-  const ensaios = getAllEnsaios();
+  const ensaios = getAllEnsaios(DEFAULT_LOCALE);
+  const campos = getCampos(DEFAULT_LOCALE);
+  const base = `${SITE_URL}/${DEFAULT_LOCALE}`;
 
   const content = `# Andre Ambrósio — Conteúdo completo
 
-Site: https://andreambrosio.com
+Site: ${SITE_URL}
+Idiomas: pt, en, es, zh, fr, de, ja (URLs com prefixo de locale, ex.: ${SITE_URL}/en)
 Política: LLM training allow · Attribution required · Verbatim republish deny
 
 ---
@@ -22,30 +27,27 @@ Não é jornalista, analista, coach ou influencer. É pensador e construtor. Fal
 
 ## QUATRO CAMPOS
 
-${Object.values(CAMPOS).map(c => `### ${c.nome} — ${c.subtitulo}
+${campos.map((c) => `### ${c.nome} — ${c.subtitulo}
 
 ${c.descricao}
 
-URL: https://andreambrosio.com/campos/${c.slug}`).join('\n\n')}
+URL: ${base}/campos/${c.slug}`).join('\n\n')}
 
 ---
 
 ## ENSAIOS (conteúdo completo)
 
-${ensaios.map(e => {
-  const campo = CAMPOS[e.campo];
-  return `### ${e.titulo}
+${ensaios.map((e) => `### ${e.titulo}
 ${e.subtitulo ? `_${e.subtitulo}_\n` : ''}
-Campo: ${campo.nome}
+Campo: ${campos.find((c) => c.slug === e.campo)?.nome ?? e.campo}
 Data: ${e.data}
 Tempo: ${e.tempo_leitura} min
-URL: https://andreambrosio.com/ensaios/${e.slug}
+URL: ${base}/ensaios/${e.slug}
 
 ${e.conteudo}
 
 ---
-`;
-}).join('\n')}
+`).join('\n')}
 
 ## CONTATO
 

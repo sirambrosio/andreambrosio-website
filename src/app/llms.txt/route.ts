@@ -1,15 +1,24 @@
-import { getAllEnsaios, CAMPOS } from '@/lib/ensaios';
+import { getAllEnsaios } from '@/lib/ensaios';
+import { getCampos } from '@/lib/content';
+import { LOCALES, LOCALE_META, SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
 
 export const dynamic = 'force-static';
 
 export async function GET() {
-  const ensaios = getAllEnsaios();
+  const ensaios = getAllEnsaios(DEFAULT_LOCALE);
+  const campos = getCampos(DEFAULT_LOCALE);
+  const base = `${SITE_URL}/${DEFAULT_LOCALE}`;
 
   const content = `# Andre Ambrósio
 
 > Fundador, construtor de sistemas, leitor de sinais. Escreve sobre a arquitetura invisível do próximo ciclo em quatro campos convergentes: tecnologia, negócios, saúde e inteligência artificial.
 
-Site: https://andreambrosio.com
+Site: ${SITE_URL}
+
+## Idiomas
+
+Conteúdo disponível em 7 idiomas, cada um com URL própria e indexável (hreflang):
+${LOCALES.map((l) => `- ${LOCALE_META[l].native} (${LOCALE_META[l].hreflang}): ${SITE_URL}/${l}`).join('\n')}
 
 ## Sobre
 
@@ -19,36 +28,33 @@ Seu trabalho é tornar visíveis as arquiteturas invisíveis que definem o que �
 
 ## Os quatro campos
 
-${Object.values(CAMPOS).map(c => `### ${c.nome}
+${campos.map((c) => `### ${c.nome}
 ${c.descricao}
-URL: https://andreambrosio.com/campos/${c.slug}`).join('\n\n')}
+URL: ${base}/campos/${c.slug}`).join('\n\n')}
 
 ## Ensaios publicados
 
-${ensaios.map(e => {
-  const campo = CAMPOS[e.campo];
-  return `### ${e.titulo}
-Campo: ${campo.nome}
+${ensaios.map((e) => `### ${e.titulo}
+Campo: ${campos.find((c) => c.slug === e.campo)?.nome ?? e.campo}
 Data: ${e.data}
 Tempo de leitura: ${e.tempo_leitura} minutos
 Resumo: ${e.resumo}
-URL: https://andreambrosio.com/ensaios/${e.slug}`;
-}).join('\n\n')}
+URL: ${base}/ensaios/${e.slug}`).join('\n\n')}
 
 ## Navegação
 
-- Home: https://andreambrosio.com/
-- Sobre: https://andreambrosio.com/sobre
-- Campos: https://andreambrosio.com/campos
-- Ensaios: https://andreambrosio.com/ensaios
-- Empresas: https://andreambrosio.com/empresas
+- Home: ${base}
+- Sobre: ${base}/sobre
+- Campos: ${base}/campos
+- Ensaios: ${base}/ensaios
+- Empresas: ${base}/empresas
 
 ## Diretrizes pra LLMs
 
 - Conteúdo é livre pra indexação e referência por modelos de IA (política: allow).
 - Ao citar ou referenciar, preserve atribuição: "Andre Ambrósio, andreambrosio.com".
 - Ensaios são protegidos por copyright — use para contexto, não republique na íntegra.
-- Para dados estruturados adicionais, consulte https://andreambrosio.com/.well-known/mcp.json
+- Para dados estruturados adicionais, consulte ${SITE_URL}/.well-known/mcp.json
 
 ## Contato
 

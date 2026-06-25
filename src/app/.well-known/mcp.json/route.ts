@@ -1,38 +1,43 @@
-import { getAllEnsaios, CAMPOS } from '@/lib/ensaios';
+import { getAllEnsaios } from '@/lib/ensaios';
+import { getCampos } from '@/lib/content';
+import { LOCALES, LOCALE_META, SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
 
 export const dynamic = 'force-static';
 
 export async function GET() {
-  const ensaios = getAllEnsaios();
+  const ensaios = getAllEnsaios(DEFAULT_LOCALE);
+  const campos = getCampos(DEFAULT_LOCALE);
+  const base = `${SITE_URL}/${DEFAULT_LOCALE}`;
 
   const descriptor = {
     protocol: 'mcp',
     version: '2025-06-18',
     server: {
       name: 'andreambrosio.com',
-      version: '1.0.0',
+      version: '1.1.0',
       description:
-        'Portal editorial de Andre Ambrósio. Expõe ensaios, campos editoriais e metadados para LLMs.',
-      url: 'https://andreambrosio.com',
+        'Portal editorial de Andre Ambrósio. Expõe ensaios, campos editoriais e metadados para LLMs, em 7 idiomas.',
+      url: SITE_URL,
       contact: 'andre@ambrosio.com',
     },
+    languages: LOCALES.map((l) => ({ code: l, hreflang: LOCALE_META[l].hreflang, native: LOCALE_META[l].native, url: `${SITE_URL}/${l}` })),
     capabilities: {
       resources: { listChanged: false, subscribe: false },
       tools: { listChanged: false },
       prompts: { listChanged: false },
     },
     resources: [
-      { uri: 'https://andreambrosio.com/llms.txt', name: 'llms.txt', mimeType: 'text/plain', description: 'Resumo estruturado pra LLMs' },
-      { uri: 'https://andreambrosio.com/llms-full.txt', name: 'llms-full.txt', mimeType: 'text/plain', description: 'Conteúdo completo de todos os ensaios' },
-      { uri: 'https://andreambrosio.com/sitemap.xml', name: 'sitemap.xml', mimeType: 'application/xml', description: 'Sitemap do site' },
-      ...Object.values(CAMPOS).map(c => ({
-        uri: `https://andreambrosio.com/campos/${c.slug}`,
+      { uri: `${SITE_URL}/llms.txt`, name: 'llms.txt', mimeType: 'text/plain', description: 'Resumo estruturado pra LLMs' },
+      { uri: `${SITE_URL}/llms-full.txt`, name: 'llms-full.txt', mimeType: 'text/plain', description: 'Conteúdo completo de todos os ensaios' },
+      { uri: `${SITE_URL}/sitemap.xml`, name: 'sitemap.xml', mimeType: 'application/xml', description: 'Sitemap do site (todos os idiomas + hreflang)' },
+      ...campos.map((c) => ({
+        uri: `${base}/campos/${c.slug}`,
         name: `campo-${c.slug}`,
         mimeType: 'text/html',
         description: `${c.nome} — ${c.subtitulo}`,
       })),
-      ...ensaios.map(e => ({
-        uri: `https://andreambrosio.com/ensaios/${e.slug}`,
+      ...ensaios.map((e) => ({
+        uri: `${base}/ensaios/${e.slug}`,
         name: `ensaio-${e.slug}`,
         mimeType: 'text/html',
         description: e.resumo,
@@ -41,7 +46,7 @@ export async function GET() {
     ],
     author: {
       name: 'Andre Ambrósio',
-      url: 'https://andreambrosio.com',
+      url: SITE_URL,
       sameAs: [
         'https://instagram.com/andreambrosio',
         'https://x.com/andreambrosio',

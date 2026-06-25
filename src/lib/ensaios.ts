@@ -1,26 +1,40 @@
+/**
+ * Leitura dos ensaios (server-only — usa node:fs).
+ * Corpo (MDX) permanece no idioma original (PT); título/subtítulo/resumo são
+ * localizados via overlay de @/lib/content quando há tradução disponível.
+ */
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
+import type { Locale } from '@/lib/i18n';
+import { DEFAULT_LOCALE } from '@/lib/i18n';
+import { ENSAIO_I18N, type CampoSlug } from '@/lib/content';
+
+export type { CampoSlug } from '@/lib/content';
 
 export type Ensaio = {
   slug: string;
   titulo: string;
   subtitulo?: string;
   resumo: string;
-  campo: 'tecnologia' | 'negocios' | 'saude' | 'ia';
+  campo: CampoSlug;
   data: string;
   tempo_leitura: number;
   destaque?: boolean;
   imagem?: string;
   conteudo: string;
+  /** true quando título/resumo foram exibidos no locale pedido (não no original PT) */
+  metaLocalized: boolean;
 };
 
 const ENSAIOS_DIR = path.join(process.cwd(), 'src/content/ensaios');
 
-export function getAllEnsaios(): Ensaio[] {
+type RawEnsaio = Omit<Ensaio, 'metaLocalized'>;
+
+function readRaw(): RawEnsaio[] {
   if (!fs.existsSync(ENSAIOS_DIR)) return [];
-  const files = fs.readdirSync(ENSAIOS_DIR).filter(f => f.endsWith('.mdx'));
-  const ensaios = files.map(filename => {
+  const files = fs.readdirSync(ENSAIOS_DIR).filter((f) => f.endsWith('.mdx'));
+  const ensaios = files.map((filename) => {
     const slug = filename.replace(/\.mdx$/, '');
     const raw = fs.readFileSync(path.join(ENSAIOS_DIR, filename), 'utf8');
     const { data, content } = matter(raw);
@@ -29,62 +43,43 @@ export function getAllEnsaios(): Ensaio[] {
       titulo: data.titulo || '',
       subtitulo: data.subtitulo,
       resumo: data.resumo || '',
-      campo: data.campo || 'tecnologia',
-      data: typeof data.data === 'string' ? data.data : data.data instanceof Date ? data.data.toISOString().slice(0, 10) : '2026-01-01',
+      campo: (data.campo || 'tecnologia') as CampoSlug,
+      data:
+        typeof data.data === 'string'
+          ? data.data
+          : data.data instanceof Date
+            ? data.data.toISOString().slice(0, 10)
+            : '2026-01-01',
       tempo_leitura: data.tempo_leitura || 5,
       destaque: data.destaque || false,
       imagem: data.imagem,
       conteudo: content,
-    } as Ensaio;
+    } as RawEnsaio;
   });
   return ensaios.sort((a, b) => (a.data > b.data ? -1 : 1));
 }
 
-export function getEnsaio(slug: string): Ensaio | null {
-  return getAllEnsaios().find(e => e.slug === slug) ?? null;
+function localize(e: RawEnsaio, locale: Locale): Ensaio {
+  const overlay = ENSAIO_I18N[e.slug]?.[locale];
+  const hasLocale = !!overlay && locale !== DEFAULT_LOCALE;
+  return {
+    ...e,
+    titulo: overlay?.titulo ?? e.titulo,
+    subtitulo: overlay?.subtitulo ?? e.subtitulo,
+    resumo: overlay?.resumo ?? e.resumo,
+    metaLocalized: hasLocale,
+  };
 }
 
-export function getEnsaiosPorCampo(campo: Ensaio['campo']): Ensaio[] {
-  return getAllEnsaios().filter(e => e.campo === campo);
+export function getAllEnsaios(locale: Locale = DEFAULT_LOCALE): Ensaio[] {
+  return readRaw().map((e) => localize(e, locale));
 }
 
-export const CAMPOS = {
-  tecnologia: {
-    slug: 'tecnologia',
-    nome: 'Tecnologia',
-    subtitulo: 'Infraestrutura digital como ambiente',
-    descricao:
-      'Leitura da arquitetura digital que está sendo reescrita — da camada física ao comportamento humano. Sistemas se tornando ambiente invisível.',
-    img: '/assets/gen-campo-tecnologia.png',
-    cor: '#C0C4C4',
-  },
-  negocios: {
-    slug: 'negocios',
-    nome: 'Negócios',
-    subtitulo: 'Vantagem estrutural em transição',
-    descricao:
-      'Arquitetura de empresas que sobrevivem à passagem de era. Modelos de receita, vantagem durável, o que escala sob a nova lógica.',
-    img: '/assets/gen-campo-negocios.png',
-    cor: '#A87248',
-  },
-  saude: {
-    slug: 'saude',
-    nome: 'Saúde',
-    subtitulo: 'Soberania biológica',
-    descricao:
-      'Saúde como infraestrutura pessoal — contínua, preditiva, legível. Engenharia humana no lugar da medicina reativa.',
-    img: '/assets/gen-campo-saude.png',
-    cor: '#0F3326',
-  },
-  ia: {
-    slug: 'ia',
-    nome: 'Inteligência Artificial',
-    subtitulo: 'Camada de decisão',
-    descricao:
-      'IA não como hype — como infraestrutura que reescreve trabalho, saúde, sistemas produtivos e a relação humano-máquina.',
-    img: '/assets/gen-campo-ia.png',
-    cor: '#C9A961',
-  },
-} as const;
+export function getEnsaio(slug: string, locale: Locale = DEFAULT_LOCALE): Ensaio | null {
+  const raw = readRaw().find((e) => e.slug === slug);
+  return raw ? localize(raw, locale) : null;
+}
 
-export type CampoSlug = keyof typeof CAMPOS;
+export function getEnsaiosPorCampo(campo: CampoSlug, locale: Locale = DEFAULT_LOCALE): Ensaio[] {
+  return getAllEnsaios(locale).filter((e) => e.campo === campo);
+}

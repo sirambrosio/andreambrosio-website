@@ -3,35 +3,36 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getAllEnsaios, getEnsaio, CAMPOS } from '@/lib/ensaios';
+import { getAllEnsaios, getEnsaio } from '@/lib/ensaios';
+import { campoNome } from '@/lib/content';
+import { getDict } from '@/lib/dictionary';
+import { asLocale, isLocale, localeHref, hreflangAlternates, SITE_URL, type Locale } from '@/lib/i18n';
 import { ArrowLeft } from 'lucide-react';
 
 export function generateStaticParams() {
-  return getAllEnsaios().map(e => ({ slug: e.slug }));
+  return getAllEnsaios().map((e) => ({ slug: e.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const e = getEnsaio(slug);
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale: raw, slug } = await params;
+  if (!isLocale(raw)) return {};
+  const locale = raw as Locale;
+  const e = getEnsaio(slug, locale);
   if (!e) return {};
-  const campo = CAMPOS[e.campo];
   return {
     title: e.titulo,
     description: e.resumo,
+    alternates: { canonical: `/${locale}/ensaios/${slug}`, languages: hreflangAlternates(`/ensaios/${slug}`) },
     openGraph: {
       type: 'article',
       title: e.titulo,
       description: e.resumo,
       publishedTime: e.data,
       authors: ['Andre Ambrósio'],
-      tags: [campo.nome],
+      tags: [campoNome(e.campo, locale)],
       images: e.imagem ? [e.imagem] : undefined,
     },
-    twitter: {
-      card: 'summary_large_image',
-      title: e.titulo,
-      description: e.resumo,
-    },
+    twitter: { card: 'summary_large_image', title: e.titulo, description: e.resumo },
   };
 }
 
@@ -51,23 +52,26 @@ const mdxComponents = {
   hr: () => <hr className="my-14 border-0 hairline" />,
 };
 
-export default async function EnsaioPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const e = getEnsaio(slug);
+export default async function EnsaioPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale: rawLocale, slug } = await params;
+  const locale: Locale = asLocale(rawLocale);
+  const d = getDict(locale);
+  const e = getEnsaio(slug, locale);
   if (!e) notFound();
 
-  const campo = CAMPOS[e.campo];
+  const campo = campoNome(e.campo, locale);
 
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: e.titulo,
     description: e.resumo,
+    inLanguage: 'pt-BR',
     author: { '@type': 'Person', name: 'Andre Ambrósio' },
     datePublished: e.data,
-    articleSection: campo.nome,
-    url: `https://andreambrosio.com/ensaios/${e.slug}`,
-    image: e.imagem ? `https://andreambrosio.com${e.imagem}` : undefined,
+    articleSection: campo,
+    url: `${SITE_URL}/${locale}/ensaios/${e.slug}`,
+    image: e.imagem ? `${SITE_URL}${e.imagem}` : undefined,
   };
 
   return (
@@ -83,15 +87,15 @@ export default async function EnsaioPage({ params }: { params: Promise<{ slug: s
           </div>
         )}
         <div className="relative max-w-[820px] mx-auto">
-          <Link href="/ensaios" className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors mb-8">
-            <ArrowLeft size={12} /> Ensaios
+          <Link href={localeHref('/ensaios', locale)} className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors mb-8">
+            <ArrowLeft size={12} /> {d.ensaios.voltar}
           </Link>
-          <div className="flex items-center gap-4 mb-8 text-[11px] font-mono tracking-[0.2em] uppercase">
-            <Link href={`/campos/${campo.slug}`} className="text-champagne hover:text-text transition-colors">{campo.nome}</Link>
+          <div className="flex items-center gap-4 mb-8 text-[11px] font-mono tracking-[0.2em] uppercase flex-wrap">
+            <Link href={localeHref(`/campos/${e.campo}`, locale)} className="text-champagne hover:text-text transition-colors">{campo}</Link>
             <span className="text-text-dimmer">·</span>
             <span className="text-text-dimmer">{e.data}</span>
             <span className="text-text-dimmer">·</span>
-            <span className="text-text-dimmer">{e.tempo_leitura} min de leitura</span>
+            <span className="text-text-dimmer">{e.tempo_leitura} {d.ensaios.minLeitura}</span>
           </div>
           <h1 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.025em] text-text mb-6">
             {e.titulo}
@@ -99,6 +103,11 @@ export default async function EnsaioPage({ params }: { params: Promise<{ slug: s
           {e.subtitulo && (
             <p className="font-display italic text-[clamp(1.125rem,1.75vw,1.5rem)] leading-[1.4] text-text-dim max-w-[680px]">
               {e.subtitulo}
+            </p>
+          )}
+          {e.metaLocalized && (
+            <p className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-bronze border border-bronze/30 rounded-full px-3 py-1">
+              🇧🇷 {d.ensaios.originalNote}
             </p>
           )}
         </div>
@@ -114,13 +123,13 @@ export default async function EnsaioPage({ params }: { params: Promise<{ slug: s
       {/* FOOTER ARTIGO */}
       <footer className="px-6 md:px-[8rem] py-20 bg-surface border-t border-border">
         <div className="max-w-[720px] mx-auto">
-          <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8 text-center">— Fim do ensaio —</div>
+          <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8 text-center">{d.ensaios.fim}</div>
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <Link href={`/campos/${campo.slug}`} className="text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors">
-              ← Mais em {campo.nome}
+            <Link href={localeHref(`/campos/${e.campo}`, locale)} className="text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors">
+              ← {d.ensaios.maisEm} {campo}
             </Link>
-            <Link href="/ensaios" className="inline-flex items-center gap-3 text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-champagne hover:text-text transition-colors group">
-              Todos os ensaios
+            <Link href={localeHref('/ensaios', locale)} className="inline-flex items-center gap-3 text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-champagne hover:text-text transition-colors group">
+              {d.ensaios.todos}
               <span className="w-[24px] h-[1px] bg-current transition-all group-hover:w-[48px]" />
             </Link>
           </div>
