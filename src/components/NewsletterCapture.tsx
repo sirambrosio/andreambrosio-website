@@ -7,13 +7,15 @@ interface Props {
   labels: { placeholder: string; submit: string; success: string; error: string };
   /** footer = sobre fundo escuro (cream) · hero = theme-aware (surface/text) */
   variant?: 'footer' | 'hero';
+  /** row = input + botão lado a lado · stacked = empilhado (para colunas estreitas) */
+  layout?: 'row' | 'stacked';
 }
 
 /**
  * Captura de e-mail. O front está completo; para persistir de fato, plugar um
  * endpoint em onSubmit (ex.: POST /api/subscribe). Hoje guarda local + confirma.
  */
-export function NewsletterCapture({ labels, variant = 'footer' }: Props) {
+export function NewsletterCapture({ labels, variant = 'footer', layout = 'row' }: Props) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'ok' | 'err'>('idle');
 
@@ -56,8 +58,10 @@ export function NewsletterCapture({ labels, variant = 'footer' }: Props) {
         ? 'border-border-strong focus:border-champagne'
         : 'border-cream/15 focus:border-champagne';
 
+  const stacked = layout === 'stacked';
+
   return (
-    <form onSubmit={submit} className="flex items-center gap-2 w-full max-w-[440px]">
+    <form onSubmit={submit} className={stacked ? 'flex flex-col items-stretch gap-2 w-full' : 'flex items-center gap-2 w-full max-w-[440px]'}>
       <input
         type="email"
         value={email}
@@ -67,11 +71,11 @@ export function NewsletterCapture({ labels, variant = 'footer' }: Props) {
         }}
         placeholder={labels.placeholder}
         aria-label={labels.placeholder}
-        className={`flex-1 h-11 px-4 rounded-full border text-[13px] outline-none transition-colors ${inputBase} ${inputBorder}`}
+        className={`${stacked ? 'w-full' : 'flex-1'} h-11 px-4 rounded-full border text-[13px] outline-none transition-colors ${inputBase} ${inputBorder}`}
       />
       <button
         type="submit"
-        className="h-11 px-5 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold inline-flex items-center gap-2 hover:opacity-90 transition-opacity shrink-0"
+        className={`h-11 px-5 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity ${stacked ? 'w-full' : 'shrink-0'}`}
       >
         {labels.submit} <ArrowRight size={14} />
       </button>

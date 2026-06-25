@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export function AuthorCard({ label, bio }: { label: string; bio: string }) {
   return (
-    <section className="my-14 p-7 md:p-8 rounded-[24px] bg-surface border border-border flex flex-col sm:flex-row gap-6 items-start">
+    <section className="my-14 p-7 md:p-8 rounded-[24px] bg-surface border border-border-strong shadow-brand flex flex-col sm:flex-row gap-6 items-start">
       <Image
         src="/assets/andre-portrait.jpg"
         alt="Andre Ambrósio"

@@ -13,11 +13,12 @@ export function ArticleRightRail({ related, relatedLabel, newsletter }: Props) {
   return (
     <aside className="hidden xl:block">
       <div className="sticky top-[110px] space-y-8">
-        <div className="rounded-[20px] border border-champagne/20 bg-surface p-6">
-          <div className="font-display font-light text-[1.25rem] text-text mb-1.5 leading-tight">{newsletter.title}</div>
-          <p className="text-[12.5px] text-text-dim mb-4 leading-relaxed">{newsletter.lead}</p>
+        <div className="rounded-[20px] border border-border-strong bg-surface p-5 shadow-brand">
+          <div className="font-display font-light text-[1.1875rem] text-text mb-1.5 leading-tight">{newsletter.title}</div>
+          <p className="text-[12px] text-text-dim mb-4 leading-relaxed">{newsletter.lead}</p>
           <NewsletterCapture
             variant="hero"
+            layout="stacked"
             labels={{ placeholder: newsletter.placeholder, submit: newsletter.submit, success: newsletter.success, error: newsletter.error }}
           />
         </div>
@@ -27,7 +28,7 @@ export function ArticleRightRail({ related, relatedLabel, newsletter }: Props) {
             <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-4">{relatedLabel}</div>
             <div className="space-y-3">
               {related.map((r) => (
-                <Link key={r.href} href={r.href} className="block rounded-[14px] border border-border bg-surface p-4 hover:border-champagne transition-all group">
+                <Link key={r.href} href={r.href} className="block rounded-[14px] border border-border-strong bg-surface p-4 hover:border-champagne transition-all group">
                   <div className="font-mono text-[9px] tracking-[0.2em] uppercase text-champagne mb-1.5">{r.campo}</div>
                   <div className="font-display font-light text-[1.0625rem] text-text leading-snug group-hover:text-champagne transition-colors">{r.titulo}</div>
                 </Link>
