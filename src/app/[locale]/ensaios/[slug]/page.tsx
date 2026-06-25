@@ -13,6 +13,7 @@ import { ReadingProgress } from '@/components/ReadingProgress';
 import { ArticleSidebar } from '@/components/journal/ArticleSidebar';
 import { ArticleRightRail } from '@/components/journal/ArticleRightRail';
 import { MobileArticleBar } from '@/components/journal/MobileArticleBar';
+import { HighlightToShare } from '@/components/journal/HighlightToShare';
 import { KeyTakeaways } from '@/components/journal/KeyTakeaways';
 import { ArticleFAQ } from '@/components/journal/ArticleFAQ';
 import { AuthorCard } from '@/components/journal/AuthorCard';
@@ -28,6 +29,7 @@ const L = {
   by: { pt: 'Por', en: 'By', es: 'Por', zh: '作者', fr: 'Par', de: 'Von', ja: '著者', ru: 'Автор' },
   save: { pt: 'Salvar', en: 'Save', es: 'Guardar', zh: '收藏', fr: 'Enregistrer', de: 'Merken', ja: '保存', ru: 'Сохранить' },
   font: { pt: 'Fonte', en: 'Text', es: 'Fuente', zh: '字号', fr: 'Police', de: 'Schrift', ja: '文字', ru: 'Шрифт' },
+  remaining: { pt: 'min restantes', en: 'min left', es: 'min restantes', zh: '分钟剩余', fr: 'min restantes', de: 'Min. übrig', ja: '分残り', ru: 'мин осталось' },
 } as const;
 const lab = (k: keyof typeof L, l: Locale) => L[k][l];
 
@@ -129,36 +131,50 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
   return (
     <article className="bg-bg text-text min-h-screen">
       <ReadingProgress />
+      <HighlightToShare url={articleUrl} label={lab('share', locale)} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
-      {/* HERO */}
-      <header className="relative px-6 md:px-12 lg:px-[8rem] pt-24 pb-20 overflow-hidden border-b border-border">
-        {e.imagem && (
-          <div className="absolute inset-0 opacity-[0.14] pointer-events-none">
-            <Image src={e.imagem} alt="" fill sizes="100vw" className="object-cover" />
-            <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(var(--overlay-fade),0.4) 0%, rgba(var(--overlay-fade),0.92) 70%, var(--bg) 100%)' }} />
-          </div>
-        )}
-        <div className="relative max-w-[820px] mx-auto">
-          <Link href={localeHref('/ensaios', locale)} className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors mb-8">
-            <ArrowLeft size={12} /> {d.ensaios.voltar}
-          </Link>
-          <div className="flex items-center gap-4 mb-8 text-[11px] font-mono tracking-[0.2em] uppercase flex-wrap">
-            <Link href={localeHref(`/campos/${e.campo}`, locale)} className="text-champagne hover:text-text transition-colors">{campo}</Link>
-            <span className="text-text-dimmer">·</span>
-            <span className="text-text-dimmer">{e.data}</span>
-            <span className="text-text-dimmer">·</span>
-            <span className="text-text-dimmer">{e.tempo_leitura} {d.ensaios.minLeitura}</span>
-          </div>
-          <h1 className="font-display font-light text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.98] tracking-[-0.025em] text-text mb-6">{e.titulo}</h1>
-          {e.subtitulo && <p className="font-display italic text-[clamp(1.125rem,1.75vw,1.5rem)] leading-[1.4] text-text-dim max-w-[680px]">{e.subtitulo}</p>}
-          {e.metaLocalized && (
-            <p className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-bronze border border-bronze/30 rounded-full px-3 py-1">
-              🇧🇷 {d.ensaios.originalNote}
-            </p>
+      {/* HERO — capa editorial (imagem grande + título sobreposto) */}
+      <header className="relative bg-oled">
+        <div className="relative h-[48vh] min-h-[360px] md:h-[58vh] w-full overflow-hidden">
+          {e.imagem && (
+            <Image src={e.imagem} alt="" fill priority sizes="100vw" className="object-cover" />
           )}
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(11,15,15,0.5) 0%, rgba(11,15,15,0.25) 38%, rgba(11,15,15,0.9) 100%)' }} />
+
+          {/* voltar */}
+          <div className="absolute top-0 left-0 right-0 px-6 md:px-12 lg:px-[8rem] pt-[104px]">
+            <div className="max-w-[1100px] mx-auto">
+              <Link href={localeHref('/ensaios', locale)} className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] uppercase text-cream/70 hover:text-champagne transition-colors">
+                <ArrowLeft size={12} /> {d.ensaios.voltar}
+              </Link>
+            </div>
+          </div>
+
+          {/* meta + título */}
+          <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-[8rem] pb-10 md:pb-14">
+            <div className="max-w-[1100px] mx-auto">
+              <div className="flex items-center gap-4 mb-5 text-[11px] font-mono tracking-[0.2em] uppercase flex-wrap text-cream/80">
+                <Link href={localeHref(`/campos/${e.campo}`, locale)} className="text-champagne hover:text-cream transition-colors">{campo}</Link>
+                <span className="text-cream/40">·</span>
+                <span>{e.data}</span>
+                <span className="text-cream/40">·</span>
+                <span>{e.tempo_leitura} {d.ensaios.minLeitura}</span>
+                {e.metaLocalized && (
+                  <>
+                    <span className="text-cream/40">·</span>
+                    <span className="text-bronze normal-case tracking-normal">🇧🇷 {d.ensaios.originalNote}</span>
+                  </>
+                )}
+              </div>
+              <h1 className="font-display font-light text-[clamp(2rem,5vw,4.25rem)] leading-[1.0] tracking-[-0.025em] text-cream max-w-[920px] mb-4">{e.titulo}</h1>
+              {e.subtitulo && (
+                <p className="font-display italic text-[clamp(1.0625rem,1.75vw,1.5rem)] leading-[1.4] text-cream/75 max-w-[720px]">{e.subtitulo}</p>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
@@ -172,7 +188,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
             toc={toc}
             shareUrl={articleUrl}
             title={e.titulo}
-            labels={{ by: lab('by', locale), min: d.ensaios.min, save: lab('save', locale), font: lab('font', locale), toc: lab('toc', locale), share: lab('share', locale) }}
+            labels={{ by: lab('by', locale), min: d.ensaios.min, remaining: lab('remaining', locale), save: lab('save', locale), font: lab('font', locale), toc: lab('toc', locale), share: lab('share', locale) }}
           />
           <div id="article-prose" className="max-w-[720px] w-full mx-auto">
             <MobileArticleBar

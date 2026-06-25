@@ -5,6 +5,7 @@ import { ArticleTOC } from './ArticleTOC';
 import { ShareButtons } from './ShareButtons';
 import { SaveButton } from './SaveButton';
 import { FontSizeControls } from './FontSizeControls';
+import { TimeRemaining } from './TimeRemaining';
 
 interface Props {
   slug: string;
@@ -13,7 +14,7 @@ interface Props {
   toc: { id: string; text: string }[];
   shareUrl: string;
   title: string;
-  labels: { by: string; min: string; save: string; font: string; toc: string; share: string };
+  labels: { by: string; min: string; remaining: string; save: string; font: string; toc: string; share: string };
 }
 
 export function ArticleSidebar({ slug, date, readingTime, toc, shareUrl, title, labels }: Props) {
@@ -26,7 +27,7 @@ export function ArticleSidebar({ slug, date, readingTime, toc, shareUrl, title, 
           <div className="min-w-0">
             <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-bronze">{labels.by}</div>
             <div className="text-[13px] text-text leading-tight">Andre Ambrósio</div>
-            <div className="text-[11px] text-text-dimmer mt-0.5">{date} · {readingTime} {labels.min}</div>
+            <div className="text-[11px] text-text-dimmer mt-0.5">{date} · <TimeRemaining total={readingTime} label={labels.remaining} /></div>
           </div>
         </div>
 

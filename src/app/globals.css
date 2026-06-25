@@ -314,3 +314,34 @@ html:not(.dark) img[src*="/gen-"] {
 .fade-to-surface-bottom {
   background: linear-gradient(to top, var(--surface), transparent);
 }
+
+/* ═══════════════════════════════════════════════════════
+   Tipografia editorial — drop cap + pull quote
+   ═══════════════════════════════════════════════════════ */
+
+.prose-editorial > p:first-of-type::first-letter {
+  font-family: var(--font-fraunces);
+  font-weight: 300;
+  font-size: 3.6em;
+  line-height: 0.78;
+  float: left;
+  margin: 0.06em 0.14em 0 0;
+  color: var(--text);
+}
+
+.prose-editorial blockquote { position: relative; }
+.prose-editorial blockquote::before {
+  content: '\201C';
+  position: absolute;
+  left: -0.06em;
+  top: -0.4em;
+  font-family: var(--font-fraunces);
+  font-size: 3.2em;
+  line-height: 1;
+  color: rgba(201, 169, 97, 0.22);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .prose-editorial > p:first-of-type::first-letter { font-size: 3em; }
+}
