@@ -27,7 +27,7 @@ export function ArticleTOC({ items, label }: { items: TocItem[]; label: string }
   if (!items.length) return null;
 
   return (
-    <nav className="hidden lg:block sticky top-[110px] self-start max-w-[230px]" aria-label={label}>
+    <nav aria-label={label}>
       <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-4">{label}</div>
       <ul className="space-y-1 border-l border-border">
         {items.map((it) => (

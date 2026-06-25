@@ -10,7 +10,8 @@ import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
 import { localeHref, localeUrl, hreflangAlternates } from '@/lib/route-translations';
 import { ArrowLeft } from 'lucide-react';
 import { ReadingProgress } from '@/components/ReadingProgress';
-import { ArticleTOC } from '@/components/journal/ArticleTOC';
+import { ArticleSidebar } from '@/components/journal/ArticleSidebar';
+import { ArticleRightRail } from '@/components/journal/ArticleRightRail';
 import { KeyTakeaways } from '@/components/journal/KeyTakeaways';
 import { ArticleFAQ } from '@/components/journal/ArticleFAQ';
 import { AuthorCard } from '@/components/journal/AuthorCard';
@@ -23,6 +24,9 @@ const L = {
   faq: { pt: 'Perguntas frequentes', en: 'FAQ', es: 'Preguntas frecuentes', zh: '常见问题', fr: 'Questions fréquentes', de: 'Häufige Fragen', ja: 'よくある質問', ru: 'Частые вопросы' },
   author: { pt: 'Sobre o autor', en: 'About the author', es: 'Sobre el autor', zh: '关于作者', fr: "À propos de l'auteur", de: 'Über den Autor', ja: '著者について', ru: 'Об авторе' },
   share: { pt: 'Compartilhar', en: 'Share', es: 'Compartir', zh: '分享', fr: 'Partager', de: 'Teilen', ja: 'シェア', ru: 'Поделиться' },
+  by: { pt: 'Por', en: 'By', es: 'Por', zh: '作者', fr: 'Par', de: 'Von', ja: '著者', ru: 'Автор' },
+  save: { pt: 'Salvar', en: 'Save', es: 'Guardar', zh: '收藏', fr: 'Enregistrer', de: 'Merken', ja: '保存', ru: 'Сохранить' },
+  font: { pt: 'Fonte', en: 'Text', es: 'Fuente', zh: '字号', fr: 'Police', de: 'Schrift', ja: '文字', ru: 'Шрифт' },
 } as const;
 const lab = (k: keyof typeof L, l: Locale) => L[k][l];
 
@@ -69,7 +73,7 @@ const mdxComponents = {
   h1: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h1 {...p} className="font-display font-light text-[clamp(2rem,3.5vw,3rem)] leading-[1.05] tracking-tight text-text mt-16 mb-6" />,
   h2: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h2 id={slug(textOf(p.children))} {...p} className="font-display font-light text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.15] tracking-tight text-text mt-14 mb-5 scroll-mt-[110px]" />,
   h3: (p: React.HTMLAttributes<HTMLHeadingElement>) => <h3 id={slug(textOf(p.children))} {...p} className="font-display font-normal text-[1.375rem] leading-[1.25] text-text mt-10 mb-4 tracking-tight scroll-mt-[110px]" />,
-  p: (p: React.HTMLAttributes<HTMLParagraphElement>) => <p {...p} className="text-[1.0625rem] leading-[1.85] text-text mb-6 font-body" />,
+  p: (p: React.HTMLAttributes<HTMLParagraphElement>) => <p {...p} className="text-[length:var(--ps,1.0625rem)] leading-[1.85] text-text mb-6 font-body" />,
   ul: (p: React.HTMLAttributes<HTMLUListElement>) => <ul {...p} className="space-y-3 mb-8 text-[1.0625rem] leading-[1.8] text-text pl-6 [&>li]:list-disc [&>li]:marker:text-champagne" />,
   ol: (p: React.HTMLAttributes<HTMLOListElement>) => <ol {...p} className="space-y-3 mb-8 text-[1.0625rem] leading-[1.8] text-text pl-6 [&>li]:list-decimal [&>li]:marker:text-champagne" />,
   li: (p: React.HTMLAttributes<HTMLLIElement>) => <li {...p} className="pl-2" />,
@@ -157,25 +161,40 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
         </div>
       </header>
 
-      {/* CORPO (TOC lateral + artigo) */}
+      {/* CORPO — sidebar esquerda + artigo + right rail (esquema VoySpark) */}
       <section className="px-6 md:px-10 py-16">
-        <div className="max-w-[1060px] mx-auto lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-14">
-          <ArticleTOC items={toc} label={lab('toc', locale)} />
-          <div className="max-w-[720px]">
+        <div className="max-w-[1340px] mx-auto lg:grid lg:grid-cols-[225px_minmax(0,1fr)] xl:grid-cols-[225px_minmax(0,720px)_300px] lg:gap-12 lg:justify-center">
+          <ArticleSidebar
+            slug={e.slug}
+            date={e.data}
+            readingTime={e.tempo_leitura}
+            toc={toc}
+            shareUrl={articleUrl}
+            title={e.titulo}
+            labels={{ by: lab('by', locale), min: d.ensaios.min, save: lab('save', locale), font: lab('font', locale), toc: lab('toc', locale), share: lab('share', locale) }}
+          />
+          <div id="article-prose" className="max-w-[720px] w-full mx-auto">
             <KeyTakeaways items={extra?.takeaways ?? []} label={lab('takeaways', locale)} />
             <div className="prose-editorial">
               <MDXRemote source={e.conteudo} components={mdxComponents} />
             </div>
-            <ShareButtons url={articleUrl} title={e.titulo} label={lab('share', locale)} />
+            <div className="lg:hidden">
+              <ShareButtons url={articleUrl} title={e.titulo} label={lab('share', locale)} />
+            </div>
             <ArticleFAQ faqs={extra?.faq ?? []} label={lab('faq', locale)} />
             <AuthorCard label={lab('author', locale)} bio={d.sobre.lead} />
           </div>
+          <ArticleRightRail
+            related={related.map((r) => ({ href: localeHref(`/ensaios/${r.slug}`, locale), titulo: r.titulo, campo: campoNome(r.campo, locale) }))}
+            relatedLabel={relatedLabel}
+            newsletter={{ title: d.footer.newsletterTitle, lead: d.footer.newsletterLead, placeholder: d.footer.newsletterPlaceholder, submit: d.footer.newsletterSubmit, success: d.footer.newsletterSuccess, error: d.footer.newsletterError }}
+          />
         </div>
       </section>
 
-      {/* RELACIONADOS */}
+      {/* RELACIONADOS (no rail em xl; aqui embaixo abaixo de xl) */}
       {related.length > 0 && (
-        <section className="px-6 md:px-[8rem] py-16 border-t border-border">
+        <section className="px-6 md:px-[8rem] py-16 border-t border-border xl:hidden">
           <div className="max-w-[820px] mx-auto">
             <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8">{relatedLabel}</div>
             <div className="grid md:grid-cols-2 gap-4">
@@ -191,11 +210,11 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
         </section>
       )}
 
-      {/* NEWSLETTER CTA */}
+      {/* FIM + NEWSLETTER CTA (rail cobre xl) */}
       <section className="px-6 md:px-[8rem] py-20 bg-surface border-t border-border">
         <div className="max-w-[820px] mx-auto">
           <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8 text-center">{d.ensaios.fim}</div>
-          <div className="rounded-[24px] border border-champagne/20 bg-bg p-8 md:p-10 text-center">
+          <div className="rounded-[24px] border border-champagne/20 bg-bg p-8 md:p-10 text-center xl:hidden">
             <h2 className="font-display font-light text-[clamp(1.5rem,2.5vw,2.25rem)] text-text tracking-tight mb-2">{d.footer.newsletterTitle}</h2>
             <p className="text-[14px] text-text-dim mb-6 max-w-[480px] mx-auto">{d.footer.newsletterLead}</p>
             <div className="flex justify-center">
