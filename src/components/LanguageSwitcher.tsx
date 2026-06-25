@@ -11,6 +11,7 @@ import {
   LOCALE_COOKIE_MAX_AGE,
   type Locale,
 } from '@/lib/i18n';
+import { canonicalizePath, localizePath } from '@/lib/route-translations';
 
 interface Props {
   currentLocale: Locale;
@@ -29,9 +30,15 @@ export function LanguageSwitcher({ currentLocale, variant = 'header', label = 'I
       setOpen(false);
       return;
     }
-    const { rest } = stripLocale(pathname);
+    // 1) tira o prefixo de locale; 2) canonicaliza usando o locale de origem;
+    // 3) re-localiza pro novo idioma — assim /en/fields/technology vira /de/felder/technologie.
+    const { locale: sourceFromPath, rest } = stripLocale(pathname);
+    let decoded = rest;
+    try { decoded = decodeURIComponent(rest); } catch { /* mantém */ }
+    const canonical = canonicalizePath(decoded, sourceFromPath ?? currentLocale);
+    const localized = localizePath(canonical, locale);
     const search = typeof window !== 'undefined' ? window.location.search : '';
-    const target = `/${locale}${rest === '/' ? '' : rest}${search}`;
+    const target = `/${locale}${localized === '/' ? '' : localized}${search}`;
     document.cookie = `${LOCALE_COOKIE}=${locale};path=/;max-age=${LOCALE_COOKIE_MAX_AGE};SameSite=Lax`;
     window.location.href = target;
   }

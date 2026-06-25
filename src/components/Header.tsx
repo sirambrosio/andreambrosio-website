@@ -1,7 +1,8 @@
 import { getDict } from '@/lib/dictionary';
 import { getSearchIndex } from '@/lib/search';
 import { getCampos } from '@/lib/content';
-import { localeHref, type Locale } from '@/lib/i18n';
+import { type Locale } from '@/lib/i18n';
+import { localeHref } from '@/lib/route-translations';
 import { HeaderClient } from './HeaderClient';
 
 export function Header({ locale }: { locale: Locale }) {
@@ -40,6 +41,7 @@ export function Header({ locale }: { locale: Locale }) {
         lightMode: d.header.lightMode,
         darkMode: d.header.darkMode,
         language: d.header.language,
+        search: d.header.search,
       }}
     />
   );

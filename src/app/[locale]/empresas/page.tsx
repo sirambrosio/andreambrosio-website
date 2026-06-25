@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getEmpresas, type EmpresaStatus } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, hreflangAlternates, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: d.empresas.eyebrow,
     description: d.empresas.lead,
-    alternates: { canonical: `/${raw}/empresas`, languages: hreflangAlternates('/empresas') },
+    alternates: { canonical: localeHref('/empresas', raw as Locale), languages: hreflangAlternates('/empresas') },
   };
 }
 

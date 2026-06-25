@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { getCampos } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, hreflangAlternates, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
@@ -13,7 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: d.campos.eyebrow,
     description: d.campos.lead,
-    alternates: { canonical: `/${raw}/campos`, languages: hreflangAlternates('/campos') },
+    alternates: { canonical: localeHref('/campos', raw as Locale), languages: hreflangAlternates('/campos') },
   };
 }
 

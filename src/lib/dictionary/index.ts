@@ -7,10 +7,11 @@ import { zh } from './zh';
 import { fr } from './fr';
 import { de } from './de';
 import { ja } from './ja';
+import { ru } from './ru';
 
 export type { Dict } from './pt';
 
-const DICTS: Record<Locale, Dict> = { pt, en, es, zh, fr, de, ja };
+const DICTS: Record<Locale, Dict> = { pt, en, es, zh, fr, de, ja, ru };
 
 /** Retorna o dicionário completo do locale (SSR-friendly, sem client context). */
 export function getDict(locale: Locale): Dict {

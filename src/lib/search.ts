@@ -5,7 +5,8 @@
 import { getAllEnsaios } from '@/lib/ensaios';
 import { getCampos, getEmpresas } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { localeHref, type Locale } from '@/lib/i18n';
+import { type Locale } from '@/lib/i18n';
+import { localeHref } from '@/lib/route-translations';
 
 export type SearchGroup = 'pages' | 'fields' | 'essays' | 'companies';
 

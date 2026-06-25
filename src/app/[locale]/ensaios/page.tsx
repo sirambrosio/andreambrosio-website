@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { getAllEnsaios } from '@/lib/ensaios';
 import { campoNome } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, hreflangAlternates, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: d.ensaios.eyebrow,
     description: d.ensaios.lead,
-    alternates: { canonical: `/${raw}/ensaios`, languages: hreflangAlternates('/ensaios') },
+    alternates: { canonical: localeHref('/ensaios', raw as Locale), languages: hreflangAlternates('/ensaios') },
   };
 }
 

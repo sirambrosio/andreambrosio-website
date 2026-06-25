@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { asLocale, stripLocale, localeHref } from '@/lib/i18n';
+import { asLocale, stripLocale } from '@/lib/i18n';
+import { localeHref } from '@/lib/route-translations';
 import { getDict } from '@/lib/dictionary';
 
 export default function LocaleNotFound() {

@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { Search } from 'lucide-react';
 import { getSearchIndex, type SearchGroup } from '@/lib/search';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { localeHref } from '@/lib/route-translations';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;

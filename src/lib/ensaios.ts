@@ -59,15 +59,26 @@ function readRaw(): RawEnsaio[] {
   return ensaios.sort((a, b) => (a.data > b.data ? -1 : 1));
 }
 
+/** Corpo traduzido em content/ensaios/<locale>/<slug>.mdx (markdown puro). */
+function readLocalizedBody(slug: string, locale: Locale): string | null {
+  if (locale === DEFAULT_LOCALE) return null;
+  const p = path.join(ENSAIOS_DIR, locale, `${slug}.mdx`);
+  if (!fs.existsSync(p)) return null;
+  const { content } = matter(fs.readFileSync(p, 'utf8'));
+  return content.trim() ? content : null;
+}
+
 function localize(e: RawEnsaio, locale: Locale): Ensaio {
   const overlay = ENSAIO_I18N[e.slug]?.[locale];
-  const hasLocale = !!overlay && locale !== DEFAULT_LOCALE;
+  const body = readLocalizedBody(e.slug, locale);
   return {
     ...e,
     titulo: overlay?.titulo ?? e.titulo,
     subtitulo: overlay?.subtitulo ?? e.subtitulo,
     resumo: overlay?.resumo ?? e.resumo,
-    metaLocalized: hasLocale,
+    conteudo: body ?? e.conteudo,
+    // nota "original em português" só quando o locale ≠ pt E o corpo NÃO foi traduzido
+    metaLocalized: locale !== DEFAULT_LOCALE && !body,
   };
 }
 

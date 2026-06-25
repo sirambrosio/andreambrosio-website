@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, hreflangAlternates, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: d.nav.sobre,
     description: d.sobre.lead,
-    alternates: { canonical: `/${raw}/sobre`, languages: hreflangAlternates('/sobre') },
+    alternates: { canonical: localeHref('/sobre', raw as Locale), languages: hreflangAlternates('/sobre') },
     openGraph: { title: `${d.nav.sobre} — Andre Ambrósio`, description: d.sobre.lead },
   };
 }

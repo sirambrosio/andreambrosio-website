@@ -4,7 +4,8 @@ import { ArrowRight } from 'lucide-react';
 import { getAllEnsaios } from '@/lib/ensaios';
 import { getCampos, campoNome } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, localeHref } from '@/lib/i18n';
+import { asLocale } from '@/lib/i18n';
+import { localeHref } from '@/lib/route-translations';
 import { NewsletterCapture } from '@/components/NewsletterCapture';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {

@@ -21,12 +21,14 @@ interface Props {
   docs: SearchDoc[];
   labels: SpotlightLabels;
   variant?: 'button' | 'bar';
+  /** rótulo curto opcional no gatilho do header (vira uma barra de busca) */
+  compactLabel?: string;
 }
 
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const GROUP_ORDER: SearchGroup[] = ['pages', 'fields', 'essays', 'companies'];
 
-export function SpotlightSearch({ docs, labels, variant = 'button' }: Props) {
+export function SpotlightSearch({ docs, labels, variant = 'button', compactLabel }: Props) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -130,10 +132,13 @@ export function SpotlightSearch({ docs, labels, variant = 'button' }: Props) {
           onClick={() => setOpen(true)}
           aria-label={labels.placeholder}
           title={labels.placeholder}
-          className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-border-strong text-text-dim hover:text-champagne hover:border-champagne transition-colors"
+          className={`inline-flex items-center gap-2 h-10 rounded-full border border-border-strong text-text-dim hover:text-champagne hover:border-champagne transition-colors ${
+            compactLabel ? 'pl-3.5 pr-2.5 min-w-[170px] lg:min-w-[220px]' : 'px-2.5'
+          }`}
         >
-          <Search size={15} strokeWidth={1.8} />
-          <kbd className="hidden lg:inline-flex items-center font-mono text-[9px] tracking-wider px-1.5 py-0.5 rounded bg-surface-alt border border-border text-text-dimmer">⌘K</kbd>
+          <Search size={16} strokeWidth={1.8} />
+          {compactLabel && <span className="flex-1 text-left text-[13px]">{compactLabel}</span>}
+          <kbd className="hidden sm:inline-flex items-center font-mono text-[9.5px] tracking-wider px-1.5 py-0.5 rounded bg-surface-alt border border-border text-text-dimmer">⌘K</kbd>
         </button>
       ) : (
         <button

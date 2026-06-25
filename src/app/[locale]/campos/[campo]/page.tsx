@@ -5,7 +5,8 @@ import { notFound } from 'next/navigation';
 import { getCampo, getCampos, CAMPO_ORDER, type CampoSlug } from '@/lib/content';
 import { getEnsaiosPorCampo } from '@/lib/ensaios';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, hreflangAlternates, SITE_URL, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
+import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 
 export function generateStaticParams() {
   return CAMPO_ORDER.map((campo) => ({ campo }));
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: c.nome,
     description: c.descricao,
-    alternates: { canonical: `/${raw}/campos/${campo}`, languages: hreflangAlternates(`/campos/${campo}`) },
+    alternates: { canonical: localeHref(`/campos/${campo}`, raw as Locale), languages: hreflangAlternates(`/campos/${campo}`) },
     openGraph: { title: `${c.nome} — ${c.subtitulo}`, description: c.descricao, images: [c.img] },
   };
 }

@@ -6,15 +6,8 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BackToTop } from '@/components/BackToTop';
 import { RevealObserver } from '@/components/RevealObserver';
-import {
-  LOCALES,
-  LOCALE_META,
-  SITE_URL,
-  isLocale,
-  hreflangAlternates,
-  localeHref,
-  type Locale,
-} from '@/lib/i18n';
+import { LOCALES, LOCALE_META, SITE_URL, isLocale, type Locale } from '@/lib/i18n';
+import { hreflangAlternates, localeHref } from '@/lib/route-translations';
 import { getDict } from '@/lib/dictionary';
 
 export const viewport: Viewport = {
@@ -139,12 +132,12 @@ export default async function LocaleLayout({
     description: d.footer.description,
     potentialAction: {
       '@type': 'SearchAction',
-      target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/${locale}/buscar?q={search_term_string}` },
+      target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}${localeHref('/buscar', locale)}?q={search_term_string}` },
       'query-input': 'required name=search_term_string',
     },
   };
 
-  const skip = ({ pt: 'Pular para o conteúdo', en: 'Skip to content', es: 'Saltar al contenido', zh: '跳到内容', fr: 'Aller au contenu', de: 'Zum Inhalt springen', ja: '本文へスキップ' } as Record<Locale, string>)[locale];
+  const skip = ({ pt: 'Pular para o conteúdo', en: 'Skip to content', es: 'Saltar al contenido', zh: '跳到内容', fr: 'Aller au contenu', de: 'Zum Inhalt springen', ja: '本文へスキップ', ru: 'Перейти к содержимому' } as Record<Locale, string>)[locale];
 
   return (
     <html lang={meta.htmlLang} suppressHydrationWarning>

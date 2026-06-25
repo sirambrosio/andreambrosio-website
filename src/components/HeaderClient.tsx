@@ -27,6 +27,7 @@ interface Props {
     lightMode: string;
     darkMode: string;
     language: string;
+    search: string;
   };
 }
 
@@ -104,7 +105,7 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
 
         <div className="flex items-center gap-3">
           <div className="hidden md:block">
-            <SpotlightSearch docs={docs} labels={spotlight} variant="button" />
+            <SpotlightSearch docs={docs} labels={spotlight} variant="button" compactLabel={t.search} />
           </div>
           <div className="hidden md:block">
             <LanguageSwitcher currentLocale={locale} variant="header" label={t.language} />

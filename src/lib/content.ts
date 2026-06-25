@@ -1,6 +1,6 @@
 /**
  * Dados editoriais localizados (client-safe — sem node:fs).
- * Campos, empresas e metadados dos ensaios em 7 idiomas.
+ * Campos, empresas e metadados dos ensaios em 8 idiomas.
  */
 import type { Locale } from '@/lib/i18n';
 
@@ -28,6 +28,7 @@ const CAMPO_I18N: Record<CampoSlug, Record<Locale, CampoText>> = {
     fr: { nome: `Technologie`, subtitulo: `L'infrastructure numérique comme environnement`, descricao: `Une lecture de l'architecture numérique en cours de réécriture — de la couche physique au comportement humain. Des systèmes qui deviennent un environnement invisible.` },
     de: { nome: `Technologie`, subtitulo: `Digitale Infrastruktur als Umgebung`, descricao: `Eine Lektüre der digitalen Architektur, die neu geschrieben wird — von der physischen Schicht bis zum menschlichen Verhalten. Systeme werden zur unsichtbaren Umgebung.` },
     ja: { nome: `テクノロジー`, subtitulo: `環境としてのデジタル基盤`, descricao: `書き換えられつつあるデジタル・アーキテクチャの読み解き——物理層から人間の振る舞いまで。システムが不可視の環境となる。` },
+    ru: { nome: `Технологии`, subtitulo: `Цифровая инфраструктура как среда`, descricao: `Чтение цифровой архитектуры, которую переписывают, — от физического слоя до человеческого поведения. Системы становятся невидимой средой.` },
   },
   negocios: {
     pt: { nome: `Negócios`, subtitulo: `Vantagem estrutural em transição`, descricao: `Arquitetura de empresas que sobrevivem à passagem de era. Modelos de receita, vantagem durável, o que escala sob a nova lógica.` },
@@ -37,6 +38,7 @@ const CAMPO_I18N: Record<CampoSlug, Record<Locale, CampoText>> = {
     fr: { nome: `Affaires`, subtitulo: `L'avantage structurel en transition`, descricao: `L'architecture des entreprises qui survivent au passage d'une ère. Modèles de revenus, avantage durable, ce qui passe à l'échelle sous la nouvelle logique.` },
     de: { nome: `Wirtschaft`, subtitulo: `Struktureller Vorteil im Übergang`, descricao: `Die Architektur von Unternehmen, die den Übergang zwischen Epochen überstehen. Erlösmodelle, dauerhafter Vorteil, was unter der neuen Logik skaliert.` },
     ja: { nome: `ビジネス`, subtitulo: `移行期の構造的優位`, descricao: `時代の転換を生き延びる企業のアーキテクチャ。収益モデル、持続する優位、新しい論理の下でスケールするもの。` },
+    ru: { nome: `Бизнес`, subtitulo: `Структурное преимущество в переходе`, descricao: `Архитектура компаний, переживающих смену эпох. Модели дохода, устойчивое преимущество, то, что масштабируется по новой логике.` },
   },
   saude: {
     pt: { nome: `Saúde`, subtitulo: `Soberania biológica`, descricao: `Saúde como infraestrutura pessoal — contínua, preditiva, legível. Engenharia humana no lugar da medicina reativa.` },
@@ -46,6 +48,7 @@ const CAMPO_I18N: Record<CampoSlug, Record<Locale, CampoText>> = {
     fr: { nome: `Santé`, subtitulo: `Souveraineté biologique`, descricao: `La santé comme infrastructure personnelle — continue, prédictive, lisible. L'ingénierie humaine à la place de la médecine réactive.` },
     de: { nome: `Gesundheit`, subtitulo: `Biologische Souveränität`, descricao: `Gesundheit als persönliche Infrastruktur — kontinuierlich, prädiktiv, lesbar. Menschliche Ingenieurskunst statt reaktiver Medizin.` },
     ja: { nome: `健康`, subtitulo: `生物学的主権`, descricao: `個人のインフラとしての健康——連続的で、予測的で、読み取り可能。受動的な医療に代わる、人間のエンジニアリング。` },
+    ru: { nome: `Здоровье`, subtitulo: `Биологический суверенитет`, descricao: `Здоровье как личная инфраструктура — непрерывная, предиктивная, читаемая. Инженерия человека вместо реактивной медицины.` },
   },
   ia: {
     pt: { nome: `Inteligência Artificial`, subtitulo: `Camada de decisão`, descricao: `IA não como hype — como infraestrutura que reescreve trabalho, saúde, sistemas produtivos e a relação humano-máquina.` },
@@ -55,6 +58,7 @@ const CAMPO_I18N: Record<CampoSlug, Record<Locale, CampoText>> = {
     fr: { nome: `Intelligence artificielle`, subtitulo: `Couche de décision`, descricao: `L'IA non comme un battage médiatique — comme une infrastructure qui réécrit le travail, la santé, les systèmes productifs et la relation humain-machine.` },
     de: { nome: `Künstliche Intelligenz`, subtitulo: `Entscheidungsschicht`, descricao: `KI nicht als Hype — als Infrastruktur, die Arbeit, Gesundheit, Produktionssysteme und das Verhältnis von Mensch und Maschine neu schreibt.` },
     ja: { nome: `人工知能`, subtitulo: `意思決定の層`, descricao: `誇大宣伝としてのAIではなく——労働、健康、生産システム、そして人と機械の関係を書き換える基盤としてのAI。` },
+    ru: { nome: `Искусственный интеллект`, subtitulo: `Слой принятия решений`, descricao: `ИИ не как хайп — как инфраструктура, переписывающая труд, здоровье, производственные системы и отношения человека и машины.` },
   },
 };
 
@@ -92,6 +96,7 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     fr: { tag: `Holding`, desc: `Holding stratégique qui organise investissements et projets personnels.` },
     de: { tag: `Holding`, desc: `Strategische Holding, die Investitionen und persönliche Projekte ordnet.` },
     ja: { tag: `ホールディング`, desc: `投資と個人プロジェクトを束ねる戦略的ホールディング。` },
+    ru: { tag: `Холдинг`, desc: `Стратегический холдинг, организующий инвестиции и личные проекты.` },
   },
   'Ambrosio Health': {
     pt: { tag: `Saúde · Produto`, desc: `Engineering Human Vitality. Saúde contínua, biomarcadores, longevidade como engenharia.` },
@@ -101,6 +106,7 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     fr: { tag: `Santé · Produit`, desc: `Engineering Human Vitality. Santé continue, biomarqueurs, la longévité comme ingénierie.` },
     de: { tag: `Gesundheit · Produkt`, desc: `Engineering Human Vitality. Kontinuierliche Gesundheit, Biomarker, Langlebigkeit als Ingenieurskunst.` },
     ja: { tag: `健康 · プロダクト`, desc: `Engineering Human Vitality。連続的な健康、バイオマーカー、工学としての長寿。` },
+    ru: { tag: `Здоровье · Продукт`, desc: `Engineering Human Vitality. Непрерывное здоровье, биомаркеры, долголетие как инженерия.` },
   },
   'LogicaOS': {
     pt: { tag: `Software · Produtividade`, desc: `Sistema operacional de agentes para construtores. Arquitetura de decisão assistida por IA.` },
@@ -110,6 +116,7 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     fr: { tag: `Logiciel · Productivité`, desc: `Un système d'exploitation d'agents pour les bâtisseurs. Architecture de décision assistée par IA.` },
     de: { tag: `Software · Produktivität`, desc: `Ein Agenten-Betriebssystem für Erbauer. KI-gestützte Entscheidungsarchitektur.` },
     ja: { tag: `ソフトウェア · 生産性`, desc: `構築者のためのエージェントOS。AIが支援する意思決定アーキテクチャ。` },
+    ru: { tag: `ПО · Продуктивность`, desc: `Операционная система агентов для строителей. Архитектура решений с помощью ИИ.` },
   },
   'VitaAZ': {
     pt: { tag: `Suplementação`, desc: `Linha de suplementação funcional com formulações proprietárias.` },
@@ -119,6 +126,7 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     fr: { tag: `Compléments`, desc: `Une gamme de compléments fonctionnels aux formulations propriétaires.` },
     de: { tag: `Supplemente`, desc: `Eine Linie funktionaler Supplemente mit eigenen Formulierungen.` },
     ja: { tag: `サプリメント`, desc: `独自処方による機能性サプリメントのライン。` },
+    ru: { tag: `Добавки`, desc: `Линейка функциональных добавок с собственными формулами.` },
   },
   'Ambrosio ExoCore': {
     pt: { tag: `Hardware · Saúde`, desc: `Órgão externo inteligente com biocartuchos. Hardware que se conecta ao corpo.` },
@@ -128,6 +136,7 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     fr: { tag: `Matériel · Santé`, desc: `Un organe externe intelligent à biocartouches. Du matériel qui se connecte au corps.` },
     de: { tag: `Hardware · Gesundheit`, desc: `Ein intelligentes externes Organ mit Biokartuschen. Hardware, die sich mit dem Körper verbindet.` },
     ja: { tag: `ハードウェア · 健康`, desc: `バイオカートリッジを備えたスマートな体外器官。身体に接続するハードウェア。` },
+    ru: { tag: `Железо · Здоровье`, desc: `Умный внешний орган с биокартриджами. Аппаратура, подключающаяся к телу.` },
   },
   'Rovemark': {
     pt: { tag: `Estúdio`, desc: `Casa criativa que produz o conteúdo editorial, design e comunicação dos projetos.` },
@@ -137,6 +146,7 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     fr: { tag: `Studio`, desc: `Une maison créative qui produit le contenu éditorial, le design et la communication des projets.` },
     de: { tag: `Studio`, desc: `Ein kreatives Haus, das die redaktionellen Inhalte, das Design und die Kommunikation der Projekte produziert.` },
     ja: { tag: `スタジオ`, desc: `各プロジェクトの編集コンテンツ、デザイン、コミュニケーションを手がけるクリエイティブ・ハウス。` },
+    ru: { tag: `Студия`, desc: `Креативный дом, создающий редакционный контент, дизайн и коммуникацию проектов.` },
   },
 };
 
@@ -148,7 +158,7 @@ export function getEmpresas(locale: Locale): Empresa[] {
   }));
 }
 
-// ─── Ensaios — overlay de metadados localizados (corpo permanece em PT) ─────────
+// ─── Ensaios — overlay de metadados localizados (corpo via content/ensaios/<locale>/) ─────────
 export interface EnsaioMeta { titulo: string; subtitulo: string; resumo: string }
 
 export const ENSAIO_I18N: Record<string, Record<Locale, EnsaioMeta>> = {
@@ -160,6 +170,7 @@ export const ENSAIO_I18N: Record<string, Record<Locale, EnsaioMeta>> = {
     fr: { titulo: `L'architecture invisible de la santé continue`, subtitulo: `Pourquoi le prochain cycle de la médecine est infrastructurel`, resumo: `Le modèle de santé actuel est réactif par construction. La prochaine couche n'est pas une appli de plus, c'est une infrastructure de lecture biologique continue.` },
     de: { titulo: `Die unsichtbare Architektur kontinuierlicher Gesundheit`, subtitulo: `Warum der nächste Zyklus der Medizin infrastrukturell ist`, resumo: `Das heutige Gesundheitsmodell ist von Grund auf reaktiv. Die nächste Schicht ist keine weitere App, sondern Infrastruktur für kontinuierliches biologisches Auslesen.` },
     ja: { titulo: `連続的な健康の、不可視のアーキテクチャ`, subtitulo: `なぜ医療の次なるサイクルはインフラ的なのか`, resumo: `現在の健康モデルは、設計からして受動的だ。次の層はもう一つのアプリではなく、生体情報を連続的に読み取るための基盤である。` },
+    ru: { titulo: `Невидимая архитектура непрерывного здоровья`, subtitulo: `Почему следующий цикл медицины — инфраструктурный`, resumo: `Нынешняя модель здоровья реактивна по построению. Следующий слой — не очередное приложение, а инфраструктура непрерывного считывания биологии.` },
   },
   'camada-decisao-ia': {
     pt: { titulo: `IA como camada de decisão, não ferramenta`, subtitulo: `A diferença entre usar IA e construir sobre ela`, resumo: `A maioria das empresas ainda trata IA como feature. A próxima onda de vantagem vem de tratá-la como camada estrutural de decisão.` },
@@ -169,6 +180,7 @@ export const ENSAIO_I18N: Record<string, Record<Locale, EnsaioMeta>> = {
     fr: { titulo: `L'IA comme couche de décision, pas comme outil`, subtitulo: `La différence entre utiliser l'IA et bâtir dessus`, resumo: `La plupart des entreprises traitent encore l'IA comme une fonctionnalité. La prochaine vague d'avantage vient de la traiter comme une couche structurelle de décision.` },
     de: { titulo: `KI als Entscheidungsschicht, nicht als Werkzeug`, subtitulo: `Der Unterschied zwischen KI nutzen und auf ihr bauen`, resumo: `Die meisten Unternehmen behandeln KI noch als Feature. Die nächste Welle des Vorteils entsteht, wenn man sie als strukturelle Entscheidungsschicht behandelt.` },
     ja: { titulo: `ツールではなく、意思決定の層としてのAI`, subtitulo: `AIを使うことと、その上に築くことの違い`, resumo: `多くの企業はいまだAIを一機能として扱う。次の優位は、それを構造的な意思決定の層として扱うことから生まれる。` },
+    ru: { titulo: `ИИ как слой принятия решений, а не инструмент`, subtitulo: `Разница между использованием ИИ и построением на нём`, resumo: `Большинство компаний всё ещё относятся к ИИ как к функции. Следующая волна преимущества — относиться к нему как к структурному слою решений.` },
   },
   'erro-estrutural-negocios': {
     pt: { titulo: `O erro estrutural da empresa moderna`, subtitulo: `Por que eficiência deixou de ser vantagem`, resumo: `Durante 50 anos, a vantagem competitiva veio de eficiência operacional. Essa era acabou. A nova vantagem é arquitetura.` },
@@ -178,5 +190,6 @@ export const ENSAIO_I18N: Record<string, Record<Locale, EnsaioMeta>> = {
     fr: { titulo: `L'erreur structurelle de l'entreprise moderne`, subtitulo: `Pourquoi l'efficacité a cessé d'être un avantage`, resumo: `Pendant 50 ans, l'avantage concurrentiel venait de l'efficacité opérationnelle. Cette ère est révolue. Le nouvel avantage, c'est l'architecture.` },
     de: { titulo: `Der strukturelle Fehler des modernen Unternehmens`, subtitulo: `Warum Effizienz aufgehört hat, ein Vorteil zu sein`, resumo: `50 Jahre lang kam der Wettbewerbsvorteil aus operativer Effizienz. Diese Ära ist vorbei. Der neue Vorteil ist Architektur.` },
     ja: { titulo: `現代企業の構造的な誤り`, subtitulo: `なぜ効率は優位でなくなったのか`, resumo: `50年にわたり、競争優位は業務効率から生まれた。その時代は終わった。新しい優位は、アーキテクチャである。` },
+    ru: { titulo: `Структурная ошибка современной компании`, subtitulo: `Почему эффективность перестала быть преимуществом`, resumo: `50 лет конкурентное преимущество исходило из операционной эффективности. Эта эпоха закончилась. Новое преимущество — архитектура.` },
   },
 };

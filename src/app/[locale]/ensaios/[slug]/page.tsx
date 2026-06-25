@@ -6,7 +6,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getAllEnsaios, getEnsaio } from '@/lib/ensaios';
 import { campoNome } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, localeHref, hreflangAlternates, SITE_URL, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
+import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 import { ArrowLeft } from 'lucide-react';
 import { ReadingProgress } from '@/components/ReadingProgress';
 
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: e.titulo,
     description: e.resumo,
-    alternates: { canonical: `/${locale}/ensaios/${slug}`, languages: hreflangAlternates(`/ensaios/${slug}`) },
+    alternates: { canonical: localeHref(`/ensaios/${slug}`, locale), languages: hreflangAlternates(`/ensaios/${slug}`) },
     openGraph: {
       type: 'article',
       title: e.titulo,
@@ -66,7 +67,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
 
   const all = getAllEnsaios(locale).filter((x) => x.slug !== e.slug);
   const related = [...all.filter((x) => x.campo === e.campo), ...all.filter((x) => x.campo !== e.campo)].slice(0, 2);
-  const relatedLabel = ({ pt: 'Continue lendo', en: 'Keep reading', es: 'Sigue leyendo', zh: '继续阅读', fr: 'Continuez la lecture', de: 'Weiterlesen', ja: '続けて読む' } as Record<Locale, string>)[locale];
+  const relatedLabel = ({ pt: 'Continue lendo', en: 'Keep reading', es: 'Sigue leyendo', zh: '继续阅读', fr: 'Continuez la lecture', de: 'Weiterlesen', ja: '続けて読む', ru: 'Продолжить чтение' } as Record<Locale, string>)[locale];
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',

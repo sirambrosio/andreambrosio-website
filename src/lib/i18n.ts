@@ -8,7 +8,7 @@
  * Server/Client Components — NÃO importar nada de `node:*` aqui.
  */
 
-export const LOCALES = ['pt', 'en', 'es', 'zh', 'fr', 'de', 'ja'] as const;
+export const LOCALES = ['pt', 'en', 'es', 'zh', 'fr', 'de', 'ja', 'ru'] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = 'pt';
@@ -35,6 +35,7 @@ export const LOCALE_META: Record<Locale, LocaleMeta> = {
   fr: { native: 'Français',  name: 'French',     flag: '🇫🇷', hreflang: 'fr',      htmlLang: 'fr',      ogLocale: 'fr_FR' },
   de: { native: 'Deutsch',   name: 'German',     flag: '🇩🇪', hreflang: 'de',      htmlLang: 'de',      ogLocale: 'de_DE' },
   ja: { native: '日本語',      name: 'Japanese',   flag: '🇯🇵', hreflang: 'ja',      htmlLang: 'ja',      ogLocale: 'ja_JP' },
+  ru: { native: 'Русский',   name: 'Russian',    flag: '🇷🇺', hreflang: 'ru',      htmlLang: 'ru',      ogLocale: 'ru_RU' },
 };
 
 export function isLocale(value: string | undefined | null): value is Locale {
@@ -68,6 +69,7 @@ export function detectLocaleFromHeader(acceptLanguage: string | null | undefined
     if (tag.startsWith('fr')) return 'fr';
     if (tag.startsWith('de')) return 'de';
     if (tag.startsWith('ja')) return 'ja';
+    if (tag.startsWith('ru')) return 'ru';
   }
   return DEFAULT_LOCALE;
 }
@@ -84,21 +86,8 @@ export function stripLocale(pathname: string): { locale: Locale | null; rest: st
   return { locale: null, rest: pathname };
 }
 
-/** Constrói um href com prefixo de locale. `localeHref('/ensaios','en')` → `/en/ensaios`. */
-export function localeHref(path: string, locale: Locale): string {
-  const clean = path.startsWith('/') ? path : `/${path}`;
-  return clean === '/' ? `/${locale}` : `/${locale}${clean}`;
-}
-
 export const SITE_URL = 'https://andreambrosio.com';
 
-/** Gera o objeto `alternates.languages` (hreflang) para uma rota canônica (sem locale). */
-export function hreflangAlternates(canonicalPath: string): Record<string, string> {
-  const clean = canonicalPath === '/' ? '' : canonicalPath;
-  const out: Record<string, string> = {};
-  for (const loc of LOCALES) {
-    out[LOCALE_META[loc].hreflang] = `${SITE_URL}/${loc}${clean}`;
-  }
-  out['x-default'] = `${SITE_URL}/${DEFAULT_LOCALE}${clean}`;
-  return out;
-}
+// localeHref / localeUrl / hreflangAlternates / localizePath / canonicalizePath
+// vivem em ./route-translations (importar de lá). Não re-exportamos aqui para
+// evitar ciclo ESM (route-translations já importa deste módulo).
