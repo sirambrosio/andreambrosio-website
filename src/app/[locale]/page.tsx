@@ -7,6 +7,7 @@ import { getDict } from '@/lib/dictionary';
 import { asLocale } from '@/lib/i18n';
 import { localeHref } from '@/lib/route-translations';
 import { NewsletterCapture } from '@/components/NewsletterCapture';
+import { MediaStrip } from '@/components/MediaStrip';
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const locale = asLocale((await params).locale);
@@ -68,6 +69,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           </div>
         </div>
       </section>
+
+      {/* COMO VISTO NA MÍDIA */}
+      <MediaStrip locale={locale} />
 
       {/* CAMPOS */}
       <section className="px-6 md:px-[5rem] py-24 md:py-32 bg-surface border-y border-border">
