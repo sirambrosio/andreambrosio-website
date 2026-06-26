@@ -24,22 +24,24 @@ const LABEL: Record<Locale, string> = {
 };
 
 export function MediaStrip({ locale }: { locale: Locale }) {
-  const plate =
-    'inline-flex items-center justify-center h-12 px-5 rounded-xl bg-white border border-border-strong/50 shadow-sm transition-all';
+  // monocromático que reage ao tema: escuro no light, claro no dark (dark:invert
+  // também neutraliza o fundo branco do PNG da PEGN — vira preto e funde no escuro)
+  const logoCls =
+    'h-[26px] md:h-7 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 dark:invert dark:opacity-70 dark:hover:opacity-100';
   return (
-    <section className="px-6 md:px-10 py-8 border-b border-border bg-surface">
-      <div className="max-w-[1100px] mx-auto flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+    <section className="px-6 md:px-10 py-9 border-b border-border bg-bg">
+      <div className="max-w-[1100px] mx-auto flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-9">
         <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze shrink-0">{LABEL[locale]}</span>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-x-8 sm:gap-x-10 gap-y-4">
           {OUTLETS.map((o) => {
             // eslint-disable-next-line @next/next/no-img-element
-            const img = <img src={o.logo} alt={o.name} loading="lazy" className="h-[22px] md:h-6 w-auto object-contain" />;
+            const img = <img src={o.logo} alt={o.name} loading="lazy" className={logoCls} />;
             return o.url ? (
-              <a key={o.name} href={o.url} target="_blank" rel="noopener noreferrer" title={o.name} className={`${plate} hover:border-champagne hover:-translate-y-px`}>
+              <a key={o.name} href={o.url} target="_blank" rel="noopener noreferrer" title={o.name} className="inline-flex items-center">
                 {img}
               </a>
             ) : (
-              <span key={o.name} title={o.name} className={plate}>
+              <span key={o.name} title={o.name} className="inline-flex items-center">
                 {img}
               </span>
             );
