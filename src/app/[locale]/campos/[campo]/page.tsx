@@ -52,27 +52,29 @@ export default async function CampoPage({ params }: { params: Promise<{ locale: 
   return (
     <div className="bg-bg text-text">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
-      {/* HERO */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden border-b border-border">
-        <div className="absolute inset-0 opacity-[0.25] pointer-events-none">
-          <Image src={c.img} alt="" fill sizes="100vw" className="object-cover" />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(var(--overlay-fade),0.3) 0%, rgba(var(--overlay-fade),0.85) 70%, var(--bg) 100%)' }} />
-        </div>
-        <div className="relative z-10 px-6 md:px-[8rem] py-20 max-w-[900px]">
-          <div className="flex items-center gap-3 mb-8">
-            <span className="font-mono text-[11px] tracking-[0.3em] text-champagne">{d.campos.campoLabel} {romano}</span>
-            <div className="w-[40px] h-[1px] bg-champagne" />
+      {/* HERO — cover banner editorial */}
+      <header className="relative bg-oled">
+        <div className="relative h-[46vh] min-h-[340px] md:h-[54vh] w-full overflow-hidden">
+          <Image src={c.img} alt="" fill priority sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(11,15,15,0.45) 0%, rgba(11,15,15,0.2) 38%, rgba(11,15,15,0.9) 100%)' }} />
+          <div className="absolute inset-x-0 bottom-0 px-6 md:px-12 lg:px-[8rem] pb-10 md:pb-14">
+            <div className="max-w-[1100px] mx-auto">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-champagne">{d.campos.campoLabel} {romano}</span>
+                <div className="w-[40px] h-[1px] bg-champagne" />
+              </div>
+              <h1 className="font-display font-light text-[clamp(2.25rem,6vw,5rem)] leading-[0.95] tracking-[-0.03em] text-cream mb-4">
+                {c.nome}<span className="text-champagne">.</span>
+              </h1>
+              <p className="font-mono text-[11px] tracking-[0.25em] uppercase text-bronze mb-5">{c.subtitulo}</p>
+              <p className="text-[1.0625rem] text-cream/80 leading-[1.7] max-w-[640px]">{c.descricao}</p>
+            </div>
           </div>
-          <h1 className="font-display font-light text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.03em] text-text mb-6">
-            {c.nome}<span className="text-champagne">.</span>
-          </h1>
-          <p className="font-mono text-[11px] tracking-[0.25em] uppercase text-bronze mb-8">{c.subtitulo}</p>
-          <p className="text-[1.0625rem] text-text-dim leading-[1.85] max-w-[620px]">{c.descricao}</p>
         </div>
-      </section>
+      </header>
 
       {/* ENSAIOS DO CAMPO */}
-      <section className="px-6 md:px-[8rem] py-24">
+      <section className="px-6 md:px-12 lg:px-[8rem] py-24">
         <div className="max-w-[1100px] mx-auto">
           <div className="mb-12">
             <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-4">{d.campos.ensaiosLabel}</span>
@@ -102,7 +104,7 @@ export default async function CampoPage({ params }: { params: Promise<{ locale: 
       </section>
 
       {/* OUTROS CAMPOS */}
-      <section className="px-6 md:px-[8rem] py-24 bg-surface border-t border-border">
+      <section className="px-6 md:px-12 lg:px-[8rem] py-24 bg-surface border-t border-border">
         <div className="max-w-[1100px] mx-auto">
           <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-4">{d.campos.outrosCampos}</span>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-8">
