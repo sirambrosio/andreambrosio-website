@@ -8,6 +8,7 @@ import { BackToTop } from '@/components/BackToTop';
 import { RevealObserver } from '@/components/RevealObserver';
 import { LOCALES, LOCALE_META, SITE_URL, isLocale, type Locale } from '@/lib/i18n';
 import { hreflangAlternates, localeHref } from '@/lib/route-translations';
+import { SOCIAL_URLS } from '@/lib/socials';
 import { getDict } from '@/lib/dictionary';
 
 export const viewport: Viewport = {
@@ -107,12 +108,7 @@ export default async function LocaleLayout({
     alternateName: 'Andre Ambrósio',
     url: `${SITE_URL}/${locale}`,
     image: `${SITE_URL}/assets/andre-portrait.jpg`,
-    sameAs: [
-      'https://instagram.com/andreambrosio',
-      'https://x.com/andreambrosio',
-      'https://youtube.com/@andreambrosio',
-      'https://linkedin.com/in/andreambrosio',
-    ],
+    sameAs: SOCIAL_URLS,
     jobTitle: 'Fundador · Arquiteto de sistemas',
     worksFor: [
       { '@type': 'Organization', name: 'Ambrosio Company' },

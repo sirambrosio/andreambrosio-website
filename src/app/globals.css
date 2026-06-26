@@ -345,3 +345,9 @@ html:not(.dark) img[src*="/gen-"] {
 @media (max-width: 640px) {
   .prose-editorial > p:first-of-type::first-letter { font-size: 3em; }
 }
+
+/* Página /links (bio imersiva) — esconde header/footer globais */
+body[data-bare] header,
+body[data-bare] footer {
+  display: none !important;
+}

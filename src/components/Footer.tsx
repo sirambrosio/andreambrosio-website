@@ -1,22 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, ArrowRight, Sparkles, Globe, BookOpen, Layers, Building2, Instagram, Youtube, Linkedin } from 'lucide-react';
+import { Mail, ArrowRight, Sparkles, Globe, BookOpen, Layers, Building2 } from 'lucide-react';
 import { getDict } from '@/lib/dictionary';
 import { getCampos, getEmpresas } from '@/lib/content';
 import { getAllEnsaios } from '@/lib/ensaios';
 import { getSearchIndex } from '@/lib/search';
 import { LOCALES, type Locale } from '@/lib/i18n';
 import { localeHref } from '@/lib/route-translations';
+import { SOCIALS } from '@/lib/socials';
+import { SocialIcon } from './SocialIcon';
 import { NewsletterCapture } from './NewsletterCapture';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { SpotlightSearch } from './SpotlightSearch';
-
-const SOCIAL = [
-  { href: 'https://instagram.com/andreambrosio', label: 'Instagram', Icon: Instagram },
-  { href: 'https://x.com/andreambrosio', label: 'X / Twitter', Icon: null },
-  { href: 'https://youtube.com/@andreambrosio', label: 'YouTube', Icon: Youtube },
-  { href: 'https://linkedin.com/in/andreambrosio', label: 'LinkedIn', Icon: Linkedin },
-];
 
 export function Footer({ locale }: { locale: Locale }) {
   const d = getDict(locale);
@@ -32,6 +27,7 @@ export function Footer({ locale }: { locale: Locale }) {
     { href: lh('/campos'), label: d.nav.campos },
     { href: lh('/ensaios'), label: d.nav.ensaios },
     { href: lh('/empresas'), label: d.nav.empresas },
+    { href: lh('/links'), label: 'Links' },
   ];
 
   const stats = [
@@ -158,9 +154,9 @@ export function Footer({ locale }: { locale: Locale }) {
             <div>
               <h3 className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-champagne mb-4">{d.footer.colSocial}</h3>
               <ul className="space-y-2.5">
-                {SOCIAL.map((s) => (
-                  <li key={s.href}>
-                    <a href={s.href} target="_blank" rel="noopener" className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{s.label} ↗</a>
+                {SOCIALS.map((s) => (
+                  <li key={s.url}>
+                    <a href={s.url} target="_blank" rel="noopener" className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{s.name} ↗</a>
                   </li>
                 ))}
               </ul>
@@ -192,9 +188,9 @@ export function Footer({ locale }: { locale: Locale }) {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-[11px] text-cream/40">© {year} · {d.footer.copyright}</p>
               <div className="flex items-center gap-4">
-                {SOCIAL.filter((s) => s.Icon).map((s) => (
-                  <a key={s.href} href={s.href} target="_blank" rel="noopener" aria-label={s.label} className="text-cream/40 hover:text-champagne transition-colors">
-                    {s.Icon ? <s.Icon className="w-4 h-4" /> : null}
+                {SOCIALS.map((s) => (
+                  <a key={s.url} href={s.url} target="_blank" rel="noopener" aria-label={s.name} title={s.handle} className="text-cream/40 hover:text-champagne transition-colors">
+                    <SocialIcon icon={s.icon} size={16} />
                   </a>
                 ))}
                 <span className="font-mono text-[9px] tracking-[0.2em] text-cream/25 hidden sm:inline">

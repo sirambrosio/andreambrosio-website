@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/campos' },
     { path: '/ensaios' },
     { path: '/empresas' },
+    { path: '/links' },
     ...CAMPO_ORDER.map((s) => ({ path: `/campos/${s}` })),
     ...ensaios.map((e) => ({ path: `/ensaios/${e.slug}`, lastModified: e.data })),
   ];

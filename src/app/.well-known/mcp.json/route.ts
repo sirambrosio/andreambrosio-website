@@ -1,6 +1,7 @@
 import { getAllEnsaios } from '@/lib/ensaios';
 import { getCampos } from '@/lib/content';
 import { LOCALES, LOCALE_META, SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
+import { SOCIAL_URLS } from '@/lib/socials';
 
 export const dynamic = 'force-static';
 
@@ -47,12 +48,7 @@ export async function GET() {
     author: {
       name: 'Andre Ambrósio',
       url: SITE_URL,
-      sameAs: [
-        'https://instagram.com/andreambrosio',
-        'https://x.com/andreambrosio',
-        'https://youtube.com/@andreambrosio',
-        'https://linkedin.com/in/andreambrosio',
-      ],
+      sameAs: SOCIAL_URLS,
     },
     usage_policy: {
       llm_training: 'allow',
