@@ -21,7 +21,7 @@ export const SOCIAL_URLS = SOCIALS.map((s) => s.url);
 
 export interface Project {
   name: string;
-  tagKey: 'logicaos' | 'health' | 'vitaaz' | 'rovemark';
+  tagKey: 'logicaos' | 'health' | 'vitaaz' | 'rovemark' | 'ouchmac';
   url: string;
 }
 
@@ -31,4 +31,5 @@ export const PROJECTS: Project[] = [
   { name: 'Ambrosio Health', tagKey: 'health', url: 'https://ambrosiohealth.com' },
   { name: 'VitaAZ', tagKey: 'vitaaz', url: 'https://vitaaz.com' },
   { name: 'Rovemark', tagKey: 'rovemark', url: '/empresas' },
+  { name: 'OuchMac', tagKey: 'ouchmac', url: 'https://ouchmac.com' },
 ];

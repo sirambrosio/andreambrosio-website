@@ -21,6 +21,7 @@ const PROJ_TAGS: Record<string, Record<Locale, string>> = {
   health: { pt: 'Engineering Human Vitality', en: 'Engineering Human Vitality', es: 'Engineering Human Vitality', zh: 'Engineering Human Vitality', fr: 'Engineering Human Vitality', de: 'Engineering Human Vitality', ja: 'Engineering Human Vitality', ru: 'Engineering Human Vitality' },
   vitaaz: { pt: 'Suplementação funcional', en: 'Functional supplements', es: 'Suplementación funcional', zh: '功能性营养补充', fr: 'Compléments fonctionnels', de: 'Funktionale Supplemente', ja: '機能性サプリメント', ru: 'Функциональные добавки' },
   rovemark: { pt: 'Casa do LogicaOS', en: 'Makers of LogicaOS', es: 'Creadores de LogicaOS', zh: 'LogicaOS 缔造者', fr: 'Maison de LogicaOS', de: 'Heimat von LogicaOS', ja: 'LogicaOS の開発元', ru: 'Создатели LogicaOS' },
+  ouchmac: { pt: 'App de menubar pro Mac', en: 'macOS menubar app', es: 'App de menubar para Mac', zh: 'Mac 菜单栏应用', fr: 'App macOS de barre de menus', de: 'macOS-Menüleisten-App', ja: 'Mac メニューバーアプリ', ru: 'Приложение для macOS' },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
