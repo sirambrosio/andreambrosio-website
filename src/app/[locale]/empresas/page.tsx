@@ -4,6 +4,7 @@ import { getEmpresas, type EmpresaStatus } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
 import { asLocale, isLocale, type Locale } from '@/lib/i18n';
 import { localeHref, hreflangAlternates } from '@/lib/route-translations';
+import { ArrowUpRight } from 'lucide-react';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
@@ -20,6 +21,7 @@ export default async function Empresas({ params }: { params: Promise<{ locale: s
   const locale: Locale = asLocale((await params).locale);
   const d = getDict(locale);
   const empresas = getEmpresas(locale);
+  const visitar = ({ pt: 'Visitar', en: 'Visit', es: 'Visitar', zh: '访问', fr: 'Visiter', de: 'Besuchen', ja: 'サイトへ', ru: 'Перейти' } as Record<Locale, string>)[locale];
 
   const statusLabel: Record<EmpresaStatus, string> = {
     ativa: d.empresas.statusAtiva,
@@ -69,6 +71,11 @@ export default async function Empresas({ params }: { params: Promise<{ locale: s
                     <span key={c} className="font-mono text-[10px] tracking-[0.15em] text-champagne border border-champagne/30 rounded-full px-3 py-[4px] uppercase">{c}</span>
                   ))}
                 </div>
+                {e.url && (
+                  <a href={e.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 text-[12px] font-mono uppercase tracking-[0.2em] text-champagne hover:text-text transition-colors">
+                    {visitar} <ArrowUpRight size={13} />
+                  </a>
+                )}
               </div>
             </article>
           ))}

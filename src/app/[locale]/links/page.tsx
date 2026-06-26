@@ -90,15 +90,20 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
           <div className="w-full mt-8">
             <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-3 pl-1">{T.projetos[locale]}</div>
             <div className="space-y-3">
-              {PROJECTS.map((p) => (
-                <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className={cardCls}>
+              {PROJECTS.map((p) => {
+                const internal = p.url.startsWith('/');
+                const href = internal ? localeHref(p.url, locale) : p.url;
+                const ext = internal ? {} : { target: '_blank', rel: 'noopener noreferrer' };
+                return (
+                <a key={p.url} href={href} {...ext} className={cardCls}>
                   <span className="min-w-0">
                     <span className="block font-display text-[1.0625rem] text-text leading-tight">{p.name}</span>
                     <span className="block text-[12px] text-text-dim mt-0.5 truncate">{PROJ_TAGS[p.tagKey][locale]}</span>
                   </span>
                   <ArrowUpRight size={17} className="text-text-dimmer group-hover:text-champagne transition-colors shrink-0" />
                 </a>
-              ))}
+                );
+              })}
             </div>
           </div>
 

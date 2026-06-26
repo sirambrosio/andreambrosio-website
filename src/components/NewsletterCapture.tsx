@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
+import { track } from '@/lib/analytics';
 
 interface Props {
   labels: { placeholder: string; submit: string; success: string; error: string };
@@ -9,30 +10,41 @@ interface Props {
   variant?: 'footer' | 'hero';
   /** row = input + botão lado a lado · stacked = empilhado (para colunas estreitas) */
   layout?: 'row' | 'stacked';
+  /** de onde veio a inscrição (home, ensaio, footer, rail...) */
+  source?: string;
 }
 
 /**
- * Captura de e-mail. O front está completo; para persistir de fato, plugar um
- * endpoint em onSubmit (ex.: POST /api/subscribe). Hoje guarda local + confirma.
+ * Captura de e-mail → POST /api/subscribe (grava em Postgres via DATABASE_URL).
+ * honeypot anti-bot + estado de loading + erro real (não finge sucesso).
  */
-export function NewsletterCapture({ labels, variant = 'footer', layout = 'row' }: Props) {
+export function NewsletterCapture({ labels, variant = 'footer', layout = 'row', source = 'site' }: Props) {
   const [email, setEmail] = useState('');
-  const [state, setState] = useState<'idle' | 'ok' | 'err'>('idle');
+  const [hp, setHp] = useState(''); // honeypot
+  const [state, setState] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle');
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const valid = /.+@.+\..+/.test(email);
-    if (!valid) {
+    if (!/.+@.+\..+/.test(email)) {
       setState('err');
       return;
     }
+    setState('loading');
     try {
-      const key = 'aa-newsletter';
-      const list: string[] = JSON.parse(localStorage.getItem(key) || '[]');
-      if (!list.includes(email)) list.push(email);
-      localStorage.setItem(key, JSON.stringify(list));
-      setState('ok');
-      setEmail('');
+      const locale = typeof document !== 'undefined' ? document.documentElement.lang : '';
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email, locale, source, company: hp }),
+      });
+      const data = await res.json().catch(() => ({ ok: false }));
+      if (res.ok && data.ok) {
+        setState('ok');
+        setEmail('');
+        track('newsletter_subscribe', { source });
+      } else {
+        setState('err');
+      }
     } catch {
       setState('err');
     }
@@ -42,7 +54,7 @@ export function NewsletterCapture({ labels, variant = 'footer', layout = 'row' }
 
   if (state === 'ok') {
     return (
-      <div className={`inline-flex items-center gap-2 text-[13px] ${isHero ? 'text-champagne' : 'text-champagne'}`}>
+      <div className="inline-flex items-center gap-2 text-[13px] text-champagne">
         <Check size={15} /> {labels.success}
       </div>
     );
@@ -59,9 +71,21 @@ export function NewsletterCapture({ labels, variant = 'footer', layout = 'row' }
         : 'border-cream/15 focus:border-champagne';
 
   const stacked = layout === 'stacked';
+  const loading = state === 'loading';
 
   return (
     <form onSubmit={submit} className={stacked ? 'flex flex-col items-stretch gap-2 w-full' : 'flex items-center gap-2 w-full max-w-[440px]'}>
+      {/* honeypot — escondido de humanos */}
+      <input
+        type="text"
+        name="company"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={hp}
+        onChange={(e) => setHp(e.target.value)}
+        className="absolute w-px h-px -m-px overflow-hidden opacity-0 pointer-events-none"
+      />
       <input
         type="email"
         value={email}
@@ -71,13 +95,15 @@ export function NewsletterCapture({ labels, variant = 'footer', layout = 'row' }
         }}
         placeholder={labels.placeholder}
         aria-label={labels.placeholder}
-        className={`${stacked ? 'w-full' : 'flex-1'} h-11 px-4 rounded-full border text-[13px] outline-none transition-colors ${inputBase} ${inputBorder}`}
+        disabled={loading}
+        className={`${stacked ? 'w-full' : 'flex-1'} h-11 px-4 rounded-full border text-[13px] outline-none transition-colors disabled:opacity-60 ${inputBase} ${inputBorder}`}
       />
       <button
         type="submit"
-        className={`h-11 px-5 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity ${stacked ? 'w-full' : 'shrink-0'}`}
+        disabled={loading}
+        className={`h-11 px-5 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-70 ${stacked ? 'w-full' : 'shrink-0'}`}
       >
-        {labels.submit} <ArrowRight size={14} />
+        {loading ? '…' : labels.submit} {!loading && <ArrowRight size={14} />}
       </button>
     </form>
   );

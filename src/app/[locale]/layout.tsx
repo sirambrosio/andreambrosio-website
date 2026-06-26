@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BackToTop } from '@/components/BackToTop';
 import { RevealObserver } from '@/components/RevealObserver';
+import { Analytics } from '@/components/Analytics';
 import { LOCALES, LOCALE_META, SITE_URL, isLocale, type Locale } from '@/lib/i18n';
 import { hreflangAlternates, localeHref } from '@/lib/route-translations';
 import { SOCIAL_URLS } from '@/lib/socials';
@@ -55,6 +56,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     alternates: {
       canonical: `${SITE_URL}/${locale}`,
       languages: hreflangAlternates('/'),
+      types: { 'application/rss+xml': `${SITE_URL}/feed.xml` },
     },
     openGraph: {
       type: 'website',
@@ -154,6 +156,7 @@ export default async function LocaleLayout({
           <Footer locale={locale} />
           <BackToTop label={d.footer.backToTop} />
           <RevealObserver />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

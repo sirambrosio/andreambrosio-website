@@ -351,3 +351,19 @@ body[data-bare] header,
 body[data-bare] footer {
   display: none !important;
 }
+
+/* ═══════════════════════════════════════════════════════
+   Contraste WCAG AA no light mode — dourado como TEXTO vira
+   bronze-escuro (#6B4628, 7.24:1). Em superfícies escuras
+   (footer, heros .bg-oled) o dourado é mantido.
+   ═══════════════════════════════════════════════════════ */
+html:not(.dark) .text-champagne,
+html:not(.dark) .text-bronze {
+  color: var(--color-bronze-deep);
+}
+html:not(.dark) footer .text-champagne,
+html:not(.dark) footer .text-bronze,
+html:not(.dark) .bg-oled .text-champagne,
+html:not(.dark) .bg-oled .text-bronze {
+  color: var(--color-champagne);
+}

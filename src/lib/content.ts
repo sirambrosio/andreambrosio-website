@@ -75,15 +75,15 @@ export function campoNome(slug: CampoSlug, locale: Locale): string {
 
 // ─── Empresas ─────────────────────────────────────────────────────────────────
 export type EmpresaStatus = 'ativa' | 'construcao' | 'beta' | 'proto';
-interface EmpresaBase { nome: string; img: string; campos: CampoSlug[]; status: EmpresaStatus }
+interface EmpresaBase { nome: string; img: string; campos: CampoSlug[]; status: EmpresaStatus; url?: string }
 interface EmpresaText { tag: string; desc: string }
 export interface Empresa extends EmpresaBase, EmpresaText { campoNomes: string[] }
 
 const EMPRESA_BASE: EmpresaBase[] = [
   { nome: 'Ambrosio Company', img: '/assets/gen-campo-negocios.png', campos: ['tecnologia', 'negocios'], status: 'ativa' },
-  { nome: 'Ambrosio Health', img: '/assets/gen-campo-saude.png', campos: ['saude', 'ia', 'tecnologia'], status: 'construcao' },
-  { nome: 'LogicaOS', img: '/assets/gen-campo-ia.png', campos: ['tecnologia', 'ia', 'negocios'], status: 'beta' },
-  { nome: 'VitaAZ', img: '/assets/gen-flatlay.png', campos: ['saude'], status: 'construcao' },
+  { nome: 'Ambrosio Health', img: '/assets/gen-campo-saude.png', campos: ['saude', 'ia', 'tecnologia'], status: 'construcao', url: 'https://ambrosiohealth.com' },
+  { nome: 'LogicaOS', img: '/assets/gen-campo-ia.png', campos: ['tecnologia', 'ia', 'negocios'], status: 'beta', url: 'https://logicaos.com' },
+  { nome: 'VitaAZ', img: '/assets/gen-flatlay.png', campos: ['saude'], status: 'construcao', url: 'https://vitaaz.com' },
   { nome: 'Ambrosio ExoCore', img: '/assets/gen-sovereignty.png', campos: ['saude', 'tecnologia'], status: 'proto' },
   { nome: 'Rovemark', img: '/assets/gen-campo-tecnologia.png', campos: ['tecnologia', 'ia', 'negocios'], status: 'ativa' },
 ];

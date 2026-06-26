@@ -54,7 +54,7 @@ export function getSearchIndex(locale: Locale): SearchDoc[] {
     group: 'companies',
     title: e.nome,
     subtitle: e.tag,
-    href: lh('/empresas'),
+    href: e.url || lh('/empresas'),
     keywords: e.desc,
   }));
 

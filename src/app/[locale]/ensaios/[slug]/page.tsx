@@ -6,7 +6,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getAllEnsaios, getEnsaio } from '@/lib/ensaios';
 import { campoNome, getEnsaioExtra } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, SITE_URL, LOCALE_META, type Locale } from '@/lib/i18n';
 import { localeHref, localeUrl, hreflangAlternates } from '@/lib/route-translations';
 import { ArrowLeft } from 'lucide-react';
 import { ReadingProgress } from '@/components/ReadingProgress';
@@ -111,7 +111,7 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
 
   const articleSchema = {
     '@context': 'https://schema.org', '@type': 'Article',
-    headline: e.titulo, description: e.resumo, inLanguage: 'pt-BR',
+    headline: e.titulo, description: e.resumo, inLanguage: LOCALE_META[locale].hreflang,
     author: { '@type': 'Person', name: 'Andre Ambrósio' },
     datePublished: e.data, articleSection: campo, url: articleUrl,
     image: e.imagem ? `${SITE_URL}${e.imagem}` : undefined,
