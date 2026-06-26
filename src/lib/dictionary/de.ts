@@ -20,7 +20,7 @@ export const de: Dict = {
     language: `Sprache`,
   },
   home: {
-    eyebrow: `Systemarchitekt`,
+    eyebrow: `Architekt der Realität`,
     h1Line1: `Ich lese Systeme`,
     h1Line2: `bevor sie offensichtlich werden`,
     lead: `Essays, Lektüren und Projekte über die Architektur des nächsten Zyklus — in vier konvergierenden Feldern: Technologie, Wirtschaft, Gesundheit und künstliche Intelligenz.`,
@@ -116,7 +116,7 @@ export const de: Dict = {
     searchTitle: `Durchsuchen Sie die ganze Seite`,
     searchSubtitle: `Essays, Felder, Unternehmen. Alles in einem Feld. Drücken Sie`,
     searchPlaceholder: `Essays, Felder, Unternehmen suchen...`,
-    seo: `Andre Ambrósio — Gründer und Systemarchitekt. Essays und systemische Lektüren über Technologie, Wirtschaft, Gesundheit und künstliche Intelligenz: die unsichtbare Architektur des nächsten Zyklus. Unternehmen: Ambrosio Company, Ambrosio Health, LogicaOS, VitaAZ, Ambrosio ExoCore und Rovemark.`,
+    seo: `Andre Ambrósio — Gründer und Architekt der Realität. Essays und systemische Lektüren über Technologie, Wirtschaft, Gesundheit und künstliche Intelligenz: die unsichtbare Architektur des nächsten Zyklus. Unternehmen: Ambrosio Company, Ambrosio Health, LogicaOS, VitaAZ, Ambrosio ExoCore und Rovemark.`,
     copyright: `Andre Ambrósio. Alle Rechte vorbehalten.`,
     backToTop: `Nach oben`,
   },

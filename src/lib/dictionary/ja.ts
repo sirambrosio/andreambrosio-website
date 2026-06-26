@@ -20,7 +20,7 @@ export const ja: Dict = {
     language: `言語`,
   },
   home: {
-    eyebrow: `システムアーキテクト`,
+    eyebrow: `現実のアーキテクト`,
     h1Line1: `システムが明白になる前に`,
     h1Line2: `私はそれを読み解く`,
     lead: `次なるサイクルのアーキテクチャに関するエッセイ、考察、プロジェクト——収束する四つの領域で：テクノロジー、ビジネス、健康、人工知能。`,
@@ -116,7 +116,7 @@ export const ja: Dict = {
     searchTitle: `サイト内のすべてを検索`,
     searchSubtitle: `エッセイ、領域、事業。すべてを一つの欄で。押す`,
     searchPlaceholder: `エッセイ、領域、事業を検索…`,
-    seo: `Andre Ambrósio——創業者にしてシステムアーキテクト。テクノロジー、ビジネス、健康、人工知能についてのエッセイとシステミックな読み物：次なるサイクルの不可視のアーキテクチャ。事業：Ambrosio Company、Ambrosio Health、LogicaOS、VitaAZ、Ambrosio ExoCore、Rovemark。`,
+    seo: `Andre Ambrósio——創業者にして現実のアーキテクト。テクノロジー、ビジネス、健康、人工知能についてのエッセイとシステミックな読み物：次なるサイクルの不可視のアーキテクチャ。事業：Ambrosio Company、Ambrosio Health、LogicaOS、VitaAZ、Ambrosio ExoCore、Rovemark。`,
     copyright: `Andre Ambrósio. 無断複製を禁じます。`,
     backToTop: `トップへ戻る`,
   },

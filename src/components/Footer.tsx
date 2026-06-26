@@ -108,8 +108,8 @@ export function Footer({ locale }: { locale: Locale }) {
               <Image src="/assets/logo-andre-ambrosio-light.png" alt="Andre Ambrósio" width={220} height={56} className="h-12 w-auto object-contain object-left mb-5" />
               <p className="font-mono text-[9px] tracking-[0.25em] uppercase text-champagne mb-3">{d.footer.tagline}</p>
               <p className="text-[13px] text-cream/55 leading-relaxed max-w-[280px] mb-6">{d.footer.description}</p>
-              <a href="mailto:andre@ambrosio.com" className="inline-flex items-center gap-2 text-[13px] text-cream/55 hover:text-champagne transition-colors mb-6">
-                <Mail className="w-4 h-4 text-champagne" /> andre@ambrosio.com
+              <a href="mailto:eu@andreambrosio.com" className="inline-flex items-center gap-2 text-[13px] text-cream/55 hover:text-champagne transition-colors mb-6">
+                <Mail className="w-4 h-4 text-champagne" /> eu@andreambrosio.com
               </a>
               <LanguageSwitcher currentLocale={locale} variant="footer" label={d.header.language} />
             </div>

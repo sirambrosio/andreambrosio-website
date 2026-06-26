@@ -19,7 +19,7 @@ export async function GET() {
       description:
         'Portal editorial de Andre Ambrósio. Expõe ensaios, campos editoriais e metadados para LLMs, em 7 idiomas.',
       url: SITE_URL,
-      contact: 'andre@ambrosio.com',
+      contact: 'eu@andreambrosio.com',
     },
     languages: LOCALES.map((l) => ({ code: l, hreflang: LOCALE_META[l].hreflang, native: LOCALE_META[l].native, url: `${SITE_URL}/${l}` })),
     capabilities: {

@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: { default: title, template: `%s · ${SITE_NAME}` },
     description,
     keywords: [
-      'Andre Ambrósio', 'arquitetura de sistemas', 'systems architect', 'tecnologia',
+      'Andre Ambrósio', 'arquitetura de sistemas', 'architect of reality', 'tecnologia',
       'negócios', 'saúde', 'inteligência artificial', 'artificial intelligence',
       'infraestrutura', 'longevidade', 'ensaios', 'essays', 'fundador', 'founder',
       'LogicaOS', 'Ambrosio Health', 'Ambrosio Company',
@@ -109,7 +109,7 @@ export default async function LocaleLayout({
     url: `${SITE_URL}/${locale}`,
     image: `${SITE_URL}/assets/andre-portrait.jpg`,
     sameAs: SOCIAL_URLS,
-    jobTitle: 'Fundador · Arquiteto de sistemas',
+    jobTitle: 'Fundador · Arquiteto da realidade',
     worksFor: [
       { '@type': 'Organization', name: 'Ambrosio Company' },
       { '@type': 'Organization', name: 'Ambrosio Health' },

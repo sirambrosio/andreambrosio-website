@@ -19,7 +19,7 @@ export const pt = {
     language: `Idioma`,
   },
   home: {
-    eyebrow: `Arquiteto de sistemas`,
+    eyebrow: `Arquiteto da realidade`,
     h1Line1: `Leio sistemas`,
     h1Line2: `antes deles ficarem óbvios`,
     lead: `Ensaios, leituras e projetos sobre a arquitetura do próximo ciclo — em quatro campos que convergem: tecnologia, negócios, saúde e inteligência artificial.`,
@@ -117,7 +117,7 @@ export const pt = {
     searchTitle: `Busque tudo no site`,
     searchSubtitle: `Ensaios, campos, empresas. Tudo num campo só. Aperte`,
     searchPlaceholder: `Buscar ensaios, campos, empresas...`,
-    seo: `Andre Ambrósio — fundador e arquiteto de sistemas. Ensaios e leituras sistêmicas sobre tecnologia, negócios, saúde e inteligência artificial: a arquitetura invisível do próximo ciclo. Empresas: Ambrosio Company, Ambrosio Health, LogicaOS, VitaAZ, Ambrosio ExoCore e Rovemark.`,
+    seo: `Andre Ambrósio — fundador e arquiteto da realidade. Ensaios e leituras sistêmicas sobre tecnologia, negócios, saúde e inteligência artificial: a arquitetura invisível do próximo ciclo. Empresas: Ambrosio Company, Ambrosio Health, LogicaOS, VitaAZ, Ambrosio ExoCore e Rovemark.`,
     copyright: `Andre Ambrósio. Todos os direitos reservados.`,
     backToTop: `Voltar ao topo`,
   },

@@ -51,7 +51,7 @@ ${e.conteudo}
 
 ## CONTATO
 
-Email: andre@ambrosio.com
+Email: eu@andreambrosio.com
 Redes: @andreambrosio (Instagram, X, YouTube, LinkedIn)
 `;
 

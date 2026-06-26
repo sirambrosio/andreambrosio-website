@@ -58,7 +58,7 @@ URL: ${base}/ensaios/${e.slug}`).join('\n\n')}
 
 ## Contato
 
-Email: andre@ambrosio.com (canais diretos)
+Email: eu@andreambrosio.com (canais diretos)
 Redes: Instagram, X/Twitter, LinkedIn, YouTube (@andreambrosio)
 `;
 

@@ -20,7 +20,7 @@ export const zh: Dict = {
     language: `语言`,
   },
   home: {
-    eyebrow: `系统架构师`,
+    eyebrow: `现实的建筑师`,
     h1Line1: `在系统显而易见之前`,
     h1Line2: `我已读懂它们`,
     lead: `关于下一个周期之架构的文章、洞察与项目——聚焦四个相互融合的领域：科技、商业、健康与人工智能。`,
@@ -116,7 +116,7 @@ export const zh: Dict = {
     searchTitle: `搜索站内的一切`,
     searchSubtitle: `文章、领域、企业。全在一个搜索框里。按`,
     searchPlaceholder: `搜索文章、领域、企业……`,
-    seo: `Andre Ambrósio——创始人与系统架构师。关于科技、商业、健康与人工智能的文章与系统性阅读：下一个周期之无形架构。旗下企业：Ambrosio Company、Ambrosio Health、LogicaOS、VitaAZ、Ambrosio ExoCore 与 Rovemark。`,
+    seo: `Andre Ambrósio——创始人与现实的建筑师。关于科技、商业、健康与人工智能的文章与系统性阅读：下一个周期之无形架构。旗下企业：Ambrosio Company、Ambrosio Health、LogicaOS、VitaAZ、Ambrosio ExoCore 与 Rovemark。`,
     copyright: `Andre Ambrósio. 保留所有权利。`,
     backToTop: `回到顶部`,
   },

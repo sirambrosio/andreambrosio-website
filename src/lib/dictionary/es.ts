@@ -20,7 +20,7 @@ export const es: Dict = {
     language: `Idioma`,
   },
   home: {
-    eyebrow: `Arquitecto de sistemas`,
+    eyebrow: `Arquitecto de la realidad`,
     h1Line1: `Leo sistemas`,
     h1Line2: `antes de que sean obvios`,
     lead: `Ensayos, lecturas y proyectos sobre la arquitectura del próximo ciclo — en cuatro campos que convergen: tecnología, negocios, salud e inteligencia artificial.`,
@@ -116,7 +116,7 @@ export const es: Dict = {
     searchTitle: `Busca todo en el sitio`,
     searchSubtitle: `Ensayos, campos, empresas. Todo en un solo campo. Pulsa`,
     searchPlaceholder: `Buscar ensayos, campos, empresas...`,
-    seo: `Andre Ambrósio — fundador y arquitecto de sistemas. Ensayos y lecturas sistémicas sobre tecnología, negocios, salud e inteligencia artificial: la arquitectura invisible del próximo ciclo. Empresas: Ambrosio Company, Ambrosio Health, LogicaOS, VitaAZ, Ambrosio ExoCore y Rovemark.`,
+    seo: `Andre Ambrósio — fundador y arquitecto de la realidad. Ensayos y lecturas sistémicas sobre tecnología, negocios, salud e inteligencia artificial: la arquitectura invisible del próximo ciclo. Empresas: Ambrosio Company, Ambrosio Health, LogicaOS, VitaAZ, Ambrosio ExoCore y Rovemark.`,
     copyright: `Andre Ambrósio. Todos los derechos reservados.`,
     backToTop: `Volver arriba`,
   },
