@@ -138,7 +138,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               {ensaios.map((e) => (
                 <Link key={e.slug} href={lh(`/ensaios/${e.slug}`)} className="group rounded-[20px] overflow-hidden border border-border bg-surface hover:border-champagne transition-all flex flex-col">
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image src={`/assets/gen-campo-${e.campo}.png`} alt={e.titulo} fill sizes="(max-width:768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <Image src={e.imagem || `/assets/gen-campo-${e.campo}.png`} alt={e.titulo} fill sizes="(max-width:768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-t from-oled/45 via-transparent to-transparent" />
                     <span className="absolute top-4 left-4 font-mono text-[9px] tracking-[0.2em] uppercase text-cream bg-oled/55 backdrop-blur px-2.5 py-1 rounded-full">{campoNome(e.campo, locale)}</span>
                   </div>

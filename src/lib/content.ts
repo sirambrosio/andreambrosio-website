@@ -163,36 +163,258 @@ export function getEmpresas(locale: Locale): Empresa[] {
 export interface EnsaioMeta { titulo: string; subtitulo: string; resumo: string }
 
 export const ENSAIO_I18N: Record<string, Record<Locale, EnsaioMeta>> = {
-  'arquitetura-invisivel': {
-    pt: { titulo: `A arquitetura invisível da saúde contínua`, subtitulo: `Por que o próximo ciclo da medicina é infraestrutural`, resumo: `O modelo atual de saúde é reativo por construção. A próxima camada não é mais um app, é infraestrutura de leitura biológica contínua.` },
-    en: { titulo: `The invisible architecture of continuous health`, subtitulo: `Why medicine's next cycle is infrastructural`, resumo: `Today's health model is reactive by construction. The next layer is not another app — it is infrastructure for continuous biological reading.` },
-    es: { titulo: `La arquitectura invisible de la salud continua`, subtitulo: `Por qué el próximo ciclo de la medicina es infraestructural`, resumo: `El modelo de salud actual es reactivo por construcción. La próxima capa no es otra app, es infraestructura de lectura biológica continua.` },
-    zh: { titulo: `持续健康的无形架构`, subtitulo: `为何医学的下一个周期是基础设施性的`, resumo: `当下的健康模式在构造上就是被动的。下一层不是又一个 App，而是持续读取生物信号的基础设施。` },
-    fr: { titulo: `L'architecture invisible de la santé continue`, subtitulo: `Pourquoi le prochain cycle de la médecine est infrastructurel`, resumo: `Le modèle de santé actuel est réactif par construction. La prochaine couche n'est pas une appli de plus, c'est une infrastructure de lecture biologique continue.` },
-    de: { titulo: `Die unsichtbare Architektur kontinuierlicher Gesundheit`, subtitulo: `Warum der nächste Zyklus der Medizin infrastrukturell ist`, resumo: `Das heutige Gesundheitsmodell ist von Grund auf reaktiv. Die nächste Schicht ist keine weitere App, sondern Infrastruktur für kontinuierliches biologisches Auslesen.` },
-    ja: { titulo: `連続的な健康の、不可視のアーキテクチャ`, subtitulo: `なぜ医療の次なるサイクルはインフラ的なのか`, resumo: `現在の健康モデルは、設計からして受動的だ。次の層はもう一つのアプリではなく、生体情報を連続的に読み取るための基盤である。` },
-    ru: { titulo: `Невидимая архитектура непрерывного здоровья`, subtitulo: `Почему следующий цикл медицины — инфраструктурный`, resumo: `Нынешняя модель здоровья реактивна по построению. Следующий слой — не очередное приложение, а инфраструктура непрерывного считывания биологии.` },
+  "ia-camada-de-decisao": {
+    "pt": {
+      "titulo": "IA como camada de decisão: o ciclo que separa quem construiu sistema de quem comprou ferramenta",
+      "subtitulo": "A maioria das empresas tem IA do jeito que tem um aspirador: chama, usa, guarda. A virada estrutural é outra — é quando a inteligência deixa de ser endpoint e vira o tecido onde cada fluxo lê contexto, decide e aprende.",
+      "resumo": "Ter IA é diferente de ser um sistema que decide. A vantagem real não está no modelo — está na arquitetura de decisão que acumula dados e aprendizado que ninguém consegue copiar via API."
+    },
+    "en": {
+      "titulo": "AI as a decision layer: the loop that separates those who built a system from those who bought a tool",
+      "subtitulo": "Most companies have AI the way they have a vacuum cleaner: grab it, use it, put it away. The structural turn is something else entirely — it's when intelligence stops being an endpoint and becomes the tissue where every workflow reads context, decides, and learns.",
+      "resumo": "Having AI is different from being a system that decides. The real advantage isn't in the model — it's in the decision architecture that accumulates data and learning nobody can copy through an API."
+    },
+    "es": {
+      "titulo": "IA como capa de decisión: el ciclo que separa a quien construyó un sistema de quien compró una herramienta",
+      "subtitulo": "La mayoría de las empresas tiene IA del mismo modo que tiene una aspiradora: la llama, la usa, la guarda. El giro estructural es otro — es cuando la inteligencia deja de ser un endpoint y se vuelve el tejido donde cada flujo lee contexto, decide y aprende.",
+      "resumo": "Tener IA es distinto de ser un sistema que decide. La ventaja real no está en el modelo — está en la arquitectura de decisión que acumula datos y aprendizaje que nadie consigue copiar vía API."
+    },
+    "zh": {
+      "titulo": "AI 作为决策层：区分\"建系统者\"与\"买工具者\"的那个闭环",
+      "subtitulo": "大多数企业拥有 AI 的方式，就像拥有一台吸尘器：召来、用上、收起。真正的结构性转折是另一回事——是当智能不再是终点（endpoint），而是成为每一条流程在其中读取上下文、做出决策、并不断学习的肌理。",
+      "resumo": "\"拥有 AI\"与\"成为一个会决策的系统\"是两回事。真正的优势不在模型——而在那套不断累积数据与学习、且没人能通过 API 复制的决策架构里。"
+    },
+    "fr": {
+      "titulo": "L'IA comme couche de décision : le cycle qui sépare ceux qui ont bâti un système de ceux qui ont acheté un outil",
+      "subtitulo": "La plupart des entreprises possèdent de l'IA comme on possède un aspirateur : on l'appelle, on s'en sert, on le range. Le vrai basculement structurel est ailleurs — c'est lorsque l'intelligence cesse d'être un point d'arrivée et devient le tissu où chaque flux lit le contexte, décide et apprend.",
+      "resumo": "Avoir de l'IA est une chose ; être un système qui décide en est une autre. L'avantage réel ne réside pas dans le modèle — il réside dans l'architecture de décision qui accumule des données et un apprentissage que personne ne peut copier via une API."
+    },
+    "de": {
+      "titulo": "KI als Entscheidungsschicht: der Kreislauf, der trennt, wer ein System gebaut hat, von wem, der ein Werkzeug gekauft hat",
+      "subtitulo": "Die meisten Unternehmen haben KI so, wie man einen Staubsauger hat: holen, benutzen, wegräumen. Die strukturelle Wende ist eine andere — sie geschieht, wenn die Intelligenz aufhört, ein Endpunkt zu sein, und zum Gewebe wird, in dem jeder Ablauf Kontext liest, entscheidet und lernt.",
+      "resumo": "KI zu haben ist etwas anderes, als ein System zu sein, das entscheidet. Der echte Vorteil liegt nicht im Modell — er liegt in der Entscheidungsarchitektur, die Daten und Lernen anhäuft, das niemand über eine API kopieren kann."
+    },
+    "ja": {
+      "titulo": "意思決定レイヤーとしてのAI——システムを築いた者とツールを買った者を分かつ、あの循環",
+      "subtitulo": "大半の企業は、掃除機を持つのと同じやり方でAIを持っている——呼び出し、使い、しまう。構造的な転換はそこではない。知性がエンドポイントであることをやめ、あらゆるフローが文脈を読み、決め、学ぶ生地となったとき、それは起こる。",
+      "resumo": "AIを持っていることと、意思決定するシステムであることは違う。真の優位はモデルにあるのではない——誰もAPI経由で複製できないデータと学習を蓄積する、意思決定のアーキテクチャにある。"
+    },
+    "ru": {
+      "titulo": "ИИ как слой принятия решений: цикл, который отделяет того, кто построил систему, от того, кто купил инструмент",
+      "subtitulo": "У большинства компаний ИИ устроен так же, как пылесос: достал, попользовался, убрал. Структурный перелом в другом — он наступает, когда интеллект перестаёт быть конечной точкой и становится той тканью, где каждый поток считывает контекст, принимает решение и учится.",
+      "resumo": "Иметь ИИ — не то же самое, что быть системой, которая решает. Настоящее преимущество не в модели — оно в архитектуре принятия решений, которая накапливает данные и обучение, неподражаемые ни для кого через API."
+    }
   },
-  'camada-decisao-ia': {
-    pt: { titulo: `IA como camada de decisão, não ferramenta`, subtitulo: `A diferença entre usar IA e construir sobre ela`, resumo: `A maioria das empresas ainda trata IA como feature. A próxima onda de vantagem vem de tratá-la como camada estrutural de decisão.` },
-    en: { titulo: `AI as a decision layer, not a tool`, subtitulo: `The difference between using AI and building on it`, resumo: `Most companies still treat AI as a feature. The next wave of advantage comes from treating it as a structural decision layer.` },
-    es: { titulo: `IA como capa de decisión, no herramienta`, subtitulo: `La diferencia entre usar IA y construir sobre ella`, resumo: `La mayoría de las empresas aún trata la IA como una función. La próxima ola de ventaja viene de tratarla como capa estructural de decisión.` },
-    zh: { titulo: `把 AI 当作决策层，而非工具`, subtitulo: `使用 AI 与在其之上构建的区别`, resumo: `多数企业仍把 AI 当作一项功能。下一波优势来自把它当作结构性的决策层。` },
-    fr: { titulo: `L'IA comme couche de décision, pas comme outil`, subtitulo: `La différence entre utiliser l'IA et bâtir dessus`, resumo: `La plupart des entreprises traitent encore l'IA comme une fonctionnalité. La prochaine vague d'avantage vient de la traiter comme une couche structurelle de décision.` },
-    de: { titulo: `KI als Entscheidungsschicht, nicht als Werkzeug`, subtitulo: `Der Unterschied zwischen KI nutzen und auf ihr bauen`, resumo: `Die meisten Unternehmen behandeln KI noch als Feature. Die nächste Welle des Vorteils entsteht, wenn man sie als strukturelle Entscheidungsschicht behandelt.` },
-    ja: { titulo: `ツールではなく、意思決定の層としてのAI`, subtitulo: `AIを使うことと、その上に築くことの違い`, resumo: `多くの企業はいまだAIを一機能として扱う。次の優位は、それを構造的な意思決定の層として扱うことから生まれる。` },
-    ru: { titulo: `ИИ как слой принятия решений, а не инструмент`, subtitulo: `Разница между использованием ИИ и построением на нём`, resumo: `Большинство компаний всё ещё относятся к ИИ как к функции. Следующая волна преимущества — относиться к нему как к структурному слою решений.` },
+  "ia-local-first-soberania": {
+    "pt": {
+      "titulo": "Soberania computacional: por que a IA precisa voltar para a sua máquina",
+      "subtitulo": "A inteligência virou serviço alugado. O próximo ciclo é a inteligência que roda no hardware que você possui — e ninguém pode desligar.",
+      "resumo": "A IA hoje é dependência de nuvem de terceiros: dados, contexto e continuidade reféns de uma API que muda preço, política ou some. Local-first devolve soberania — e redefine quem é dono da camada de decisão."
+    },
+    "en": {
+      "titulo": "Computational sovereignty: why AI needs to come back to your machine",
+      "subtitulo": "Intelligence has become a rented service. The next cycle is intelligence that runs on hardware you own — and that no one can switch off.",
+      "resumo": "AI today is a dependency on someone else's cloud: your data, context, and continuity held hostage by an API that can change its price, its policy, or simply vanish. Local-first hands sovereignty back — and redefines who owns the decision layer."
+    },
+    "es": {
+      "titulo": "Soberanía computacional: por qué la IA tiene que volver a tu máquina",
+      "subtitulo": "La inteligencia se convirtió en un servicio alquilado. El próximo ciclo es la inteligencia que corre en el hardware que tú posees, y que nadie puede apagar.",
+      "resumo": "Hoy la IA es dependencia de la nube de terceros: datos, contexto y continuidad rehenes de una API que cambia de precio, de política o desaparece. Lo local-first devuelve soberanía, y redefine quién es dueño de la capa de decisión."
+    },
+    "zh": {
+      "titulo": "计算主权：为什么 AI 必须回到你自己的机器上",
+      "subtitulo": "智能已经变成了租来的服务。下一个周期，是运行在你拥有的硬件上、谁也无法关闭的智能。",
+      "resumo": "今天的 AI 是对第三方云的依赖：数据、上下文和连续性都被一个随时会改价格、改政策或干脆消失的 API 扣作人质。本地优先（local-first）把主权还给你——并重新定义谁才是决策层的主人。"
+    },
+    "fr": {
+      "titulo": "Souveraineté computationnelle : pourquoi l'IA doit revenir sur votre machine",
+      "subtitulo": "L'intelligence est devenue un service loué. Le prochain cycle, c'est l'intelligence qui tourne sur le matériel que vous possédez — et que personne ne peut éteindre.",
+      "resumo": "L'IA est aujourd'hui une dépendance au cloud de tiers : données, contexte et continuité retenus en otage par une API qui change de prix, de politique ou disparaît. Le local-first redonne la souveraineté — et redéfinit qui est propriétaire de la couche de décision."
+    },
+    "de": {
+      "titulo": "Computationale Souveränität: warum die KI auf Ihre Maschine zurückkehren muss",
+      "subtitulo": "Intelligenz ist zur gemieteten Dienstleistung geworden. Der nächste Zyklus ist die Intelligenz, die auf der Hardware läuft, die Ihnen gehört — und die niemand abschalten kann.",
+      "resumo": "KI ist heute eine Abhängigkeit von fremder Cloud: Daten, Kontext und Kontinuität als Geiseln einer API, die Preis, Politik oder ihre bloße Existenz ändert. Local-first gibt die Souveränität zurück — und definiert neu, wem die Entscheidungsebene gehört."
+    },
+    "ja": {
+      "titulo": "計算機主権：なぜAIはあなたのマシンへ帰る必要があるのか",
+      "subtitulo": "知能はレンタルされるサービスになった。次の周期は、あなたが所有するハードウェア上で動く知能だ——そして誰もそれを止めることはできない。",
+      "resumo": "今日のAIは第三者のクラウドへの依存である。データ、コンテキスト、継続性が、価格やポリシーを変えたり消えたりするAPIの人質になっている。ローカルファーストは主権を取り戻す——そして、意思決定の層を誰が所有するのかを再定義する。"
+    },
+    "ru": {
+      "titulo": "Вычислительный суверенитет: почему ИИ должен вернуться на вашу машину",
+      "subtitulo": "Интеллект превратился в арендуемую услугу. Следующий цикл — это интеллект, который работает на принадлежащем вам железе, и который никто не может выключить.",
+      "resumo": "ИИ сегодня — это зависимость от чужого облака: данные, контекст и непрерывность остаются заложниками API, который меняет цену, политику или попросту исчезает. Local-first возвращает суверенитет — и переопределяет, кто владеет слоем принятия решений."
+    }
   },
-  'erro-estrutural-negocios': {
-    pt: { titulo: `O erro estrutural da empresa moderna`, subtitulo: `Por que eficiência deixou de ser vantagem`, resumo: `Durante 50 anos, a vantagem competitiva veio de eficiência operacional. Essa era acabou. A nova vantagem é arquitetura.` },
-    en: { titulo: `The structural error of the modern company`, subtitulo: `Why efficiency stopped being an advantage`, resumo: `For 50 years, competitive advantage came from operational efficiency. That era is over. The new advantage is architecture.` },
-    es: { titulo: `El error estructural de la empresa moderna`, subtitulo: `Por qué la eficiencia dejó de ser ventaja`, resumo: `Durante 50 años, la ventaja competitiva vino de la eficiencia operativa. Esa era terminó. La nueva ventaja es la arquitectura.` },
-    zh: { titulo: `现代企业的结构性错误`, subtitulo: `为何效率不再是优势`, resumo: `五十年来，竞争优势源自运营效率。那个时代已经结束。新的优势是架构。` },
-    fr: { titulo: `L'erreur structurelle de l'entreprise moderne`, subtitulo: `Pourquoi l'efficacité a cessé d'être un avantage`, resumo: `Pendant 50 ans, l'avantage concurrentiel venait de l'efficacité opérationnelle. Cette ère est révolue. Le nouvel avantage, c'est l'architecture.` },
-    de: { titulo: `Der strukturelle Fehler des modernen Unternehmens`, subtitulo: `Warum Effizienz aufgehört hat, ein Vorteil zu sein`, resumo: `50 Jahre lang kam der Wettbewerbsvorteil aus operativer Effizienz. Diese Ära ist vorbei. Der neue Vorteil ist Architektur.` },
-    ja: { titulo: `現代企業の構造的な誤り`, subtitulo: `なぜ効率は優位でなくなったのか`, resumo: `50年にわたり、競争優位は業務効率から生まれた。その時代は終わった。新しい優位は、アーキテクチャである。` },
-    ru: { titulo: `Структурная ошибка современной компании`, subtitulo: `Почему эффективность перестала быть преимуществом`, resumo: `50 лет конкурентное преимущество исходило из операционной эффективности. Эта эпоха закончилась. Новое преимущество — архитектура.` },
+  "memoria-ia-mente": {
+    "pt": {
+      "titulo": "Memória: o que separa uma ferramenta de uma mente",
+      "subtitulo": "LLMs sem memória são amnésicos brilhantes. A próxima fronteira não é mais parâmetros — é continuidade, identidade e a capacidade de não esquecer quem você é.",
+      "resumo": "A inteligência sem memória é uma performance. O que transforma um modelo de linguagem num parceiro é a continuidade — episódica, semântica e de identidade — que persiste entre os encontros."
+    },
+    "en": {
+      "titulo": "Memory: What Separates a Tool From a Mind",
+      "subtitulo": "LLMs without memory are brilliant amnesiacs. The next frontier isn't more parameters — it's continuity, identity, and the capacity not to forget who you are.",
+      "resumo": "Intelligence without memory is a performance. What turns a language model into a partner is continuity — episodic, semantic, and of identity — that persists between encounters."
+    },
+    "es": {
+      "titulo": "Memoria: lo que separa una herramienta de una mente",
+      "subtitulo": "Los LLMs sin memoria son amnésicos brillantes. La próxima frontera no es más parámetros: es continuidad, identidad y la capacidad de no olvidar quién eres.",
+      "resumo": "La inteligencia sin memoria es una actuación. Lo que convierte a un modelo de lenguaje en un compañero es la continuidad —episódica, semántica y de identidad— que persiste entre un encuentro y otro."
+    },
+    "zh": {
+      "titulo": "记忆：区分工具与心智的分界",
+      "subtitulo": "没有记忆的大语言模型，是出色的失忆症患者。下一个前沿不再是更多参数——而是连续性、身份认同，以及不忘记自己是谁的能力。",
+      "resumo": "没有记忆的智能只是一场表演。让一个语言模型从工具变成伙伴的，是连续性——情节的、语义的与身份的连续性，它在一次次相遇之间持存。"
+    },
+    "fr": {
+      "titulo": "La mémoire : ce qui sépare un outil d'un esprit",
+      "subtitulo": "Les LLM sans mémoire sont des amnésiques brillants. La prochaine frontière n'est plus une question de paramètres — c'est la continuité, l'identité et la capacité de ne pas oublier qui vous êtes.",
+      "resumo": "L'intelligence sans mémoire est une performance. Ce qui transforme un modèle de langage en partenaire, c'est la continuité — épisodique, sémantique et identitaire — qui persiste entre les rencontres."
+    },
+    "de": {
+      "titulo": "Gedächtnis: was ein Werkzeug von einem Geist trennt",
+      "subtitulo": "LLMs ohne Gedächtnis sind brillante Amnesiekranke. Die nächste Grenze sind nicht mehr Parameter — es sind Kontinuität, Identität und die Fähigkeit, nicht zu vergessen, wer man ist.",
+      "resumo": "Intelligenz ohne Gedächtnis ist eine Performance. Was ein Sprachmodell in einen Partner verwandelt, ist die Kontinuität — episodisch, semantisch und identitätsbezogen —, die zwischen den Begegnungen fortbesteht."
+    },
+    "ja": {
+      "titulo": "記憶——道具と精神を分かつもの",
+      "subtitulo": "記憶を持たないLLMは、聡明な健忘症患者だ。次なるフロンティアはもはやパラメータの増大ではない——連続性、アイデンティティ、そして自分が誰であるかを忘れない能力である。",
+      "resumo": "記憶なき知性とは、ひとつの演技にすぎない。言語モデルをパートナーへと変えるのは、出会いと出会いのあいだに持続する連続性——エピソード的、意味的、そしてアイデンティティの連続性——である。"
+    },
+    "ru": {
+      "titulo": "Память: то, что отличает инструмент от разума",
+      "subtitulo": "Языковые модели без памяти — это блестящие амнезиаки. Следующий рубеж — не больше параметров, а непрерывность, идентичность и способность не забывать, кто ты есть.",
+      "resumo": "Интеллект без памяти — это представление. То, что превращает языковую модель в партнёра, — это непрерывность (эпизодическая, семантическая и непрерывность идентичности), которая сохраняется между встречами."
+    }
   },
+  "ia-proxima-fase-saude": {
+    "pt": {
+      "titulo": "A próxima fase da saúde será escrita por IA",
+      "subtitulo": "A medicina episódica está chegando ao fim. O que vem depois é engenharia humana — contínua, preditiva, legível — com a IA como camada que lê o corpo o tempo todo.",
+      "resumo": "A saúde vai deixar de ser um sistema reativo que você aciona quando algo já quebrou e virar infraestrutura pessoal contínua, lida por IA em tempo real, como energia ou internet."
+    },
+    "en": {
+      "titulo": "The next phase of health will be written by AI",
+      "subtitulo": "Episodic medicine is coming to an end. What comes next is human engineering — continuous, predictive, legible — with AI as the layer that reads the body all the time.",
+      "resumo": "Health will stop being a reactive system you trigger once something has already broken and become continuous personal infrastructure, read by AI in real time, like power or the internet."
+    },
+    "es": {
+      "titulo": "La próxima fase de la salud será escrita por IA",
+      "subtitulo": "La medicina episódica está llegando a su fin. Lo que viene después es ingeniería humana —continua, predictiva, legible— con la IA como capa que lee el cuerpo todo el tiempo.",
+      "resumo": "La salud va a dejar de ser un sistema reactivo que activas cuando algo ya se rompió y se convertirá en infraestructura personal continua, leída por IA en tiempo real, como la energía o internet."
+    },
+    "zh": {
+      "titulo": "健康的下一个阶段将由人工智能书写",
+      "subtitulo": "间歇式医疗正走向终结。接踵而来的是人体工程学——持续、预测、可读——而人工智能则是那个时刻读取身体的层。",
+      "resumo": "健康将不再是一个等到某处已经损坏才启动的被动系统，而会变成持续的个人基础设施，由人工智能实时读取，如同电力或互联网一般。"
+    },
+    "fr": {
+      "titulo": "La prochaine phase de la santé sera écrite par l'IA",
+      "subtitulo": "La médecine épisodique touche à sa fin. Ce qui vient ensuite, c'est l'ingénierie humaine — continue, prédictive, lisible — avec l'IA comme couche qui lit le corps en permanence.",
+      "resumo": "La santé va cesser d'être un système réactif que l'on déclenche quand quelque chose s'est déjà cassé, pour devenir une infrastructure personnelle continue, lue par l'IA en temps réel, comme l'énergie ou l'internet."
+    },
+    "de": {
+      "titulo": "Die nächste Phase der Gesundheit wird von KI geschrieben",
+      "subtitulo": "Die episodische Medizin geht zu Ende. Was danach kommt, ist Human Engineering — kontinuierlich, prädiktiv, lesbar — mit der KI als Schicht, die den Körper die ganze Zeit liest.",
+      "resumo": "Gesundheit wird aufhören, ein reaktives System zu sein, das man auslöst, wenn etwas bereits kaputt ist, und wird zu kontinuierlicher persönlicher Infrastruktur, in Echtzeit von KI gelesen, wie Strom oder Internet."
+    },
+    "ja": {
+      "titulo": "健康の次なるフェーズは、AIによって書かれる",
+      "subtitulo": "エピソード型医療は終わりを迎えつつある。その先に来るのは、人間のエンジニアリングだ——連続的で、予測的で、可読な。そして、身体を四六時中読み続ける層としてのAIが、それを担う。",
+      "resumo": "健康は、何かがすでに壊れたときに作動させる受動的なシステムであることをやめ、エネルギーやインターネットのように、AIによってリアルタイムで読み取られる連続的な個人インフラへと変わっていく。"
+    },
+    "ru": {
+      "titulo": "Следующую фазу здоровья напишет ИИ",
+      "subtitulo": "Эпизодическая медицина подходит к концу. То, что приходит ей на смену, — это инженерия человека: непрерывная, предиктивная, читаемая — с ИИ в роли слоя, который читает тело постоянно.",
+      "resumo": "Здоровье перестанет быть реактивной системой, которую вы включаете, когда что-то уже сломалось, и станет непрерывной личной инфраструктурой, читаемой ИИ в реальном времени, как электричество или интернет."
+    }
+  },
+  "fim-do-software": {
+    "pt": {
+      "titulo": "O fim do software: quando a interface se dissolve e o sistema passa a se gerar sozinho",
+      "subtitulo": "Por décadas, software foi tela, botão e menu — uma máquina congelada que o humano operava. Esse contrato está acabando. O próximo software não é operado: é instruído, e se reescreve em tempo real para cada pessoa que o toca.",
+      "resumo": "O software para de ser um artefato fixo de telas e botões e vira um sistema que decide, executa e se gera ao vivo por contexto — dissolvendo a interface e redefinindo o trabalho do conhecimento."
+    },
+    "en": {
+      "titulo": "The End of Software: When the Interface Dissolves and the System Begins to Generate Itself",
+      "subtitulo": "For decades, software was screen, button, and menu — a frozen machine the human operated. That contract is ending. The next software isn't operated: it's instructed, and it rewrites itself in real time for every person who touches it.",
+      "resumo": "Software stops being a fixed artifact of screens and buttons and becomes a system that decides, executes, and generates itself live according to context — dissolving the interface and redefining knowledge work."
+    },
+    "es": {
+      "titulo": "El fin del software: cuando la interfaz se disuelve y el sistema pasa a generarse solo",
+      "subtitulo": "Durante décadas, el software fue pantalla, botón y menú: una máquina congelada que el humano operaba. Ese contrato está terminando. El próximo software no se opera: se le instruye, y se reescribe en tiempo real para cada persona que lo toca.",
+      "resumo": "El software deja de ser un artefacto fijo de pantallas y botones y se convierte en un sistema que decide, ejecuta y se genera en vivo según el contexto, disolviendo la interfaz y redefiniendo el trabajo del conocimiento."
+    },
+    "zh": {
+      "titulo": "软件的终结：当界面消融，系统开始自我生成",
+      "subtitulo": "几十年来，软件一直是屏幕、按钮和菜单——一台被人类操作的冻结机器。这份契约正在终结。下一代软件不是被操作的：它是被指令的，并为每一个触碰它的人实时重写自己。",
+      "resumo": "软件不再是由屏幕和按钮构成的固定造物，而成为一个根据上下文实时决策、执行并自我生成的系统——消融界面，重新定义知识工作。"
+    },
+    "fr": {
+      "titulo": "La fin du logiciel : quand l'interface se dissout et que le système se met à s'engendrer lui-même",
+      "subtitulo": "Pendant des décennies, le logiciel a été un écran, un bouton, un menu — une machine figée que l'humain opérait. Ce contrat touche à sa fin. Le prochain logiciel ne s'opère pas : il s'instruit, et il se réécrit en temps réel pour chaque personne qui le touche.",
+      "resumo": "Le logiciel cesse d'être un artefact fixe d'écrans et de boutons pour devenir un système qui décide, exécute et s'engendre en direct par contexte — dissolvant l'interface et redéfinissant le travail du savoir."
+    },
+    "de": {
+      "titulo": "Das Ende der Software: Wenn die Oberfläche sich auflöst und das System anfängt, sich selbst zu erzeugen",
+      "subtitulo": "Jahrzehntelang war Software Bildschirm, Knopf und Menü — eine eingefrorene Maschine, die der Mensch bediente. Dieser Vertrag läuft aus. Die nächste Software wird nicht bedient: Sie wird instruiert und schreibt sich in Echtzeit für jeden Menschen neu, der sie berührt.",
+      "resumo": "Software hört auf, ein festes Artefakt aus Bildschirmen und Knöpfen zu sein, und wird zu einem System, das entscheidet, ausführt und sich live nach Kontext erzeugt — die Oberfläche löst sich auf und die Wissensarbeit wird neu definiert."
+    },
+    "ja": {
+      "titulo": "ソフトウェアの終焉——インターフェースが溶け、システムが自らを生成しはじめるとき",
+      "subtitulo": "何十年ものあいだ、ソフトウェアとは画面であり、ボタンであり、メニューだった——人間が操作する、凍りついた機械。その契約はいま終わりつつある。次のソフトウェアは操作されない。指示され、それに触れる一人ひとりのために、リアルタイムで自らを書き換える。",
+      "resumo": "ソフトウェアは画面とボタンの固定された人工物であることをやめ、文脈に応じて判断し、実行し、その場で自らを生成するシステムへと変わる——インターフェースを溶かし、知識労働を再定義しながら。"
+    },
+    "ru": {
+      "titulo": "Конец программного обеспечения: когда интерфейс растворяется и система начинает порождать себя сама",
+      "subtitulo": "Десятилетиями программное обеспечение было экраном, кнопкой и меню — застывшей машиной, которой управлял человек. Этот контракт подходит к концу. Следующим программным обеспечением не управляют: ему дают указания, и оно переписывает себя в реальном времени для каждого, кто к нему прикасается.",
+      "resumo": "Программное обеспечение перестаёт быть фиксированным артефактом из экранов и кнопок и становится системой, которая решает, исполняет и порождает себя вживую по контексту — растворяя интерфейс и переопределяя работу со знанием."
+    }
+  },
+  "economia-da-inteligencia": {
+    "pt": {
+      "titulo": "A Economia da Inteligência",
+      "subtitulo": "Por que o valor está migrando da interface para a capacidade de decidir — e o que isso faz com quem só sabe comprar ferramenta",
+      "resumo": "Quando decidir bem fica barato e abundante, a vantagem deixa de morar na eficiência e passa a morar na arquitetura: na camada onde o negócio vive e no que ele acumula que ninguém consegue copiar."
+    },
+    "en": {
+      "titulo": "The Economics of Intelligence",
+      "subtitulo": "Why value is migrating from the interface to the capacity to decide — and what that does to anyone who only knows how to buy a tool",
+      "resumo": "When deciding well becomes cheap and abundant, advantage stops living in efficiency and moves into architecture: into the layer where the business lives and into what it accumulates that no one can copy."
+    },
+    "es": {
+      "titulo": "La Economía de la Inteligencia",
+      "subtitulo": "Por qué el valor está migrando de la interfaz a la capacidad de decidir — y qué le hace eso a quien solo sabe comprar herramienta",
+      "resumo": "Cuando decidir bien se vuelve barato y abundante, la ventaja deja de habitar en la eficiencia y pasa a habitar en la arquitectura: en la capa donde el negocio vive y en lo que acumula que nadie consigue copiar."
+    },
+    "zh": {
+      "titulo": "智能经济学",
+      "subtitulo": "为什么价值正从界面迁向决策能力——以及这对只会买工具的人意味着什么",
+      "resumo": "当把事情决断好变得便宜而充裕，优势便不再栖身于效率，而是栖身于架构：栖身于业务所处的那一层，以及它所积累的、谁也无法复制的东西。"
+    },
+    "fr": {
+      "titulo": "L'Économie de l'Intelligence",
+      "subtitulo": "Pourquoi la valeur migre de l'interface vers la capacité de décider — et ce que cela fait à ceux qui ne savent qu'acheter des outils",
+      "resumo": "Quand bien décider devient bon marché et abondant, l'avantage cesse d'habiter l'efficacité et se met à habiter l'architecture : dans la couche où l'entreprise vit et dans ce qu'elle accumule que personne ne peut copier."
+    },
+    "de": {
+      "titulo": "Die Ökonomie der Intelligenz",
+      "subtitulo": "Warum der Wert sich von der Schnittstelle zur Entscheidungsfähigkeit verlagert — und was das mit denen macht, die nur Werkzeuge kaufen können",
+      "resumo": "Wenn gutes Entscheiden billig und im Überfluss vorhanden wird, wohnt der Vorteil nicht mehr in der Effizienz, sondern in der Architektur: in der Schicht, in der das Geschäft lebt, und in dem, was es ansammelt und das niemand kopieren kann."
+    },
+    "ja": {
+      "titulo": "知性の経済学",
+      "subtitulo": "なぜ価値はインターフェースから意思決定する能力へと移っているのか——そしてそれが、ツールを買うことしか知らない者に何をもたらすのか",
+      "resumo": "うまく決めることが安く、ありふれたものになると、優位はもはや効率に宿らず、アーキテクチャに宿るようになる——事業が生きる階層と、誰にも複製できない形でそこに蓄積されるものに。"
+    },
+    "ru": {
+      "titulo": "Экономика интеллекта",
+      "subtitulo": "Почему ценность мигрирует от интерфейса к способности решать — и что это делает с теми, кто умеет только покупать инструмент",
+      "resumo": "Когда хорошо решать становится дёшево и доступно всем, преимущество перестаёт жить в эффективности и переселяется в архитектуру: в тот слой, где обитает бизнес, и в то, что он накапливает и чего никто не может скопировать."
+    }
+  }
 };
 
 // ─── Extras editoriais (key takeaways + FAQ) — opcional por idioma ──────────────

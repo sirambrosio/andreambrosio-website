@@ -29,9 +29,6 @@ const SEGMENT_TRANSLATIONS: Record<string, SegMap> = {
   ia:         { en: 'artificial-intelligence', es: 'inteligencia-artificial', fr: 'intelligence-artificielle', de: 'kuenstliche-intelligenz', ja: '人工知能', zh: '人工智能', ru: 'искусственный-интеллект' },
 
   // ── slugs de ensaio ─────────────────────────────────────────────────────
-  'arquitetura-invisivel':    { en: 'invisible-architecture', es: 'arquitectura-invisible', fr: 'architecture-invisible', de: 'unsichtbare-architektur', ja: '不可視のアーキテクチャ', zh: '无形架构', ru: 'невидимая-архитектура' },
-  'camada-decisao-ia':        { en: 'ai-decision-layer',      es: 'ia-capa-de-decision',    fr: 'ia-couche-de-decision',  de: 'ki-entscheidungsschicht', ja: '意思決定の層',         zh: '决策层',   ru: 'слой-решений' },
-  'erro-estrutural-negocios': { en: 'structural-error',       es: 'error-estructural',      fr: 'erreur-structurelle',    de: 'struktureller-fehler',    ja: '構造的な誤り',         zh: '结构性错误', ru: 'структурная-ошибка' },
 };
 
 // reverse: locale → { slug-traduzido: canônico }

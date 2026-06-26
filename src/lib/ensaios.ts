@@ -64,8 +64,9 @@ function readLocalizedBody(slug: string, locale: Locale): string | null {
   if (locale === DEFAULT_LOCALE) return null;
   const p = path.join(ENSAIOS_DIR, locale, `${slug}.mdx`);
   if (!fs.existsSync(p)) return null;
-  const { content } = matter(fs.readFileSync(p, 'utf8'));
-  return content.trim() ? content : null;
+  // corpo localizado é markdown puro (sem frontmatter) — NÃO passar por matter()
+  const raw = fs.readFileSync(p, 'utf8').replace(/^\uFEFF/, '').trim();
+  return raw || null;
 }
 
 function localize(e: RawEnsaio, locale: Locale): Ensaio {
