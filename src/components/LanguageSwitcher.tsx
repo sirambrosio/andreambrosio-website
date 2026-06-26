@@ -15,7 +15,7 @@ import { canonicalizePath, localizePath } from '@/lib/route-translations';
 
 interface Props {
   currentLocale: Locale;
-  variant?: 'header' | 'footer';
+  variant?: 'header' | 'footer' | 'mobile';
   label?: string;
 }
 
@@ -56,6 +56,35 @@ export function LanguageSwitcher({ currentLocale, variant = 'header', label = 'I
       window.removeEventListener('mousedown', onClick);
     };
   }, [open]);
+
+  // Variante mobile: lista direta de idiomas (sem dropdown) — visível no menu mobile.
+  if (variant === 'mobile') {
+    return (
+      <div>
+        <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-dimmer mb-3 px-1">{label}</div>
+        <div className="grid grid-cols-2 gap-1.5">
+          {LOCALES.map((loc) => {
+            const m = LOCALE_META[loc];
+            const active = loc === currentLocale;
+            return (
+              <button
+                key={loc}
+                type="button"
+                onClick={() => change(loc)}
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[14px] border transition-colors ${
+                  active ? 'border-champagne text-champagne bg-champagne/10' : 'border-border text-text-dim hover:text-champagne hover:border-champagne'
+                }`}
+              >
+                <span aria-hidden className="text-base">{m.flag}</span>
+                <span className="flex-1 text-left">{m.native}</span>
+                {active && <Check size={14} className="text-champagne shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 
   const isFooter = variant === 'footer';
 

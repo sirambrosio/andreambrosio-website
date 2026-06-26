@@ -172,8 +172,8 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
               )}
             </div>
           ))}
-          <div className="pt-6">
-            <LanguageSwitcher currentLocale={locale} variant="header" label={t.language} />
+          <div className="pt-6 mt-2 border-t border-border">
+            <LanguageSwitcher currentLocale={locale} variant="mobile" label={t.language} />
           </div>
         </div>
       )}

@@ -9,6 +9,7 @@ import { SOCIALS, PROJECTS } from '@/lib/socials';
 import { SocialIcon } from '@/components/SocialIcon';
 import { HideChrome } from '@/components/HideChrome';
 import { BioThemeToggle } from '@/components/journal/BioThemeToggle';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const T = {
   projetos: { pt: 'Projetos', en: 'Projects', es: 'Proyectos', zh: '项目', fr: 'Projets', de: 'Projekte', ja: 'プロジェクト', ru: 'Проекты' },
@@ -59,8 +60,9 @@ export default async function LinksPage({ params }: { params: Promise<{ locale: 
         <div className="absolute inset-0" style={{ background: 'radial-gradient(120% 75% at 50% -8%, rgba(201,169,97,0.16) 0%, transparent 52%)' }} />
       </div>
 
-      {/* toggle de tema */}
-      <div className="absolute top-5 right-5 z-20">
+      {/* idioma + tema */}
+      <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
+        <LanguageSwitcher currentLocale={locale} variant="header" label={d.header.language} />
         <BioThemeToggle label={d.header.toggleTheme} />
       </div>
 
