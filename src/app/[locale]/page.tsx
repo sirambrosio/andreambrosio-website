@@ -99,6 +99,26 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
       </section>
 
+      {/* SOBRE — pessoal */}
+      <section className="px-6 md:px-[5rem] py-24 md:py-32 border-b border-border">
+        <div className="max-w-[1100px] mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <div className="relative aspect-[4/5] rounded-[28px] overflow-hidden border border-border max-w-[440px] w-full mx-auto md:mx-0" data-reveal>
+            <Image src="/assets/andre-2.jpg" alt="Andre Ambrósio" fill sizes="(max-width:768px) 100vw, 45vw" className="object-cover" />
+          </div>
+          <div data-reveal>
+            <div className="font-mono text-[10px] tracking-[0.35em] uppercase text-bronze mb-6">{d.sobre.eyebrow}</div>
+            <h2 className="font-display font-light text-[clamp(2rem,3.5vw,3.25rem)] leading-[1.05] text-text tracking-tight mb-7">
+              Andre <span className="italic text-gold-foil">Ambrósio</span>.
+            </h2>
+            <p className="text-[1.0625rem] text-text-dim leading-[1.85] mb-8 max-w-[520px]">{d.sobre.lead}</p>
+            <Link href={lh('/sobre')} className="group inline-flex items-center gap-3 text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-champagne hover:text-text transition-colors">
+              <span className="w-[24px] h-[1px] bg-current transition-all group-hover:w-[48px]" />
+              {d.home.ctaAbout}
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ÚLTIMOS ENSAIOS */}
       {ensaios.length > 0 && (
         <section className="px-6 md:px-[8rem] py-24 md:py-32">
@@ -114,16 +134,20 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               </Link>
             </div>
 
-            <div className="border-y border-border">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal>
               {ensaios.map((e) => (
-                <Link key={e.slug} href={lh(`/ensaios/${e.slug}`)} className="group grid grid-cols-[80px_1fr_auto] md:grid-cols-[120px_1fr_auto_auto] items-baseline gap-6 md:gap-10 py-8 border-b border-border last:border-b-0 hover:pl-4 transition-all">
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-champagne">{campoNome(e.campo, locale)}</span>
-                  <div>
-                    <h3 className="font-display font-light text-[clamp(1.25rem,2vw,1.75rem)] leading-[1.2] text-text tracking-tight group-hover:italic transition-all">{e.titulo}</h3>
-                    {e.subtitulo && <p className="text-[13px] text-text-dim mt-1">{e.subtitulo}</p>}
+                <Link key={e.slug} href={lh(`/ensaios/${e.slug}`)} className="group rounded-[20px] overflow-hidden border border-border bg-surface hover:border-champagne transition-all flex flex-col">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image src={`/assets/gen-campo-${e.campo}.png`} alt={e.titulo} fill sizes="(max-width:768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-oled/45 via-transparent to-transparent" />
+                    <span className="absolute top-4 left-4 font-mono text-[9px] tracking-[0.2em] uppercase text-cream bg-oled/55 backdrop-blur px-2.5 py-1 rounded-full">{campoNome(e.campo, locale)}</span>
                   </div>
-                  <span className="hidden md:inline font-mono text-[10px] text-text-dimmer">{e.tempo_leitura} {d.ensaios.min}</span>
-                  <span className="font-display text-[1.25rem] text-text-dimmer group-hover:text-champagne group-hover:translate-x-1 transition-all">→</span>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="font-mono text-[10px] tracking-[0.1em] text-text-dimmer mb-3">{e.data} · {e.tempo_leitura} {d.ensaios.min}</div>
+                    <h3 className="font-display font-light text-[1.375rem] leading-[1.2] text-text tracking-tight group-hover:text-champagne transition-colors mb-2">{e.titulo}</h3>
+                    <p className="text-[13.5px] text-text-dim leading-relaxed line-clamp-3 flex-1">{e.resumo}</p>
+                    <span className="mt-5 font-mono text-[11px] tracking-[0.2em] uppercase text-champagne inline-flex items-center gap-2 group-hover:gap-3 transition-all">{d.common.ler} →</span>
+                  </div>
                 </Link>
               ))}
             </div>
