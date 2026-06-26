@@ -3,9 +3,9 @@ import type { Locale } from '@/lib/i18n';
 /** Veículos de imprensa que destacaram Andre Ambrósio (prova social factual). */
 const OUTLETS: { name: string; url?: string }[] = [
   { name: 'G1', url: 'https://g1.globo.com' },
-  { name: 'PEGN', url: 'https://revistapegn.globo.com' },
-  { name: 'O Povo', url: 'https://www.opovo.com.br' },
-  { name: 'Startup-i', url: 'https://startupi.com.br' },
+  { name: 'PEGN', url: 'http://revistapegn.globo.com/Startups/noticia/2014/08/bome-oferece-programa-de-vantagens-para-pequenos-e-medios-negocios.html' },
+  { name: 'O Povo', url: 'https://www.youtube.com/watch?v=3flyzlbhlFE' },
+  { name: 'Startup-i', url: 'https://startupi.com.br/2014/07/aceleradora-85-labs-anuncia-primeira-turma-de-startups/' },
   { name: 'Tribuna do Ceará' },
 ];
 
