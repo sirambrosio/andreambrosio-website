@@ -30,9 +30,9 @@ export function MediaStrip({ locale }: { locale: Locale }) {
     'h-[26px] md:h-7 w-auto object-contain grayscale opacity-60 transition-all duration-300 hover:opacity-100 dark:invert dark:opacity-70 dark:hover:opacity-100';
   return (
     <section className="px-6 md:px-10 py-9 border-b border-border bg-bg">
-      <div className="max-w-[1100px] mx-auto flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-9">
+      <div className="max-w-[1100px] mx-auto flex flex-col items-center sm:flex-row sm:items-center sm:justify-center gap-5 sm:gap-9">
         <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze shrink-0">{LABEL[locale]}</span>
-        <div className="flex flex-wrap items-center gap-x-8 sm:gap-x-10 gap-y-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-8 sm:gap-x-10 gap-y-4">
           {OUTLETS.map((o) => {
             // eslint-disable-next-line @next/next/no-img-element
             const img = <img src={o.logo} alt={o.name} loading="lazy" className={logoCls} />;
