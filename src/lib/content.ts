@@ -85,7 +85,7 @@ const EMPRESA_BASE: EmpresaBase[] = [
   { nome: 'LogicaOS', img: '/assets/gen-campo-ia.png', campos: ['tecnologia', 'ia', 'negocios'], status: 'beta' },
   { nome: 'VitaAZ', img: '/assets/gen-flatlay.png', campos: ['saude'], status: 'construcao' },
   { nome: 'Ambrosio ExoCore', img: '/assets/gen-sovereignty.png', campos: ['saude', 'tecnologia'], status: 'proto' },
-  { nome: 'Rovemark', img: '/assets/gen-campo-tecnologia.png', campos: ['tecnologia', 'negocios'], status: 'ativa' },
+  { nome: 'Rovemark', img: '/assets/gen-campo-tecnologia.png', campos: ['tecnologia', 'ia', 'negocios'], status: 'ativa' },
 ];
 
 const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
@@ -140,14 +140,14 @@ const EMPRESA_I18N: Record<string, Record<Locale, EmpresaText>> = {
     ru: { tag: `Железо · Здоровье`, desc: `Умный внешний орган с биокартриджами. Аппаратура, подключающаяся к телу.` },
   },
   'Rovemark': {
-    pt: { tag: `Estúdio`, desc: `Casa criativa que produz o conteúdo editorial, design e comunicação dos projetos.` },
-    en: { tag: `Studio`, desc: `A creative house producing the editorial content, design and communication of the projects.` },
-    es: { tag: `Estudio`, desc: `Casa creativa que produce el contenido editorial, el diseño y la comunicación de los proyectos.` },
-    zh: { tag: `工作室`, desc: `负责各项目编辑内容、设计与传播的创意工作室。` },
-    fr: { tag: `Studio`, desc: `Une maison créative qui produit le contenu éditorial, le design et la communication des projets.` },
-    de: { tag: `Studio`, desc: `Ein kreatives Haus, das die redaktionellen Inhalte, das Design und die Kommunikation der Projekte produziert.` },
-    ja: { tag: `スタジオ`, desc: `各プロジェクトの編集コンテンツ、デザイン、コミュニケーションを手がけるクリエイティブ・ハウス。` },
-    ru: { tag: `Студия`, desc: `Креативный дом, создающий редакционный контент, дизайн и коммуникацию проектов.` },
+    pt: { tag: `Infraestrutura de IA`, desc: `A casa por trás do LogicaOS e da suíte Logica — infraestrutura de IA soberana e local-first.` },
+    en: { tag: `AI Infrastructure`, desc: `The company behind LogicaOS and the Logica suite — sovereign, local-first AI infrastructure.` },
+    es: { tag: `Infraestructura de IA`, desc: `La compañía detrás de LogicaOS y la suite Logica — infraestructura de IA soberana y local-first.` },
+    zh: { tag: `AI 基础设施`, desc: `打造 LogicaOS 与 Logica 套件的公司——主权式、本地优先的 AI 基础设施。` },
+    fr: { tag: `Infrastructure IA`, desc: `La maison derrière LogicaOS et la suite Logica — une infrastructure d'IA souveraine et local-first.` },
+    de: { tag: `KI-Infrastruktur`, desc: `Das Unternehmen hinter LogicaOS und der Logica-Suite — souveräne, local-first KI-Infrastruktur.` },
+    ja: { tag: `AI インフラ`, desc: `LogicaOS と Logica スイートを生み出す企業——主権的でローカルファーストな AI インフラ。` },
+    ru: { tag: `ИИ-инфраструктура`, desc: `Компания, создающая LogicaOS и набор Logica — суверенная, local-first ИИ-инфраструктура.` },
   },
 };
 

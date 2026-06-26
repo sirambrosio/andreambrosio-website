@@ -19,7 +19,7 @@ const PROJ_TAGS: Record<string, Record<Locale, string>> = {
   logicaos: { pt: 'Sistema operacional de agentes', en: 'Agent operating system', es: 'Sistema operativo de agentes', zh: '智能体操作系统', fr: "Système d'exploitation d'agents", de: 'Agenten-Betriebssystem', ja: 'エージェントOS', ru: 'Операционная система агентов' },
   health: { pt: 'Engineering Human Vitality', en: 'Engineering Human Vitality', es: 'Engineering Human Vitality', zh: 'Engineering Human Vitality', fr: 'Engineering Human Vitality', de: 'Engineering Human Vitality', ja: 'Engineering Human Vitality', ru: 'Engineering Human Vitality' },
   vitaaz: { pt: 'Suplementação funcional', en: 'Functional supplements', es: 'Suplementación funcional', zh: '功能性营养补充', fr: 'Compléments fonctionnels', de: 'Funktionale Supplemente', ja: '機能性サプリメント', ru: 'Функциональные добавки' },
-  rovemark: { pt: 'Estúdio criativo', en: 'Creative studio', es: 'Estudio creativo', zh: '创意工作室', fr: 'Studio créatif', de: 'Kreativstudio', ja: 'クリエイティブ・スタジオ', ru: 'Креативная студия' },
+  rovemark: { pt: 'Casa do LogicaOS', en: 'Makers of LogicaOS', es: 'Creadores de LogicaOS', zh: 'LogicaOS 缔造者', fr: 'Maison de LogicaOS', de: 'Heimat von LogicaOS', ja: 'LogicaOS の開発元', ru: 'Создатели LogicaOS' },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
