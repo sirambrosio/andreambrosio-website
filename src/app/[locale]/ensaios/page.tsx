@@ -24,7 +24,6 @@ export default async function EnsaiosPage({ params }: { params: Promise<{ locale
   const d = getDict(locale);
   const ensaios = getAllEnsaios(locale);
 
-  // monta props serializáveis (href + campoNome + imagem resolvidos no server)
   const items = ensaios.map((e) => ({
     slug: e.slug,
     titulo: e.titulo,
@@ -67,17 +66,42 @@ export default async function EnsaiosPage({ params }: { params: Promise<{ locale
 
   return (
     <div className="bg-bg text-text min-h-screen">
-      {/* HERO */}
-      <section className="px-6 md:px-[8rem] pt-24 pb-14 border-b border-border">
-        <div className="max-w-[860px]">
-          <div className="flex items-center gap-3 mb-9">
-            <div className="w-[40px] h-[1px] bg-champagne" />
-            <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-champagne">{d.ensaios.eyebrow}</span>
+      {/* HERO cinematográfico full-bleed — imagem arquitetural atrás do menu transparente */}
+      <section className="bg-oled relative -mt-[86px] min-h-[82vh] md:min-h-[90vh] flex items-end overflow-hidden">
+        <Image src="/assets/ensaios-hero.jpg" alt="" fill priority sizes="100vw" className="object-cover object-center" />
+        {/* escurece base, lado esquerdo (texto) e topo (menu) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-oled via-oled/55 to-oled/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-oled/85 via-oled/35 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-[220px] bg-gradient-to-b from-oled/85 via-oled/40 to-transparent" />
+
+        <div className="relative z-10 w-full px-6 md:px-[8rem] pt-[150px] pb-16 md:pb-24">
+          <div className="max-w-[720px]">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-[40px] h-[1px] bg-champagne" />
+              <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-champagne">{d.ensaios.eyebrow}</span>
+            </div>
+            <h1
+              className="font-display font-light text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.96] text-cream tracking-tight mb-7"
+            >
+              {d.ensaios.title}
+            </h1>
+            <p className="text-[1.0625rem] md:text-[1.1875rem] text-cream/75 leading-[1.8] max-w-[600px] mb-10">
+              {d.ensaios.lead}
+            </p>
+            <div className="max-w-[460px]">
+              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-cream/55 mb-3">{d.footer.newsletterTitle}</p>
+              <NewsletterCapture
+                variant="footer"
+                source="ensaios-hero"
+                labels={{
+                  placeholder: d.footer.newsletterPlaceholder,
+                  submit: d.footer.newsletterSubmit,
+                  success: d.footer.newsletterSuccess,
+                  error: d.footer.newsletterError,
+                }}
+              />
+            </div>
           </div>
-          <h1 className="font-display font-light text-[clamp(2.25rem,5vw,5rem)] leading-[0.98] text-gold-foil mb-7 tracking-tight">
-            {d.ensaios.title}
-          </h1>
-          <p className="text-[1.0625rem] text-text-dim leading-[1.85] max-w-[640px]">{d.ensaios.lead}</p>
         </div>
       </section>
 

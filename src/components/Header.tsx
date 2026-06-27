@@ -30,6 +30,7 @@ export function Header({ locale }: { locale: Locale }) {
     <HeaderClient
       locale={locale}
       homeHref={localeHref('/', locale)}
+      heroHref={localeHref('/ensaios', locale)}
       nav={nav}
       docs={docs}
       spotlight={d.spotlight}

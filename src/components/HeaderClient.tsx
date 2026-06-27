@@ -16,6 +16,7 @@ interface NavItem { href: string; label: string; children?: NavChild[] }
 interface Props {
   locale: Locale;
   homeHref: string;
+  heroHref: string;
   nav: NavItem[];
   docs: SearchDoc[];
   spotlight: SpotlightLabels;
@@ -31,7 +32,7 @@ interface Props {
   };
 }
 
-export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Props) {
+export function HeaderClient({ locale, homeHref, heroHref, nav, docs, spotlight, t }: Props) {
   const [mounted, setMounted] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -46,7 +47,9 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
   }, []);
 
   const isDark = mounted && resolvedTheme === 'dark';
-  const logoSrc = isDark ? '/assets/logo-andre-ambrosio-light.png' : '/assets/logo-andre-ambrosio-dark.png';
+  const onHero = mounted && !scrolled && pathname === heroHref;
+  const logoSrc =
+    onHero || isDark ? '/assets/logo-andre-ambrosio-light.png' : '/assets/logo-andre-ambrosio-dark.png';
 
   return (
     <>
@@ -54,6 +57,7 @@ export function HeaderClient({ locale, homeHref, nav, docs, spotlight, t }: Prop
         className={`fixed top-0 left-0 right-0 h-[86px] z-[999] transition-all duration-300 ${
           scrolled ? 'bg-bg/95 backdrop-blur-xl border-b border-border shadow-sm' : 'bg-transparent border-b border-transparent'
         }`}
+        data-on-hero={onHero ? 'true' : undefined}
       >
         <div className="max-w-[1280px] mx-auto h-full flex items-center justify-between px-6 md:px-8">
         <Link href={homeHref} className="flex items-center" aria-label={t.homeLabel}>

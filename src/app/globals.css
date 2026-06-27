@@ -367,3 +367,9 @@ html:not(.dark) .bg-oled .text-champagne,
 html:not(.dark) .bg-oled .text-bronze {
   color: var(--color-champagne);
 }
+
+/* Header transparente sobre hero escuro (/ensaios): conteúdo claro nos 2 temas, até scrollar */
+header[data-on-hero] .text-text-dim { color: #F0EBDF !important; }
+header[data-on-hero] .text-text-dimmer { color: rgba(240, 235, 223, 0.62) !important; }
+header[data-on-hero] .border-border-strong { border-color: rgba(240, 235, 223, 0.24) !important; }
+header[data-on-hero] .border-border { border-color: rgba(240, 235, 223, 0.16) !important; }
