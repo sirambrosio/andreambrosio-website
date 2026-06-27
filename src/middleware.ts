@@ -72,5 +72,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Tudo exceto: _next, api, og (route de imagem), e qualquer path com ponto
-  matcher: ['/((?!_next|api|og|.*\\.).*)'],
+  matcher: ['/((?!_next|api|og|admin|.*\\.).*)'],
 };
