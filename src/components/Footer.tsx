@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Mail, ArrowRight, Sparkles, Globe, BookOpen, Layers, Building2 } from 'lucide-react';
 import { getDict } from '@/lib/dictionary';
 import { getCampos, getEmpresas } from '@/lib/content';
+import { PRIVACIDADE } from '@/lib/legal';
 import { getAllEnsaios } from '@/lib/ensaios';
 import { getSearchIndex } from '@/lib/search';
 import { LOCALES, type Locale } from '@/lib/i18n';
@@ -193,7 +194,7 @@ export function Footer({ locale }: { locale: Locale }) {
           <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-8">
             <p className="text-[10px] text-cream/25 leading-relaxed mb-5 max-w-5xl">{d.footer.seo} {empresas.map((e) => e.nome).join(' · ')}.</p>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <p className="text-[11px] text-cream/40">© {year} · {d.footer.copyright}</p>
+              <p className="text-[11px] text-cream/40">© {year} · {d.footer.copyright} · <Link href={lh('/privacidade')} className="hover:text-champagne transition-colors">{PRIVACIDADE.eyebrow[locale]}</Link></p>
               <div className="flex items-center gap-4">
                 {SOCIALS.map((s) => (
                   <a key={s.url} href={s.url} target="_blank" rel="noopener" aria-label={s.name} title={s.handle} className="text-cream/40 hover:text-champagne transition-colors">

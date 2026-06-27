@@ -6,6 +6,7 @@ import { getDict } from '@/lib/dictionary';
 import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
 import { SOCIAL_URLS } from '@/lib/socials';
 import { localeHref, hreflangAlternates } from '@/lib/route-translations';
+import { CONTATO } from '@/lib/legal';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: raw } = await params;
@@ -121,6 +122,9 @@ export default async function Sobre({ params }: { params: Promise<{ locale: stri
             </Link>
             <Link href={lh('/empresas')} className="text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors">
               {d.sobre.verEmpresas} →
+            </Link>
+            <Link href={lh('/contato')} className="text-[12px] font-mono font-semibold tracking-[0.25em] uppercase text-text-dim hover:text-champagne transition-colors">
+              {CONTATO.eyebrow[locale]} →
             </Link>
           </div>
         </div>

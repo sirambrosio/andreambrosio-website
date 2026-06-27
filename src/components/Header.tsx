@@ -4,6 +4,7 @@ import { getCampos } from '@/lib/content';
 import { type Locale } from '@/lib/i18n';
 import { localeHref } from '@/lib/route-translations';
 import { HeaderClient } from './HeaderClient';
+import { CONTATO } from '@/lib/legal';
 
 export function Header({ locale }: { locale: Locale }) {
   const d = getDict(locale);
@@ -24,6 +25,7 @@ export function Header({ locale }: { locale: Locale }) {
     },
     { href: localeHref('/ensaios', locale), label: d.nav.ensaios },
     { href: localeHref('/empresas', locale), label: d.nav.empresas },
+    { href: localeHref('/contato', locale), label: CONTATO.eyebrow[locale] },
   ];
 
   return (
