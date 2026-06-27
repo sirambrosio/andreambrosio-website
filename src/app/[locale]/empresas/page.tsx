@@ -89,7 +89,7 @@ export default async function Empresas({ params }: { params: Promise<{ locale: s
                   ))}
                 </div>
                 {e.url && (
-                  <a href={e.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-6 text-[12px] font-mono uppercase tracking-[0.2em] text-champagne hover:text-text transition-colors">
+                  <a href={e.url} target="_blank" rel="noopener noreferrer" data-track={`product_click:${e.nome}`} className="inline-flex items-center gap-2 mt-6 text-[12px] font-mono uppercase tracking-[0.2em] text-champagne hover:text-text transition-colors">
                     {visitar} <ArrowUpRight size={13} />
                   </a>
                 )}

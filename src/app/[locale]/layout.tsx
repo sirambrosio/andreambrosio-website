@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BackToTop } from '@/components/BackToTop';
 import { ScrollReset } from '@/components/ScrollReset';
+import { TrackClicks } from '@/components/TrackClicks';
 import { Analytics } from '@/components/Analytics';
 import { LOCALES, LOCALE_META, SITE_URL, isLocale, type Locale } from '@/lib/i18n';
 import { hreflangAlternates, localeHref } from '@/lib/route-translations';
@@ -155,6 +156,7 @@ export default async function LocaleLayout({
           <Footer locale={locale} />
           <BackToTop label={d.footer.backToTop} />
           <ScrollReset />
+          <TrackClicks />
           <Analytics />
         </ThemeProvider>
       </body>

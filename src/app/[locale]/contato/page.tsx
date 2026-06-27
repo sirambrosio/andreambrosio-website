@@ -43,6 +43,7 @@ export default async function Contato({ params }: { params: Promise<{ locale: st
               <a
                 key={k}
                 href={mailto(`${it.label[locale]} — Andre Ambrósio`)}
+                data-track={`contact_click:${k}`}
                 className="group rounded-[20px] border border-border bg-surface p-7 hover:border-champagne transition-all flex flex-col"
               >
                 <div className="flex items-start justify-between mb-3 gap-4">
@@ -56,7 +57,7 @@ export default async function Contato({ params }: { params: Promise<{ locale: st
         </div>
         <div className="max-w-[900px] mx-auto mt-12 text-center">
           <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-3">{c.emailLabel[locale]}</p>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="font-display font-light text-[clamp(1.25rem,2.5vw,1.75rem)] text-text hover:text-champagne transition-colors">
+          <a href={`mailto:${CONTACT_EMAIL}`} data-track="contact_click:email" className="font-display font-light text-[clamp(1.25rem,2.5vw,1.75rem)] text-text hover:text-champagne transition-colors">
             {CONTACT_EMAIL}
           </a>
         </div>

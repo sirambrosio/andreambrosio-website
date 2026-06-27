@@ -61,6 +61,7 @@ export default async function Painel({ searchParams }: { searchParams: Promise<{
       ])
     : [[empty], [empty], [empty], [empty], [empty], [], [], [], []];
 
+  const clicks = db ? await q(db, `select event, source, count(*) n from events where event in ('product_click','contact_click') and source is not null group by event, source order by n desc limit 14`) : [];
   const totalPv = num(pv), totalLeads = num(leads);
   const conv = totalPv > 0 ? ((totalLeads / totalPv) * 100).toFixed(2) : '0';
 
@@ -104,7 +105,7 @@ export default async function Painel({ searchParams }: { searchParams: Promise<{
               {srcs.length === 0 && <li className="py-2.5 text-[13px] text-text-dimmer">sem inscritos ainda</li>}
             </ul>
             <h2 className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-4">Eventos</h2>
-            <ul className="divide-y divide-border">
+            <ul className="divide-y divide-border mb-8">
               {evts.map((r) => (
                 <li key={String(r.event)} className="flex justify-between py-2.5 text-[13px]">
                   <span className="text-text-dim">{String(r.event)}</span>
@@ -112,6 +113,19 @@ export default async function Painel({ searchParams }: { searchParams: Promise<{
                 </li>
               ))}
             </ul>
+            {clicks.length > 0 && (
+              <>
+                <h2 className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-4">Intenção (produto / contato)</h2>
+                <ul className="divide-y divide-border">
+                  {clicks.map((r) => (
+                    <li key={`${String(r.event)}-${String(r.source)}`} className="flex justify-between py-2.5 text-[13px]">
+                      <span className="text-text-dim">{String(r.event) === 'product_click' ? '→ ' : '✉ '}{String(r.source)}</span>
+                      <span className="font-mono text-text tabular-nums">{String(r.n)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </div>

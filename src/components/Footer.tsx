@@ -147,7 +147,7 @@ export function Footer({ locale }: { locale: Locale }) {
                 {empresas.map((e) =>
                   e.url && e.url.startsWith('http') ? (
                     <li key={e.nome}>
-                      <a href={e.url} target="_blank" rel="noopener" className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{e.nome} ↗</a>
+                      <a href={e.url} target="_blank" rel="noopener" data-track={`product_click:${e.nome}`} className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{e.nome} ↗</a>
                     </li>
                   ) : (
                     <li key={e.nome}>
