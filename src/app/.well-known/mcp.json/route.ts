@@ -17,7 +17,7 @@ export async function GET() {
       name: 'andreambrosio.com',
       version: '1.1.0',
       description:
-        'Portal editorial de Andre Ambrósio. Expõe ensaios, campos editoriais e metadados para LLMs, em 7 idiomas.',
+        `Portal editorial de Andre Ambrósio. Expõe ensaios, campos editoriais e metadados para LLMs, em ${LOCALES.length} idiomas.`,
       url: SITE_URL,
       contact: 'eu@andreambrosio.com',
     },

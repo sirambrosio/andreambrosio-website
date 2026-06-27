@@ -109,6 +109,7 @@ export const es: Dict = {
     newsletterSubmit: `Suscribirse`,
     newsletterSuccess: `Suscrito. La próxima carta llega a tu correo.`,
     newsletterError: `No funcionó. Inténtalo de nuevo.`,
+    newsletterMicro: `Sin spam. Cancela cuando quieras.`,
     statLanguages: `idiomas`,
     statFields: `campos`,
     statEssays: `ensayos`,

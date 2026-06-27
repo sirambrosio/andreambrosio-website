@@ -73,6 +73,7 @@ export function Footer({ locale }: { locale: Locale }) {
                 <p className="text-[14px] text-cream/55 leading-relaxed">{d.footer.newsletterLead}</p>
               </div>
               <NewsletterCapture
+                source="footer"
                 labels={{
                   placeholder: d.footer.newsletterPlaceholder,
                   submit: d.footer.newsletterSubmit,
@@ -142,11 +143,17 @@ export function Footer({ locale }: { locale: Locale }) {
             <div>
               <h3 className="font-mono text-[10px] font-semibold tracking-[0.25em] uppercase text-champagne mb-4">{d.footer.colCompanies}</h3>
               <ul className="space-y-2.5">
-                {empresas.map((e) => (
-                  <li key={e.nome}>
-                    <Link href={lh('/empresas')} className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{e.nome}</Link>
-                  </li>
-                ))}
+                {empresas.map((e) =>
+                  e.url && e.url.startsWith('http') ? (
+                    <li key={e.nome}>
+                      <a href={e.url} target="_blank" rel="noopener" className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{e.nome} ↗</a>
+                    </li>
+                  ) : (
+                    <li key={e.nome}>
+                      <Link href={lh('/empresas')} className="text-[13px] text-cream/55 hover:text-champagne transition-colors">{e.nome}</Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
 
@@ -184,7 +191,7 @@ export function Footer({ locale }: { locale: Locale }) {
         {/* SEO + copyright */}
         <div className="border-t border-cream/10">
           <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-8">
-            <p className="text-[10px] text-cream/25 leading-relaxed mb-5 max-w-5xl">{d.footer.seo}</p>
+            <p className="text-[10px] text-cream/25 leading-relaxed mb-5 max-w-5xl">{d.footer.seo} {empresas.map((e) => e.nome).join(' · ')}.</p>
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-[11px] text-cream/40">© {year} · {d.footer.copyright}</p>
               <div className="flex items-center gap-4">

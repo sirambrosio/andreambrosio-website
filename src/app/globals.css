@@ -15,7 +15,7 @@
     --surface-deep: #D8D3C6;     /* surface mais profunda */
     --text: #151A1A;             /* ink */
     --text-dim: #5A5550;         /* secundário - mais escuro para melhor contraste */
-    --text-dimmer: #8A8580;      /* terciário - ajustado */
+    --text-dimmer: #6E6862;      /* terciário - WCAG AA (~4.5:1) */
     --border: rgba(21, 26, 26, 0.12);  /* aumentado de 0.08 */
     --border-strong: rgba(21, 26, 26, 0.25);  /* aumentado de 0.18 */
     --hairline: rgba(21, 26, 26, 0.18);  /* aumentado de 0.15 */
@@ -231,7 +231,7 @@ html:not(.dark) .text-metallic {
 }
 
 html:not(.dark) .text-gold-foil {
-  background: linear-gradient(135deg, #8B764A 0%, #C9A961 40%, #6B4628 70%, #A87248 100%);
+  background: linear-gradient(135deg, #6B4628 0%, #8B764A 38%, #6B4628 66%, #8B764A 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

@@ -109,6 +109,7 @@ export const de: Dict = {
     newsletterSubmit: `Abonnieren`,
     newsletterSuccess: `Abonniert. Der nächste Brief landet in Ihrem Postfach.`,
     newsletterError: `Hat nicht geklappt. Versuchen Sie es erneut.`,
+    newsletterMicro: `Kein Spam. Jederzeit abbestellbar.`,
     statLanguages: `Sprachen`,
     statFields: `Felder`,
     statEssays: `Essays`,

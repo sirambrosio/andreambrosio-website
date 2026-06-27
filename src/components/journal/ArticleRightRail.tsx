@@ -19,6 +19,7 @@ export function ArticleRightRail({ related, relatedLabel, newsletter }: Props) {
           <NewsletterCapture
             variant="hero"
             layout="stacked"
+            source="article-rail"
             labels={{ placeholder: newsletter.placeholder, submit: newsletter.submit, success: newsletter.success, error: newsletter.error }}
           />
         </div>

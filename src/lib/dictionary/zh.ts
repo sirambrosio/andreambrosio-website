@@ -109,6 +109,7 @@ export const zh: Dict = {
     newsletterSubmit: `订阅`,
     newsletterSuccess: `已订阅。下一封信将抵达你的收件箱。`,
     newsletterError: `没有成功，请重试。`,
+    newsletterMicro: `无垃圾邮件，随时退订。`,
     statLanguages: `种语言`,
     statFields: `个领域`,
     statEssays: `篇文章`,

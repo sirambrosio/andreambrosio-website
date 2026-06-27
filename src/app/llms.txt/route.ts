@@ -1,5 +1,6 @@
 import { getAllEnsaios } from '@/lib/ensaios';
-import { getCampos } from '@/lib/content';
+import { getCampos, getEmpresas } from '@/lib/content';
+import { SOCIALS } from '@/lib/socials';
 import { LOCALES, LOCALE_META, SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
 
 export const dynamic = 'force-static';
@@ -7,6 +8,7 @@ export const dynamic = 'force-static';
 export async function GET() {
   const ensaios = getAllEnsaios(DEFAULT_LOCALE);
   const campos = getCampos(DEFAULT_LOCALE);
+  const empresas = getEmpresas(DEFAULT_LOCALE);
   const base = `${SITE_URL}/${DEFAULT_LOCALE}`;
 
   const content = `# Andre Ambrósio
@@ -17,12 +19,12 @@ Site: ${SITE_URL}
 
 ## Idiomas
 
-Conteúdo disponível em 7 idiomas, cada um com URL própria e indexável (hreflang):
+Conteúdo disponível em ${LOCALES.length} idiomas, cada um com URL própria e indexável (hreflang):
 ${LOCALES.map((l) => `- ${LOCALE_META[l].native} (${LOCALE_META[l].hreflang}): ${SITE_URL}/${l}`).join('\n')}
 
 ## Sobre
 
-Andre Ambrósio é fundador da Ambrosio Company (holding), Ambrosio Health (saúde contínua), LogicaOS (sistema operacional de agentes), VitaAZ (suplementação funcional), Ambrosio ExoCore (hardware biomédico) e Rovemark (estúdio criativo).
+Andre Ambrósio é fundador de ${empresas.map((e) => `${e.nome} (${e.tag})`).join(', ')}.
 
 Seu trabalho é tornar visíveis as arquiteturas invisíveis que definem o que é possível em empresas, corpos, sistemas e trabalho.
 
@@ -59,7 +61,7 @@ URL: ${base}/ensaios/${e.slug}`).join('\n\n')}
 ## Contato
 
 Email: eu@andreambrosio.com (canais diretos)
-Redes: Instagram, X/Twitter, LinkedIn, YouTube (@andreambrosio)
+Redes: ${SOCIALS.map((s) => `${s.name} (${s.handle})`).join(' · ')}
 `;
 
   return new Response(content, {

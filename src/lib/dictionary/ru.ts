@@ -109,6 +109,7 @@ export const ru: Dict = {
     newsletterSubmit: `Подписаться`,
     newsletterSuccess: `Готово. Следующее письмо придёт вам на почту.`,
     newsletterError: `Не вышло. Попробуйте снова.`,
+    newsletterMicro: `Без спама. Отписаться можно в любой момент.`,
     statLanguages: `языков`,
     statFields: `полей`,
     statEssays: `эссе`,

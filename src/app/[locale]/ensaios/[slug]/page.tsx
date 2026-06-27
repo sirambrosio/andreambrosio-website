@@ -235,12 +235,16 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
       <section className="px-6 md:px-12 lg:px-[8rem] py-20 bg-surface border-t border-border">
         <div className="max-w-[820px] mx-auto">
           <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-8 text-center">{d.ensaios.fim}</div>
+          <div className="flex justify-center mb-10">
+            <ShareButtons url={articleUrl} title={e.titulo} label={lab('share', locale)} />
+          </div>
           <div className="rounded-[24px] border border-champagne/20 bg-bg p-8 md:p-10 text-center xl:hidden">
             <h2 className="font-display font-light text-[clamp(1.5rem,2.5vw,2.25rem)] text-text tracking-tight mb-2">{d.footer.newsletterTitle}</h2>
             <p className="text-[14px] text-text-dim mb-6 max-w-[480px] mx-auto">{d.footer.newsletterLead}</p>
             <div className="flex justify-center">
-              <NewsletterCapture variant="hero" labels={{ placeholder: d.footer.newsletterPlaceholder, submit: d.footer.newsletterSubmit, success: d.footer.newsletterSuccess, error: d.footer.newsletterError }} />
+              <NewsletterCapture variant="hero" source="article-end" labels={{ placeholder: d.footer.newsletterPlaceholder, submit: d.footer.newsletterSubmit, success: d.footer.newsletterSuccess, error: d.footer.newsletterError }} />
             </div>
+            <p className="text-[11px] text-text-dimmer mt-4">{d.footer.newsletterMicro}</p>
           </div>
         </div>
       </section>

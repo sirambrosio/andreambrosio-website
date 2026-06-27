@@ -109,6 +109,7 @@ export const en: Dict = {
     newsletterSubmit: `Subscribe`,
     newsletterSuccess: `Subscribed. The next letter lands in your inbox.`,
     newsletterError: `Didn't work. Try again.`,
+    newsletterMicro: `No spam. Unsubscribe anytime.`,
     statLanguages: `languages`,
     statFields: `fields`,
     statEssays: `essays`,

@@ -109,6 +109,7 @@ export const ja: Dict = {
     newsletterSubmit: `購読する`,
     newsletterSuccess: `購読しました。次の手紙が受信箱に届きます。`,
     newsletterError: `うまくいきませんでした。もう一度お試しください。`,
+    newsletterMicro: `スパムなし。いつでも配信停止できます。`,
     statLanguages: `言語`,
     statFields: `領域`,
     statEssays: `エッセイ`,

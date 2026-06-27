@@ -110,6 +110,7 @@ export const pt = {
     newsletterSubmit: `Assinar`,
     newsletterSuccess: `Assinado. A próxima carta chega na sua caixa.`,
     newsletterError: `Não funcionou. Tente de novo.`,
+    newsletterMicro: `Sem spam. Cancele quando quiser.`,
     statLanguages: `idiomas`,
     statFields: `campos`,
     statEssays: `ensaios`,

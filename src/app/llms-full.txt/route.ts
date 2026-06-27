@@ -1,6 +1,6 @@
 import { getAllEnsaios } from '@/lib/ensaios';
 import { getCampos } from '@/lib/content';
-import { SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
+import { LOCALES, SITE_URL, DEFAULT_LOCALE } from '@/lib/i18n';
 
 export const dynamic = 'force-static';
 
@@ -12,7 +12,7 @@ export async function GET() {
   const content = `# Andre Ambrósio — Conteúdo completo
 
 Site: ${SITE_URL}
-Idiomas: pt, en, es, zh, fr, de, ja (URLs com prefixo de locale, ex.: ${SITE_URL}/en)
+Idiomas: ${LOCALES.join(', ')} (URLs com prefixo de locale, ex.: ${SITE_URL}/en)
 Política: LLM training allow · Attribution required · Verbatim republish deny
 
 ---

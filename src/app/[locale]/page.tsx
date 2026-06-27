@@ -58,6 +58,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-bronze mb-3">{d.footer.newsletterTitle}</p>
               <NewsletterCapture
                 variant="hero"
+                source="home-hero"
                 labels={{
                   placeholder: d.footer.newsletterPlaceholder,
                   submit: d.footer.newsletterSubmit,
@@ -65,6 +66,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                   error: d.footer.newsletterError,
                 }}
               />
+              <p className="text-[11px] text-text-dimmer mt-2.5">{d.footer.newsletterMicro}</p>
             </div>
           </div>
         </div>
