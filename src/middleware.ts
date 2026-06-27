@@ -55,7 +55,7 @@ export function middleware(request: NextRequest) {
   const locale: Locale = isLocale(cookie) ? cookie : detectLocaleFromHeader(request.headers.get('accept-language'));
 
   // valida o primeiro segmento — evita fabricar /{locale}/<lixo> → 404 (polui índice)
-  const KNOWN_FIRST = new Set(['sobre', 'campos', 'ensaios', 'empresas', 'links', 'buscar', 'contato', 'privacidade']);
+  const KNOWN_FIRST = new Set(['sobre', 'campos', 'ensaios', 'empresas', 'links', 'buscar', 'contato', 'privacidade', 'painel']);
   const firstSegNoPrefix = canonicalizePath(pathname, locale).split('/')[1];
   if (firstSegNoPrefix && !KNOWN_FIRST.has(firstSegNoPrefix)) {
     const u = request.nextUrl.clone();

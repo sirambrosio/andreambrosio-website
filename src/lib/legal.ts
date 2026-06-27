@@ -199,14 +199,14 @@ export const PRIVACIDADE: {
         "ru": "Что мы собираем"
       },
       "p": {
-        "pt": "Apenas quando você se inscreve na newsletter: seu e-mail, o idioma escolhido e a página de origem da inscrição. Nada mais. Não há cookies de rastreamento nem analytics ativos no momento.",
-        "en": "Only when you subscribe to the newsletter: your email, the language you chose, and the page the signup came from. Nothing else. There are no tracking cookies or active analytics at the moment.",
-        "es": "Solo cuando te suscribes a la newsletter: tu correo, el idioma elegido y la página de origen de la inscripción. Nada más. No hay cookies de rastreo ni analítica activa por ahora.",
-        "zh": "仅在你订阅通讯时收集：你的邮箱、所选语言，以及订阅来源页面。仅此而已。目前没有跟踪 Cookie，也没有启用任何分析工具。",
-        "fr": "Uniquement lorsque vous vous inscrivez à la newsletter : votre e-mail, la langue choisie et la page d'où vient l'inscription. Rien d'autre. Aucun cookie de suivi ni outil d'analyse n'est actif pour l'instant.",
-        "de": "Nur wenn Sie den Newsletter abonnieren: Ihre E-Mail-Adresse, die gewählte Sprache und die Seite, von der die Anmeldung kam. Sonst nichts. Es gibt derzeit keine Tracking-Cookies und keine aktive Analyse.",
-        "ja": "ニュースレターを購読したときだけ集めます。メールアドレス、選んだ言語、登録元のページ。それだけです。現時点でトラッキング用 Cookie や解析ツールは使っていません。",
-        "ru": "Только когда вы подписываетесь на рассылку: ваш e-mail, выбранный язык и страница, с которой пришла подписка. Больше ничего. Сейчас нет ни отслеживающих cookie, ни активной аналитики."
+        "pt": "Apenas quando você se inscreve na newsletter: seu e-mail, o idioma escolhido e a página de origem da inscrição. Nada mais. Não usamos cookies de rastreamento; medimos apenas visitas de página de forma anônima, no nosso próprio servidor (sem identificar você).",
+        "en": "Only when you subscribe to the newsletter: your email, the language you chose, and the page the signup came from. Nothing else. We use no tracking cookies; we only measure page visits anonymously, on our own server (without identifying you).",
+        "es": "Solo cuando te suscribes a la newsletter: tu correo, el idioma elegido y la página de origen de la inscripción. Nada más. No usamos cookies de rastreo; solo medimos visitas de página de forma anónima, en nuestro propio servidor (sin identificarte).",
+        "zh": "仅在你订阅通讯时收集：你的邮箱、所选语言，以及订阅来源页面。仅此而已。我们不使用跟踪 Cookie；仅在自有服务器上匿名统计页面访问（不识别你的身份）。",
+        "fr": "Uniquement lorsque vous vous inscrivez à la newsletter : votre e-mail, la langue choisie et la page d'où vient l'inscription. Rien d'autre. Nous n'utilisons aucun cookie de suivi ; nous mesurons seulement les visites de page de façon anonyme, sur notre propre serveur (sans vous identifier).",
+        "de": "Nur wenn Sie den Newsletter abonnieren: Ihre E-Mail-Adresse, die gewählte Sprache und die Seite, von der die Anmeldung kam. Sonst nichts. Wir verwenden keine Tracking-Cookies; wir messen nur Seitenaufrufe anonym, auf unserem eigenen Server (ohne Sie zu identifizieren).",
+        "ja": "ニュースレターを購読したときだけ集めます。メールアドレス、選んだ言語、登録元のページ。それだけです。トラッキング用 Cookie は使いません。ページの訪問数を、自社サーバー上で匿名に集計するだけです（あなたを特定しません）。",
+        "ru": "Только когда вы подписываетесь на рассылку: ваш e-mail, выбранный язык и страница, с которой пришла подписка. Больше ничего. Мы не используем отслеживающие cookie; мы лишь анонимно считаем посещения страниц на собственном сервере (не идентифицируя вас)."
       }
     },
     "base": {
