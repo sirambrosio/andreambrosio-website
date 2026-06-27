@@ -5,7 +5,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BackToTop } from '@/components/BackToTop';
-import { RevealObserver } from '@/components/RevealObserver';
+import { ScrollReset } from '@/components/ScrollReset';
 import { Analytics } from '@/components/Analytics';
 import { LOCALES, LOCALE_META, SITE_URL, isLocale, type Locale } from '@/lib/i18n';
 import { hreflangAlternates, localeHref } from '@/lib/route-translations';
@@ -155,7 +155,7 @@ export default async function LocaleLayout({
           <main id="conteudo" className="pt-[86px] min-h-screen flex flex-col">{children}</main>
           <Footer locale={locale} />
           <BackToTop label={d.footer.backToTop} />
-          <RevealObserver />
+          <ScrollReset />
           <Analytics />
         </ThemeProvider>
       </body>
