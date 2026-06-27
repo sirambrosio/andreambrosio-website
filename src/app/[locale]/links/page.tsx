@@ -22,6 +22,8 @@ const PROJ_TAGS: Record<string, Record<Locale, string>> = {
   vitaaz: { pt: 'Suplementação funcional', en: 'Functional supplements', es: 'Suplementación funcional', zh: '功能性营养补充', fr: 'Compléments fonctionnels', de: 'Funktionale Supplemente', ja: '機能性サプリメント', ru: 'Функциональные добавки' },
   rovemark: { pt: 'Casa do LogicaOS', en: 'Makers of LogicaOS', es: 'Creadores de LogicaOS', zh: 'LogicaOS 缔造者', fr: 'Maison de LogicaOS', de: 'Heimat von LogicaOS', ja: 'LogicaOS の開発元', ru: 'Создатели LogicaOS' },
   ouchmac: { pt: 'App de menubar pro Mac', en: 'macOS menubar app', es: 'App de menubar para Mac', zh: 'Mac 菜单栏应用', fr: 'App macOS de barre de menus', de: 'macOS-Menüleisten-App', ja: 'Mac メニューバーアプリ', ru: 'Приложение для macOS' },
+  bsp: { pt: 'Protocolo de soberania dos dados biológicos', en: 'A protocol for biological data sovereignty', es: 'Protocolo de soberanía de los datos biológicos', zh: '生物数据主权协议', fr: 'Un protocole de souveraineté des données biologiques', de: 'Protokoll für Souveränität über biologische Daten', ja: '生体データ主権のためのプロトコル', ru: 'Протокол суверенитета биологических данных' },
+  institute: { pt: 'Instituto que constrói o BSP', en: 'The institute building BSP', es: 'El instituto que construye el BSP', zh: '构建 BSP 的研究院', fr: 'L\'institut qui construit le BSP', de: 'Das Institut hinter dem BSP', ja: 'BSP を築く研究機関', ru: 'Институт, создающий BSP' },
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {

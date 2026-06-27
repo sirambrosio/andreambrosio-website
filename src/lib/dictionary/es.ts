@@ -70,6 +70,10 @@ export const es: Dict = {
     outrosCampos: `Otros campos`,
   },
   ensaios: {
+    todosCurto: `Todos`,
+    camposTitle: `Explorar por campo`,
+    recentesTitle: `Más recientes`,
+    buscar: `Buscar por título o tema…`,
     eyebrow: `Ensayos`,
     title: `Lecturas sistémicas.`,
     lead: `Piezas largas y densas. Cada ensayo describe una arquitectura — por qué existe, qué cambia, hacia dónde apunta. Ordenados por fecha.`,
@@ -85,7 +89,7 @@ export const es: Dict = {
   empresas: {
     eyebrow: `Empresas`,
     title: `Lo que construyo en paralelo.`,
-    lead: `Seis empresas y proyectos. Cada uno aplica la misma lógica: arquitectura invisible que se vuelve sistema visible. Ninguno es un proyecto secundario.`,
+    lead: `Las empresas y proyectos. Cada uno aplica la misma lógica: arquitectura invisible que se vuelve sistema visible. Ninguno es un proyecto secundario.`,
     statusAtiva: `Activa`,
     statusEmConstrucao: `En construcción`,
     statusBeta: `Beta privada`,

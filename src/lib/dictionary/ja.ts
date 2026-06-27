@@ -70,6 +70,10 @@ export const ja: Dict = {
     outrosCampos: `他の領域`,
   },
   ensaios: {
+    todosCurto: `すべて`,
+    camposTitle: `分野で探す`,
+    recentesTitle: `最新`,
+    buscar: `タイトルやテーマで検索…`,
     eyebrow: `エッセイ`,
     title: `システミックな読み物。`,
     lead: `長く、密度の高い文章。各エッセイは一つのアーキテクチャを描きます——なぜ存在し、何を変え、どこを指し示すのか。日付順。`,
@@ -85,7 +89,7 @@ export const ja: Dict = {
   empresas: {
     eyebrow: `事業`,
     title: `並行して築いているもの。`,
-    lead: `六つの事業とプロジェクト。それぞれが同じ論理を体現します：不可視のアーキテクチャが、可視のシステムになる。どれも片手間ではありません。`,
+    lead: `事業とプロジェクト。それぞれが同じ論理を体現します：不可視のアーキテクチャが、可視のシステムになる。どれも片手間ではありません。`,
     statusAtiva: `稼働中`,
     statusEmConstrucao: `構築中`,
     statusBeta: `クローズドベータ`,

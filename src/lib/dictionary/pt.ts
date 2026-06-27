@@ -70,6 +70,10 @@ export const pt = {
     outrosCampos: `Outros campos`,
   },
   ensaios: {
+    todosCurto: `Todos`,
+    camposTitle: `Explorar por campo`,
+    recentesTitle: `Mais recentes`,
+    buscar: `Buscar por título ou tema…`,
     eyebrow: `Ensaios`,
     title: `Leituras sistêmicas.`,
     lead: `Peças longas e densas. Cada ensaio descreve uma arquitetura — por que ela existe, o que ela muda, pra onde aponta. Ordenados por data.`,
@@ -86,7 +90,7 @@ export const pt = {
   empresas: {
     eyebrow: `Empresas`,
     title: `O que construo paralelo.`,
-    lead: `Seis empresas e projetos. Cada um é uma aplicação da mesma lógica: arquitetura invisível virando sistema visível. Nenhum é side-project.`,
+    lead: `As empresas e os projetos. Cada um é uma aplicação da mesma lógica: arquitetura invisível virando sistema visível. Nenhum é side-project.`,
     statusAtiva: `Ativa`,
     statusEmConstrucao: `Em construção`,
     statusBeta: `Beta privado`,

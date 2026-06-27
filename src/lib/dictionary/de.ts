@@ -70,6 +70,10 @@ export const de: Dict = {
     outrosCampos: `Andere Felder`,
   },
   ensaios: {
+    todosCurto: `Alle`,
+    camposTitle: `Nach Feld erkunden`,
+    recentesTitle: `Neueste`,
+    buscar: `Nach Titel oder Thema suchen…`,
     eyebrow: `Essays`,
     title: `Systemische Lektüren.`,
     lead: `Lange, dichte Texte. Jeder Essay beschreibt eine Architektur — warum sie existiert, was sie verändert, wohin sie weist. Nach Datum geordnet.`,
@@ -85,7 +89,7 @@ export const de: Dict = {
   empresas: {
     eyebrow: `Unternehmen`,
     title: `Was ich parallel baue.`,
-    lead: `Sechs Unternehmen und Projekte. Jedes wendet dieselbe Logik an: unsichtbare Architektur, die zum sichtbaren System wird. Keines ist ein Nebenprojekt.`,
+    lead: `Die Unternehmen und Projekte. Jedes wendet dieselbe Logik an: unsichtbare Architektur, die zum sichtbaren System wird. Keines ist ein Nebenprojekt.`,
     statusAtiva: `Aktiv`,
     statusEmConstrucao: `Im Aufbau`,
     statusBeta: `Private Beta`,

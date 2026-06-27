@@ -70,6 +70,10 @@ export const en: Dict = {
     outrosCampos: `Other fields`,
   },
   ensaios: {
+    todosCurto: `All`,
+    camposTitle: `Explore by field`,
+    recentesTitle: `Most recent`,
+    buscar: `Search by title or theme…`,
     eyebrow: `Essays`,
     title: `Systemic readings.`,
     lead: `Long, dense pieces. Each essay describes an architecture — why it exists, what it changes, where it points. Ordered by date.`,
@@ -85,7 +89,7 @@ export const en: Dict = {
   empresas: {
     eyebrow: `Companies`,
     title: `What I build in parallel.`,
-    lead: `Six companies and projects. Each one applies the same logic: invisible architecture becoming a visible system. None is a side project.`,
+    lead: `The companies and projects. Each one applies the same logic: invisible architecture becoming a visible system. None is a side project.`,
     statusAtiva: `Active`,
     statusEmConstrucao: `In progress`,
     statusBeta: `Private beta`,

@@ -70,6 +70,10 @@ export const zh: Dict = {
     outrosCampos: `其他领域`,
   },
   ensaios: {
+    todosCurto: `全部`,
+    camposTitle: `按领域浏览`,
+    recentesTitle: `最新`,
+    buscar: `按标题或主题搜索…`,
     eyebrow: `文章`,
     title: `系统性的阅读。`,
     lead: `长篇而厚重的文字。每篇文章都描绘一种架构——它为何存在、改变了什么、指向何方。按日期排序。`,
@@ -85,7 +89,7 @@ export const zh: Dict = {
   empresas: {
     eyebrow: `企业`,
     title: `我在并行构建的。`,
-    lead: `六家企业与项目。每一个都应用着同一种逻辑：让无形的架构成为可见的系统。没有一个是副业。`,
+    lead: `这些企业与项目。每一个都应用着同一种逻辑：让无形的架构成为可见的系统。没有一个是副业。`,
     statusAtiva: `运营中`,
     statusEmConstrucao: `建设中`,
     statusBeta: `内测中`,
