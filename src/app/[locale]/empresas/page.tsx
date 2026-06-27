@@ -71,9 +71,9 @@ export default async function Empresas({ params }: { params: Promise<{ locale: s
       <section className="px-6 md:px-[5rem] py-20">
         <div className="max-w-[1200px] mx-auto space-y-px bg-champagne/10">
           {empresas.map((e, i) => (
-            <article key={e.nome} className={`grid grid-cols-1 md:grid-cols-2 bg-bg min-h-[360px] ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}>
+            <article key={e.nome} data-reveal className={`group grid grid-cols-1 md:grid-cols-2 bg-bg min-h-[360px] ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}>
               <div className="relative aspect-[4/3] md:aspect-auto min-h-[240px] overflow-hidden">
-                <Image src={e.img} alt={e.nome} fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover" />
+                <Image src={e.img} alt={e.nome} fill sizes="(max-width:768px) 100vw, 50vw" className="object-cover transition-transform duration-[1200ms] group-hover:scale-[1.03]" />
                 <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-bg via-transparent to-transparent" />
               </div>
               <div className="p-10 md:p-14 flex flex-col justify-center">

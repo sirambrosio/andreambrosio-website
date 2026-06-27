@@ -46,6 +46,7 @@ export default async function CamposPage({ params }: { params: Promise<{ locale:
           {campos.map((c, i) => (
             <Link
               key={c.slug}
+              data-reveal
               href={localeHref(`/campos/${c.slug}`, locale)}
               className={`group grid grid-cols-1 md:grid-cols-2 bg-bg min-h-[380px] ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}
             >

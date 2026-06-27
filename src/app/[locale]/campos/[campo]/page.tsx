@@ -7,6 +7,7 @@ import { getEnsaiosPorCampo } from '@/lib/ensaios';
 import { getDict } from '@/lib/dictionary';
 import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
 import { localeHref, hreflangAlternates } from '@/lib/route-translations';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 export function generateStaticParams() {
   return CAMPO_ORDER.map((campo) => ({ campo }));
@@ -75,6 +76,9 @@ export default async function CampoPage({ params }: { params: Promise<{ locale: 
 
       {/* ENSAIOS DO CAMPO */}
       <section className="px-6 md:px-12 lg:px-[8rem] py-24">
+        <div className="max-w-[1200px] mx-auto mb-10">
+          <Breadcrumb items={[{ label: d.nav.inicio, href: localeHref('/', locale) }, { label: d.nav.campos, href: localeHref('/campos', locale) }, { label: c.nome }]} />
+        </div>
         <div className="max-w-[1100px] mx-auto">
           <div className="mb-12">
             <span className="block font-mono text-[10px] tracking-[0.3em] uppercase text-bronze mb-4">{d.campos.ensaiosLabel}</span>
