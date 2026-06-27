@@ -46,12 +46,22 @@ export function middleware(request: NextRequest) {
     // rewrite p/ rota canônica interna (estrutura física do app/)
     const url = request.nextUrl.clone();
     url.pathname = `/${locale}${canonical === '/' ? '' : canonical}`;
-    return setLocaleCookie(NextResponse.rewrite(url), locale);
+    // sem Set-Cookie aqui: é resposta cacheável (rewrite de página estática) — evita CDN servir cookie de outro locale
+    return NextResponse.rewrite(url);
   }
 
   // ── sem prefixo → escolhe locale e redireciona (com slug localizado) ───────
   const cookie = request.cookies.get(LOCALE_COOKIE)?.value;
   const locale: Locale = isLocale(cookie) ? cookie : detectLocaleFromHeader(request.headers.get('accept-language'));
+
+  // valida o primeiro segmento — evita fabricar /{locale}/<lixo> → 404 (polui índice)
+  const KNOWN_FIRST = new Set(['sobre', 'campos', 'ensaios', 'empresas', 'links', 'buscar', 'contato', 'privacidade']);
+  const firstSegNoPrefix = canonicalizePath(pathname, locale).split('/')[1];
+  if (firstSegNoPrefix && !KNOWN_FIRST.has(firstSegNoPrefix)) {
+    const u = request.nextUrl.clone();
+    u.pathname = `/${locale}`;
+    return setLocaleCookie(NextResponse.redirect(u), locale);
+  }
 
   const localized = localizePath(pathname, locale);
   const url = request.nextUrl.clone();

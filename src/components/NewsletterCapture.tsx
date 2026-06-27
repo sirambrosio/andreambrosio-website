@@ -43,6 +43,7 @@ export function NewsletterCapture({ labels, variant = 'footer', layout = 'row', 
         setEmail('');
         track('newsletter_subscribe', { source });
       } else {
+        if (res.status === 503) console.warn('[newsletter] backend indisponível (DATABASE_URL ausente)');
         setState('err');
       }
     } catch {

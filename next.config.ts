@@ -6,6 +6,10 @@ const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
   { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+  {
+    key: 'Content-Security-Policy-Report-Only',
+    value: "default-src 'self'; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+  },
 ];
 
 const nextConfig: NextConfig = {
