@@ -11,6 +11,7 @@ import { LOCALES, LOCALE_META, SITE_URL, isLocale, type Locale } from '@/lib/i18
 import { hreflangAlternates, localeHref } from '@/lib/route-translations';
 import { SOCIAL_URLS } from '@/lib/socials';
 import { getDict } from '@/lib/dictionary';
+import { getEmpresas } from '@/lib/content';
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
@@ -102,21 +103,19 @@ export default async function LocaleLayout({
   const locale = raw as Locale;
   const meta = LOCALE_META[locale];
   const d = getDict(locale);
+  const empresas = getEmpresas(locale);
 
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${SITE_URL}/#person`,
     name: SITE_NAME,
     alternateName: 'Andre Ambrósio',
     url: `${SITE_URL}/${locale}`,
     image: `${SITE_URL}/assets/andre-portrait.jpg`,
     sameAs: SOCIAL_URLS,
     jobTitle: 'Fundador · Arquiteto da realidade',
-    worksFor: [
-      { '@type': 'Organization', name: 'Ambrosio Company' },
-      { '@type': 'Organization', name: 'Ambrosio Health' },
-      { '@type': 'Organization', name: 'LogicaOS' },
-    ],
+    worksFor: empresas.map((e) => ({ '@type': 'Organization', name: e.nome, ...(e.url && e.url.startsWith('http') ? { url: e.url } : {}) })),
     knowsAbout: ['Tecnologia', 'Negócios', 'Saúde', 'Inteligência Artificial', 'Arquitetura de sistemas', 'Longevidade'],
     description: d.footer.description,
   };

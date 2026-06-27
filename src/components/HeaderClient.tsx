@@ -36,6 +36,7 @@ export function HeaderClient({ locale, homeHref, heroHref, nav, docs, spotlight,
   const [mounted, setMounted] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [openMenu, setOpenMenu] = React.useState<string | null>(null);
   const { resolvedTheme, setTheme } = useTheme();
   const pathname = usePathname();
 
@@ -70,19 +71,42 @@ export function HeaderClient({ locale, homeHref, heroHref, nav, docs, spotlight,
           {nav.map((item) => {
             const isActive = pathname === item.href || (!!item.children && pathname.startsWith(item.href));
             if (item.children) {
+              const isOpen = openMenu === item.href;
+              const subId = `submenu-${item.href.replace(/\//g, '-')}`;
               return (
-                <div key={item.href} className="relative h-full flex items-center group">
+                <div
+                  key={item.href}
+                  className="relative h-full flex items-center"
+                  onMouseEnter={() => setOpenMenu(item.href)}
+                  onMouseLeave={() => setOpenMenu(null)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Escape') setOpenMenu(null);
+                  }}
+                >
                   <Link
                     href={item.href}
-                    className={`h-full flex items-center gap-1 text-[13px] font-medium transition-colors ${isActive ? 'text-champagne font-semibold' : 'text-text-dim group-hover:text-champagne'}`}
+                    className={`h-full flex items-center text-[13px] font-medium transition-colors ${isActive ? 'text-champagne font-semibold' : 'text-text-dim hover:text-champagne'}`}
                   >
                     {item.label}
-                    <ChevronDown size={13} className="transition-transform group-hover:rotate-180" />
                   </Link>
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+                  <button
+                    type="button"
+                    aria-haspopup="true"
+                    aria-expanded={isOpen}
+                    aria-controls={subId}
+                    aria-label={item.label}
+                    onClick={() => setOpenMenu(isOpen ? null : item.href)}
+                    className="h-full flex items-center pl-1 text-text-dim hover:text-champagne transition-colors"
+                  >
+                    <ChevronDown size={13} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div
+                    id={subId}
+                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1'}`}
+                  >
                     <div className="w-[300px] rounded-2xl bg-surface border border-border-strong shadow-brand-lg p-2">
                       {item.children.map((c) => (
-                        <Link key={c.href} href={c.href} className="block px-4 py-2.5 rounded-xl hover:bg-surface-alt transition-colors group/item">
+                        <Link key={c.href} href={c.href} onClick={() => setOpenMenu(null)} className="block px-4 py-2.5 rounded-xl hover:bg-surface-alt transition-colors group/item">
                           <span className="block text-[13.5px] text-text group-hover/item:text-champagne transition-colors">{c.label}</span>
                           {c.sub && <span className="block text-[11px] text-text-dim mt-0.5">{c.sub}</span>}
                         </Link>

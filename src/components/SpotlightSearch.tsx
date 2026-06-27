@@ -35,6 +35,7 @@ export function SpotlightSearch({ docs, labels, variant = 'button', compactLabel
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const prevFocusRef = useRef<HTMLElement | null>(null);
 
   const groupLabel: Record<SearchGroup, string> = {
     pages: labels.pages,
@@ -92,12 +93,14 @@ export function SpotlightSearch({ docs, labels, variant = 'button', compactLabel
   // focus + scroll-lock quando abre
   useEffect(() => {
     if (!open) return;
+    prevFocusRef.current = document.activeElement as HTMLElement | null;
     const t = setTimeout(() => inputRef.current?.focus(), 30);
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
       clearTimeout(t);
       document.body.style.overflow = prev;
+      prevFocusRef.current?.focus?.();
     };
   }, [open]);
 
@@ -105,6 +108,7 @@ export function SpotlightSearch({ docs, labels, variant = 'button', compactLabel
 
   const onInputKey = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') return close();
+    if (e.key === 'Tab') return e.preventDefault();
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setActive((a) => Math.min(a + 1, flat.length - 1));
@@ -154,7 +158,7 @@ export function SpotlightSearch({ docs, labels, variant = 'button', compactLabel
       )}
 
       {open && (
-        <div className="fixed inset-0 z-[2000] flex items-start justify-center px-4 pt-[12vh] animate-spotlight-fadein" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-[2000] flex items-start justify-center px-4 pt-[12vh] animate-spotlight-fadein" role="dialog" aria-modal="true" aria-label={labels.placeholder}>
           <div className="absolute inset-0 bg-oled/70 backdrop-blur-sm" onClick={close} aria-hidden />
 
           <div className="relative w-full max-w-[640px] rounded-[20px] bg-surface border border-border-strong shadow-brand-lg overflow-hidden animate-spotlight-scalein">

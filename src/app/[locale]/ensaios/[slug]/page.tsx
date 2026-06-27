@@ -112,8 +112,10 @@ export default async function EnsaioPage({ params }: { params: Promise<{ locale:
   const articleSchema = {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: e.titulo, description: e.resumo, inLanguage: LOCALE_META[locale].hreflang,
-    author: { '@type': 'Person', name: 'Andre Ambrósio' },
-    datePublished: e.data, articleSection: campo, url: articleUrl,
+    author: { '@type': 'Person', '@id': `${SITE_URL}/#person`, name: 'Andre Ambrósio', url: `${SITE_URL}/${locale}/sobre` },
+    publisher: { '@type': 'Organization', name: 'Andre Ambrósio', logo: { '@type': 'ImageObject', url: `${SITE_URL}/assets/logo-andre-ambrosio-dark.png` } },
+    datePublished: e.data, dateModified: e.data, articleSection: campo, url: articleUrl,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
     image: e.imagem ? `${SITE_URL}${e.imagem}` : undefined,
   };
   const breadcrumbSchema = {

@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
+import { SOCIAL_URLS } from '@/lib/socials';
 import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -25,8 +26,33 @@ export default async function Sobre({ params }: { params: Promise<{ locale: stri
   const romanos = ['I', 'II', 'III', 'IV'];
   const paras = [d.sobre.p1, d.sobre.p2, d.sobre.p3, d.sobre.p4];
 
+  const profileSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    mainEntity: {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Andre Ambrósio',
+      url: `${SITE_URL}/${locale}/sobre`,
+      image: `${SITE_URL}/assets/andre-portrait.jpg`,
+      jobTitle: 'Fundador · Arquiteto da realidade',
+      description: [d.sobre.p1, d.sobre.p2, d.sobre.p3, d.sobre.p4].join(' '),
+      sameAs: SOCIAL_URLS,
+    },
+  };
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/${locale}` },
+      { '@type': 'ListItem', position: 2, name: d.nav.sobre, item: `${SITE_URL}${localeHref('/sobre', locale)}` },
+    ],
+  };
+
   return (
     <div className="bg-bg text-text">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <section className="relative min-h-[calc(100vh-86px)] flex items-center overflow-hidden border-b border-border">
         <div className="absolute inset-0 md:w-[48%] md:right-auto">
           <Image src="/assets/andre-portrait.jpg" alt="Andre Ambrósio" fill priority sizes="(max-width:768px) 100vw, 48vw" className="object-cover object-[30%_center]" />

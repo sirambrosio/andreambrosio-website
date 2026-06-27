@@ -29,6 +29,7 @@ export function FontSizeControls({ label }: { label: string }) {
       type="button"
       onClick={() => apply(s)}
       aria-pressed={size === s}
+      aria-label={`${label} ${({ sm: 'S', md: 'M', lg: 'L' } as const)[s]}`}
       className={`w-8 h-8 rounded-full border flex items-center justify-center font-display transition-colors ${cls} ${
         size === s ? 'border-champagne text-champagne bg-champagne/10' : 'border-border text-text-dim hover:text-text'
       }`}

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getEmpresas, type EmpresaStatus } from '@/lib/content';
 import { getDict } from '@/lib/dictionary';
-import { asLocale, isLocale, type Locale } from '@/lib/i18n';
+import { asLocale, isLocale, SITE_URL, type Locale } from '@/lib/i18n';
 import { localeHref, hreflangAlternates } from '@/lib/route-translations';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -30,8 +30,25 @@ export default async function Empresas({ params }: { params: Promise<{ locale: s
     proto: d.empresas.statusProto,
   };
 
+  const empresasSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: empresas.map((e, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Organization',
+        name: e.nome,
+        description: e.desc,
+        ...(e.url && e.url.startsWith('http') ? { url: e.url } : {}),
+        founder: { '@type': 'Person', '@id': `${SITE_URL}/#person`, name: 'Andre Ambrósio' },
+      },
+    })),
+  };
+
   return (
     <div className="bg-bg text-text">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(empresasSchema) }} />
       <section className="relative px-6 md:px-[8rem] pt-24 pb-20 overflow-hidden border-b border-border">
         <div className="absolute inset-0 opacity-[0.12] pointer-events-none">
           <Image src="/assets/gen-flatlay.png" alt="" fill sizes="100vw" className="object-cover" />

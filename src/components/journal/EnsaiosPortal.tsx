@@ -136,6 +136,7 @@ export function EnsaiosPortal({
                 <button
                   key={t.slug}
                   onClick={() => setFiltro(t.slug)}
+                  aria-pressed={active}
                   className={`relative shrink-0 font-mono text-[11px] tracking-[0.2em] uppercase pb-2 transition-colors ${
                     active ? 'text-text' : 'text-text-dimmer hover:text-text-dim'
                   }`}
@@ -234,6 +235,7 @@ export function EnsaiosPortal({
                     <li key={t.slug}>
                       <button
                         onClick={() => setFiltro(t.slug)}
+                        aria-pressed={filtro === t.slug}
                         className="w-full flex items-baseline justify-between py-3 border-b border-border group text-left"
                       >
                         <span

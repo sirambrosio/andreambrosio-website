@@ -12,6 +12,10 @@ const OUTLETS: { name: string; logo: string; url?: string }[] = [
   { name: 'Tribuna do Ceará', logo: '/assets/media/tribuna.svg' },
 ];
 
+const NEW_TAB: Record<Locale, string> = {
+  pt: 'matéria (abre em nova aba)', en: 'article (opens in new tab)', es: 'artículo (abre en nueva pestaña)', zh: '报道（在新标签页打开）', fr: 'article (nouvel onglet)', de: 'Artikel (öffnet in neuem Tab)', ja: '記事（新しいタブで開く）', ru: 'материал (откроется в новой вкладке)',
+};
+
 const LABEL: Record<Locale, string> = {
   pt: 'Como visto na mídia',
   en: 'As featured in',
@@ -37,7 +41,7 @@ export function MediaStrip({ locale }: { locale: Locale }) {
             // eslint-disable-next-line @next/next/no-img-element
             const img = <img src={o.logo} alt={o.name} loading="lazy" className={logoCls} />;
             return o.url ? (
-              <a key={o.name} href={o.url} target="_blank" rel="noopener noreferrer" title={o.name} className="inline-flex items-center">
+              <a key={o.name} href={o.url} target="_blank" rel="noopener noreferrer" title={o.name} aria-label={`${o.name} — ${NEW_TAB[locale]}`} className="inline-flex items-center">
                 {img}
               </a>
             ) : (
