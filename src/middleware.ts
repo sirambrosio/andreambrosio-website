@@ -22,6 +22,16 @@ function setLocaleCookie(res: NextResponse, locale: Locale) {
 
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  // ── domínio de tracking: track.andreambrosio.com/{slug} → handler /l/{slug} ──
+  const host = (request.headers.get('host') || '').toLowerCase();
+  if (host.startsWith('track.')) {
+    const slug = pathname.replace(/^\//, '');
+    if (!slug || slug === 'favicon.ico') return NextResponse.redirect('https://andreambrosio.com');
+    const u = request.nextUrl.clone();
+    u.pathname = `/l/${slug}`;
+    return NextResponse.rewrite(u);
+  }
   const firstSeg = pathname.split('/')[1];
 
   // ── já tem prefixo de locale ──────────────────────────────────────────────
@@ -72,5 +82,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Tudo exceto: _next, api, og (route de imagem), e qualquer path com ponto
-  matcher: ['/((?!_next|api|og|admin|.*\\.).*)'],
+  matcher: ['/((?!_next|api|og|admin|l|.*\\.).*)'],
 };
