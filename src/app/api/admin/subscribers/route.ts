@@ -1,16 +1,9 @@
 import { NextResponse } from 'next/server';
-import { Pool } from 'pg';
 import { getSession } from '@/lib/admin-auth';
+import { getPool } from '@/lib/admin-data';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-
-let pool: Pool | null = null;
-function getPool(): Pool | null {
-  if (!process.env.DATABASE_URL) return null;
-  if (!pool) pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 3, ssl: process.env.DATABASE_SSL === 'disable' ? false : { rejectUnauthorized: false } });
-  return pool;
-}
 
 export async function GET(req: Request) {
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
@@ -23,4 +16,16 @@ export async function GET(req: Request) {
     return new NextResponse(csv, { headers: { 'content-type': 'text/csv; charset=utf-8', 'content-disposition': 'attachment; filename="assinantes.csv"' } });
   }
   return NextResponse.json({ ok: true, count: rows.length, rows });
+}
+
+export async function DELETE(req: Request) {
+  if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
+  const db = getPool();
+  if (!db) return NextResponse.json({ ok: false }, { status: 503 });
+  let b: { email?: string } = {};
+  try { b = await req.json(); } catch { /* */ }
+  const email = String(b.email ?? '').trim().toLowerCase();
+  if (!email) return NextResponse.json({ ok: false }, { status: 400 });
+  await db.query('delete from newsletter_leads where lower(email)=$1', [email]);
+  return NextResponse.json({ ok: true });
 }

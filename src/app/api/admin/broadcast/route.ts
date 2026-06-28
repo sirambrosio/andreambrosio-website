@@ -46,5 +46,9 @@ export async function POST(req: Request) {
     } catch { /* segue */ }
     await new Promise((res) => setTimeout(res, 550));
   }
+  if (!b.test) {
+    const dbc = getPool();
+    if (dbc) { try { await dbc.query(`create table if not exists campaigns (id bigserial primary key, ts timestamptz not null default now(), subject text, sent int, total int)`); await dbc.query(`insert into campaigns (subject, sent, total) values ($1,$2,$3)`, [subject, sent, recipients.length]); } catch { /* */ } }
+  }
   return NextResponse.json({ ok: true, sent, total: recipients.length });
 }

@@ -6,9 +6,13 @@ export const SESSION_COOKIE = 'aa_admin';
 export const SESSION_MAX_AGE = 60 * 60 * 24 * 30; // 30 dias
 
 /** scrypt: ADMIN_PASSWORD_HASH = "saltHex:hashHex". Built-in, sem dependência. */
-export function verifyPassword(password: string): boolean {
-  const stored = process.env.ADMIN_PASSWORD_HASH || '';
-  const [salt, hash] = stored.split(':');
+export function hashPassword(password: string): string {
+  const salt = crypto.randomBytes(16).toString('hex');
+  return salt + ':' + crypto.scryptSync(password, salt, 64).toString('hex');
+}
+
+export function verifyPasswordWith(stored: string, password: string): boolean {
+  const [salt, hash] = (stored || '').split(':');
   if (!salt || !hash || !password) return false;
   try {
     const derived = crypto.scryptSync(password, salt, 64);
@@ -17,6 +21,10 @@ export function verifyPassword(password: string): boolean {
   } catch {
     return false;
   }
+}
+
+export function verifyPassword(password: string): boolean {
+  return verifyPasswordWith(process.env.ADMIN_PASSWORD_HASH || '', password);
 }
 
 export function createSession(email: string): string {
