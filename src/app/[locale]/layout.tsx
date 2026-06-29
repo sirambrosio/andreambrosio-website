@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { Inter, Fraunces, IBM_Plex_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Header } from '@/components/Header';
@@ -150,6 +151,7 @@ export default async function LocaleLayout({
         <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[3000] focus:px-4 focus:py-2 focus:rounded-full focus:bg-brand-gradient focus:text-ink focus:text-[13px] focus:font-semibold">
           {skip}
         </a>
+        <Script id="metricool-tracker" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: 'function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"c0c0e270340df21e8cc780c8c2a35bf7"})});' }} />
         <ThemeProvider>
           <Header locale={locale} />
           <main id="conteudo" className="pt-[86px] min-h-screen flex flex-col">{children}</main>
