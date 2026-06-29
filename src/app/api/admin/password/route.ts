@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { sameOrigin } from '@/lib/rate-limit';
 import { getSession, verifyPasswordWith, hashPassword } from '@/lib/admin-auth';
 import { getPool, ensureAdmin, effectivePasswordHash, setConfig, bumpTokenVersion } from '@/lib/admin-data';
 
@@ -6,6 +7,8 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false, error: 'origin' }, { status: 403 });
+
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
   let b: { current?: string; next?: string } = {};
   try { b = await req.json(); } catch { /* */ }

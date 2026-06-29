@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/admin-auth';
+import { sameOrigin } from '@/lib/rate-limit';
 import { getPool, ensureAdmin } from '@/lib/admin-data';
 
 export const runtime = 'nodejs';
@@ -19,6 +20,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false, error: 'origin' }, { status: 403 });
+
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
   const db = getPool();
   if (!db) return NextResponse.json({ ok: false }, { status: 503 });
@@ -38,6 +41,8 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false }, { status: 403 });
+
   const db = getPool();
   if (!db) return NextResponse.json({ ok: false }, { status: 503 });
   let b: { slug?: string; target?: string; title?: string } = {};
@@ -51,6 +56,8 @@ export async function PATCH(req: Request) {
 
 export async function DELETE(req: Request) {
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false }, { status: 403 });
+
   const db = getPool();
   if (!db) return NextResponse.json({ ok: false }, { status: 503 });
   let b: { slug?: string } = {};

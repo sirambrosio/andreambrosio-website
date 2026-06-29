@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/admin-auth';
 import { getPool } from '@/lib/admin-data';
+import { sameOrigin } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -20,6 +21,8 @@ export async function GET(req: Request) {
 
 export async function DELETE(req: Request) {
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false }, { status: 403 });
+
   const db = getPool();
   if (!db) return NextResponse.json({ ok: false }, { status: 503 });
   let b: { email?: string } = {};

@@ -34,3 +34,10 @@ export function isBot(ua: string): boolean {
 export function getCountry(req: Request): string | null {
   return (req.headers.get('cf-ipcountry') || req.headers.get('x-vercel-ip-country') || req.headers.get('x-country') || '').slice(0, 2).toUpperCase() || null;
 }
+
+/** CSRF defense: aceita só requests do próprio domínio (Origin ausente = cliente nativo, permitido). */
+export function sameOrigin(req: Request): boolean {
+  const o = req.headers.get('origin');
+  if (!o) return true;
+  try { return new URL(o).hostname.endsWith('andreambrosio.com'); } catch { return false; }
+}

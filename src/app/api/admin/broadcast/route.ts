@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
 import { getSession } from '@/lib/admin-auth';
+import { sameOrigin } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,6 +14,8 @@ function getPool(): Pool | null {
 }
 
 export async function POST(req: Request) {
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false, error: 'origin' }, { status: 403 });
+
   if (!(await getSession())) return NextResponse.json({ ok: false }, { status: 401 });
   const key = process.env.RESEND_API_KEY;
   if (!key) return NextResponse.json({ ok: false, error: 'no_esp' }, { status: 400 });
