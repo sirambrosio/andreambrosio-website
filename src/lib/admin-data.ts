@@ -44,3 +44,10 @@ export async function bumpTokenVersion(db: Pool): Promise<void> {
   const cur = await getTokenVersion(db);
   await setConfig(db, 'token_version', String(cur + 1));
 }
+
+/** range da UI → { days, where(col) } pra filtrar por período (days validado, seguro interpolar). */
+export function range(r: string | undefined): { key: string; days: number; where: (col?: string) => string } {
+  const key = ['7', '30', '90', 'all'].includes(r || '') ? (r as string) : '30';
+  const days = key === 'all' ? 3650 : Number(key);
+  return { key, days: key === 'all' ? 365 : days, where: (col = 'ts') => (key === 'all' ? '' : `and ${col} > now() - interval '${days} days'`) };
+}

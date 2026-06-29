@@ -16,18 +16,25 @@ export function LinksManager({ initial }: { initial: Row[] }) {
   const [msg, setMsg] = useState('');
   const [copied, setCopied] = useState('');
   const [edit, setEdit] = useState<{ slug: string; target: string } | null>(null);
+  const [showUtm, setShowUtm] = useState(false);
+  const [utm, setUtm] = useState({ source: '', medium: '', campaign: '' });
 
   async function refresh() {
     const d = await fetch('/api/admin/links').then((r) => r.json()).catch(() => null);
     if (d?.ok) setList(d.rows.map((r: Record<string, unknown>) => ({ slug: r.slug, target: r.target, title: r.title, clicks: Number(r.clicks), created: r.created })));
   }
+  function applyUtm(t: string): string {
+    if (!utm.source && !utm.medium && !utm.campaign) return t;
+    try { const u = new URL(t); if (utm.source) u.searchParams.set('utm_source', utm.source); if (utm.medium) u.searchParams.set('utm_medium', utm.medium); if (utm.campaign) u.searchParams.set('utm_campaign', utm.campaign); return u.toString(); } catch { return t; }
+  }
   async function create(e: React.FormEvent) {
     e.preventDefault();
     if (!/^https?:\/\/.+/.test(target)) { setMsg('Cole uma URL http(s) válida.'); return; }
     setBusy(true); setMsg('');
-    const r = await fetch('/api/admin/links', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ target, slug, title }) });
+    const finalTarget = applyUtm(target);
+    const r = await fetch('/api/admin/links', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ target: finalTarget, slug, title }) });
     const d = await r.json().catch(() => ({}));
-    if (d.ok) { setList((l) => [{ slug: d.slug, target, title: title || null, clicks: 0, created: new Date().toISOString().slice(0, 10) }, ...l]); setTarget(''); setSlug(''); setTitle(''); }
+    if (d.ok) { setList((l) => [{ slug: d.slug, target: applyUtm(target), title: title || null, clicks: 0, created: new Date().toISOString().slice(0, 10) }, ...l]); setTarget(''); setSlug(''); setTitle(''); setUtm({ source: '', medium: '', campaign: '' }); }
     else setMsg(d.error === 'slug' ? 'Atalho já em uso.' : 'URL inválida.');
     setBusy(false);
   }
@@ -68,6 +75,14 @@ export function LinksManager({ initial }: { initial: Row[] }) {
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Título (opcional)" className="h-11 px-4 rounded-[10px] border border-border-strong bg-bg text-[13px] text-text placeholder:text-text-dimmer outline-none focus:border-champagne flex-1 min-w-[160px]" />
           <button disabled={busy} className="h-11 px-6 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-60">Criar</button>
         </div>
+        <button type="button" onClick={() => setShowUtm((v) => !v)} className="mt-3 text-[11px] font-mono uppercase tracking-[0.15em] text-text-dimmer hover:text-champagne transition-colors">{showUtm ? '− UTM' : '+ UTM'}</button>
+        {showUtm && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
+            <input value={utm.source} onChange={(e) => setUtm({ ...utm, source: e.target.value })} placeholder="utm_source" className="h-10 px-3 rounded-[8px] border border-border-strong bg-bg text-[12px] text-text placeholder:text-text-dimmer outline-none focus:border-champagne" />
+            <input value={utm.medium} onChange={(e) => setUtm({ ...utm, medium: e.target.value })} placeholder="utm_medium" className="h-10 px-3 rounded-[8px] border border-border-strong bg-bg text-[12px] text-text placeholder:text-text-dimmer outline-none focus:border-champagne" />
+            <input value={utm.campaign} onChange={(e) => setUtm({ ...utm, campaign: e.target.value })} placeholder="utm_campaign" className="h-10 px-3 rounded-[8px] border border-border-strong bg-bg text-[12px] text-text placeholder:text-text-dimmer outline-none focus:border-champagne" />
+          </div>
+        )}
         {msg && <p role="status" aria-live="polite" className="text-[12px] text-text-dim mt-3">{msg}</p>}
       </form>
 

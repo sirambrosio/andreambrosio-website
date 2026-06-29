@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getPool } from '@/lib/admin-data';
-import { clientIp, firstSeen, isBot } from '@/lib/rate-limit';
+import { clientIp, firstSeen, isBot, getCountry } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -27,7 +27,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ slug: string }>
     // log best-effort: ignora bots/preview e dedup mesmo IP+slug em 60s (unfurl/prefetch)
     const ua = (req.headers.get('user-agent') || '');
     if (!isBot(ua) && firstSeen(`click:${clientIp(req)}:${slug}`, 60000)) {
-      const country = (req.headers.get('cf-ipcountry') || '').slice(0, 2) || null;
+      const country = getCountry(req);
       const refRaw = req.headers.get('referer') || '';
       let ref: string | null = null;
       try { ref = refRaw ? new URL(refRaw).hostname : null; } catch { ref = null; }

@@ -1,5 +1,6 @@
 import { requireAdmin } from '@/lib/admin-auth';
-import { getPool, rows, num, ensureAdmin } from '@/lib/admin-data';
+import { getPool, rows, num, ensureAdmin, range } from '@/lib/admin-data';
+import { PeriodSelector } from '@/components/admin/PeriodSelector';
 import { Shell } from '@/components/admin/Shell';
 import { Card, Stat, RankList } from '@/components/admin/ui';
 import { Funnel } from '@/components/admin/Funnel';
@@ -7,22 +8,25 @@ import { Funnel } from '@/components/admin/Funnel';
 export const dynamic = 'force-dynamic';
 const rk = (r: Record<string, unknown>[], k: string) => r.map((x) => ({ label: String(x[k] ?? '—'), n: Number(x.n) }));
 
-export default async function FunilPage() {
+export default async function FunilPage({ searchParams }: { searchParams: Promise<{ range?: string }> }) {
   const sess = await requireAdmin();
+  const rg = range((await searchParams).range);
+  const w = rg.where();
+  const wl = rg.where('created_at');
   const db = getPool();
   if (db) await ensureAdmin(db);
   const e: Record<string, unknown>[] = [];
   const [pv, prod, contact, leads, prodBy, contactBy] = db ? await Promise.all([
-    rows(db, `select count(*) n from events where event='pageview'`),
-    rows(db, `select count(*) n from events where event='product_click'`),
-    rows(db, `select count(*) n from events where event='contact_click'`),
-    rows(db, `select count(*) n from newsletter_leads`),
-    rows(db, `select source, count(*) n from events where event='product_click' group by source order by n desc limit 8`),
-    rows(db, `select source, count(*) n from events where event='contact_click' group by source order by n desc limit 8`),
+    rows(db, `select count(*) n from events where event='pageview' ${w}`),
+    rows(db, `select count(*) n from events where event='product_click' ${w}`),
+    rows(db, `select count(*) n from events where event='contact_click' ${w}`),
+    rows(db, `select count(*) n from newsletter_leads where true ${wl}`),
+    rows(db, `select source, count(*) n from events where event='product_click' ${w} group by source order by n desc limit 8`),
+    rows(db, `select source, count(*) n from events where event='contact_click' ${w} group by source order by n desc limit 8`),
   ]) : [e, e, e, e, e, e];
   const tPv = num(pv), tIntent = num(prod) + num(contact), tLeads = num(leads);
   return (
-    <Shell email={sess.email} title="Funil">
+    <Shell email={sess.email} title="Funil" actions={<PeriodSelector current={rg.key} />}>
       <div className="grid lg:grid-cols-[1fr_300px] gap-6">
         <Card title="Visitas &rarr; Intenção &rarr; Inscrição">
           <Funnel stages={[{ label: 'Visitas', value: tPv }, { label: 'Intenção (cliques)', value: tIntent }, { label: 'Inscrições', value: tLeads }]} />
