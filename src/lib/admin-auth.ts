@@ -62,7 +62,6 @@ export async function getSession() {
     const db = getPool();
     if (db && sess.v !== undefined) {
       const cur = await getTokenVersion(db);
-      console.error('[getSession]', JSON.stringify({ v: sess.v, cur, db: !!db }));
       if (Number(sess.v) !== cur) return null;
     }
   } catch { /* falha no DB não derruba sessão válida por HMAC */ }
