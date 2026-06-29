@@ -85,29 +85,48 @@ export function RankList({ items, empty = 'sem dados' }: { items: { label: strin
 export function Bars({ data }: { data: { label: string; n: number }[] }) {
   const max = Math.max(1, ...data.map((d) => d.n));
   return (
-    <div className="flex items-end gap-[3px] h-36">
-      {data.map((d, i) => (
-        <div key={i} className="flex-1 flex flex-col items-center justify-end group" title={`${d.label}: ${d.n}`}>
-          <div className="w-full rounded-t-[3px] bg-gradient-to-t from-champagne/25 to-champagne/70 group-hover:to-champagne transition-all" style={{ height: `${Math.max(2, (d.n / max) * 100)}%` }} />
-        </div>
-      ))}
+    <div>
+      <div className="flex items-end gap-[3px] h-36">
+        {data.map((d, i) => (
+          <div key={i} className="flex-1 flex flex-col items-center justify-end group" title={`${d.label}: ${d.n}`}>
+            <div className="w-full rounded-t-[3px] bg-gradient-to-t from-champagne/25 to-champagne/70 group-hover:to-champagne transition-all" style={{ height: `${Math.max(2, (d.n / max) * 100)}%` }} />
+          </div>
+        ))}
+      </div>
+      <div className="flex gap-[3px] mt-1.5">
+        {data.map((d, i) => (
+          <div key={i} className="flex-1 text-center font-mono text-[8px] text-text-dimmer tabular-nums">{i % 3 === 0 ? d.label : ''}</div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export function PageHeader({ eyebrow, title, sub }: { eyebrow?: string; title: string; sub?: string }) {
+export function PageHeader({ eyebrow, title, sub, right }: { eyebrow?: string; title: string; sub?: string; right?: React.ReactNode }) {
   return (
-    <div className="mb-8 pb-5 border-b border-border">
-      {eyebrow && (
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-[32px] h-[1px] bg-champagne" />
-          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-champagne">{eyebrow}</span>
-        </div>
-      )}
-      <h1 className="font-display font-light text-[clamp(1.75rem,3vw,2.5rem)] leading-tight text-gold-foil tracking-tight">{title}</h1>
-      {sub && <p className="text-[14px] text-text-dim mt-2 max-w-[600px] leading-relaxed">{sub}</p>}
+    <div className="mb-8 pb-5 border-b border-border flex items-end justify-between gap-4 flex-wrap">
+      <div>
+        {eyebrow && (
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-[32px] h-[1px] bg-champagne" />
+            <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-champagne">{eyebrow}</span>
+          </div>
+        )}
+        <h1 className="font-display font-light text-[clamp(1.75rem,3vw,2.5rem)] leading-tight text-gold-foil tracking-tight">{title}</h1>
+        {sub && <p className="text-[14px] text-text-dim mt-2 max-w-[600px] leading-relaxed">{sub}</p>}
+      </div>
+      {right}
     </div>
   );
+}
+
+export function SectionLabel({ children }: { children: React.ReactNode }) {
+  return <div className="font-mono text-[10px] tracking-[0.28em] uppercase text-text-dimmer mb-3 flex items-center gap-3"><span className="w-[18px] h-[1px] bg-border-strong" />{children}</div>;
+}
+
+export function countryFlag(cc: string) {
+  if (!/^[A-Za-z]{2}$/.test(cc)) return '🌐';
+  return String.fromCodePoint(...cc.toUpperCase().split('').map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
 }
 
 /** Mapeia linhas do Postgres para itens de ranking (fallback robusto: null/vazio → "—"). */
