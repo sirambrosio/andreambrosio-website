@@ -28,9 +28,9 @@ export default async function FunilPage() {
           <Funnel stages={[{ label: 'Visitas', value: tPv }, { label: 'Intenção (cliques)', value: tIntent }, { label: 'Inscrições', value: tLeads }]} />
         </Card>
         <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
-          <Stat label="Visita &rarr; Intenção" value={`${tPv ? ((tIntent / tPv) * 100).toFixed(1) : 0}%`} />
-          <Stat label="Intenção &rarr; Inscrição" value={`${tIntent ? ((tLeads / tIntent) * 100).toFixed(1) : 0}%`} />
-          <Stat label="Visita &rarr; Inscrição" value={`${tPv ? ((tLeads / tPv) * 100).toFixed(2) : 0}%`} />
+          <Stat label="Visita &rarr; Intenção" value={`${tPv ? Math.min(100, (tIntent / tPv) * 100).toFixed(1) : 0}%`} />
+          <Stat label="Intenção &rarr; Inscrição" value={`${tIntent ? Math.min(100, (tLeads / tIntent) * 100).toFixed(1) : 0}%`} />
+          <Stat label="Visita &rarr; Inscrição" value={`${tPv ? Math.min(100, (tLeads / tPv) * 100).toFixed(2) : 0}%`} />
         </div>
       </div>
       <div className="grid md:grid-cols-2 gap-6 mt-6">

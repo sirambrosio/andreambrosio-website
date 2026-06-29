@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
+import { rateLimit, clientIp, isBot } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -42,6 +43,9 @@ const s = (v: unknown, n: number) => (v == null ? null : String(v).slice(0, n));
 
 // Analytics first-party, sem cookie, sem IP, sem PII. Best-effort: nunca quebra a UX.
 export async function POST(req: Request) {
+  // ignora bots/preview e limita flood por IP
+  if (isBot(req.headers.get('user-agent') || '')) return new NextResponse(null, { status: 204 });
+  if (!rateLimit(`track:${clientIp(req)}`, 200, 60000)) return new NextResponse(null, { status: 204 });
   let b: Record<string, unknown> = {};
   try { b = await req.json(); } catch { /* corpo vazio */ }
   const event = s(b.event, 60);
@@ -55,6 +59,6 @@ export async function POST(req: Request) {
       `insert into events (event, path, locale, source, ref, country) values ($1,$2,$3,$4,$5,$6)`,
       [event, s(b.path, 200), s(b.locale, 8), s(b.source, 60), s(b.ref, 120), country],
     );
-  } catch { /* noop */ }
+  } catch (e) { console.error('[track] insert falhou', e); }
   return new NextResponse(null, { status: 204 });
 }

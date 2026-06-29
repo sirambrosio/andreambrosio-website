@@ -28,7 +28,7 @@ export function Funnel({ stages }: { stages: { label: string; value: number }[] 
       <div className="absolute inset-0">
         {stages.map((s, i) => {
           const prev = i > 0 ? stages[i - 1].value : null;
-          const conv = prev && prev > 0 ? ((s.value / prev) * 100).toFixed(1) : null;
+          const conv = prev && prev > 0 ? Math.min(100, (s.value / prev) * 100).toFixed(1) : null;
           return (
             <div key={i} className="absolute left-0 right-0 flex flex-col items-center justify-center text-center px-2" style={{ top: `${((i * (BH + GAP)) / H) * 100}%`, height: `${(BH / H) * 100}%` }}>
               <div className="font-display font-light text-[1.7rem] leading-none text-ink drop-shadow-sm">{s.value.toLocaleString('pt-BR')}</div>

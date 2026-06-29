@@ -29,8 +29,8 @@ export function SubscribersTable({ initial }: { initial: Row[] }) {
         </div>
         <a href="/api/admin/subscribers?format=csv" className="h-10 inline-flex items-center px-5 rounded-full border border-border-strong text-[12px] font-mono uppercase tracking-[0.15em] text-text-dim hover:text-champagne hover:border-champagne transition-colors">Exportar CSV</a>
       </div>
-      <div className="rounded-[16px] border border-border overflow-hidden">
-        <table className="w-full text-[13px]">
+      <div className="rounded-[16px] border border-border overflow-x-auto">
+        <table className="w-full text-[13px] min-w-[560px]">
           <thead>
             <tr className="bg-surface-alt text-left font-mono text-[10px] tracking-[0.15em] uppercase text-text-dimmer">
               <th className="px-5 py-3 font-medium">E-mail</th>

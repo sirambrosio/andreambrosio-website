@@ -10,7 +10,7 @@ export default async function Newsletter() {
   const sess = await requireAdmin();
   const db = getPool();
   if (db) await ensureAdmin(db);
-  const hist = db ? await rows(db, `select to_char(ts,'YYYY-MM-DD HH24:MI') t, subject, sent, total from campaigns order by ts desc limit 30`) : [];
+  const hist = db ? await rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, subject, sent, total from campaigns order by ts desc limit 30`) : [];
   return (
     <Shell email={sess.email} title="Campanhas">
       <div className="grid lg:grid-cols-2 gap-6">

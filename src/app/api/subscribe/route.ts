@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
+import { rateLimit, clientIp } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -62,6 +63,7 @@ async function sendWelcome(email: string, locale: string) {
 }
 
 export async function POST(req: Request) {
+  if (!rateLimit(`sub:${clientIp(req)}`, 6, 60 * 60 * 1000)) return NextResponse.json({ ok: false, error: 'rate' }, { status: 429 });
   let body: { email?: string; locale?: string; source?: string; company?: string } = {};
   try {
     body = await req.json();

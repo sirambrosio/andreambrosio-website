@@ -9,7 +9,7 @@ export default async function Acessos() {
   const sess = await requireAdmin();
   const db = getPool();
   if (db) await ensureAdmin(db);
-  const logins = db ? await rows(db, `select to_char(ts,'YYYY-MM-DD HH24:MI') t, ua from admin_logins order by ts desc limit 40`) : [];
+  const logins = db ? await rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, ua from admin_logins order by ts desc limit 40`) : [];
   return (
     <Shell email={sess.email} title="Acessos">
       <Card title="Logins do admin (mais recentes)">

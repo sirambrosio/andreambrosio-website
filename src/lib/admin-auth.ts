@@ -29,6 +29,7 @@ export function verifyPassword(password: string): boolean {
 
 export function createSession(email: string): string {
   const secret = process.env.SESSION_SECRET || '';
+  if (!secret) throw new Error('SESSION_SECRET ausente');
   const payload = Buffer.from(JSON.stringify({ email, exp: Date.now() + SESSION_MAX_AGE * 1000 })).toString('base64url');
   const sig = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
   return `${payload}.${sig}`;
@@ -37,6 +38,7 @@ export function createSession(email: string): string {
 export function verifySession(token: string | undefined | null): { email: string } | null {
   if (!token) return null;
   const secret = process.env.SESSION_SECRET || '';
+  if (!secret) return null;
   const [payload, sig] = token.split('.');
   if (!payload || !sig) return null;
   try {

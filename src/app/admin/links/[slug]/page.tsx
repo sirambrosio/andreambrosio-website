@@ -11,7 +11,7 @@ function fillDays(data: Record<string, unknown>[], days: number) {
   const m = new Map(data.map((r) => [String(r.d), Number(r.n)]));
   const out: { label: string; n: number }[] = [];
   const now = new Date();
-  for (let i = days - 1; i >= 0; i--) { const dt = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10); out.push({ label: dt.slice(5), n: m.get(dt) ?? 0 }); }
+  for (let i = days - 1; i >= 0; i--) { const dt = new Date(now.getTime() - i * 86400000).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }); out.push({ label: dt.slice(5), n: m.get(dt) ?? 0 }); }
   return out;
 }
 
@@ -25,11 +25,11 @@ export default async function LinkDetail({ params }: { params: Promise<{ slug: s
   const id = link?.id;
   const e: Record<string, unknown>[] = [];
   const [series, countries, refs, devices, recent] = (db && id) ? await Promise.all([
-    rows(db, `select to_char(ts,'YYYY-MM-DD') d, count(*) n from link_clicks where link_id=$1 and ts > now() - interval '30 days' group by d`, [id]),
+    rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD') d, count(*) n from link_clicks where link_id=$1 and ts > now() - interval '30 days' group by d`, [id]),
     rows(db, `select country, count(*) n from link_clicks where link_id=$1 and country is not null group by country order by n desc limit 10`, [id]),
     rows(db, `select ref, count(*) n from link_clicks where link_id=$1 and ref is not null group by ref order by n desc limit 10`, [id]),
     rows(db, `select device, count(*) n from link_clicks where link_id=$1 group by device order by n desc`, [id]),
-    rows(db, `select to_char(ts,'YYYY-MM-DD HH24:MI') t, country, ref, device from link_clicks where link_id=$1 order by ts desc limit 20`, [id]),
+    rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, country, ref, device from link_clicks where link_id=$1 order by ts desc limit 20`, [id]),
   ]) : [e, e, e, e, e];
 
   return (

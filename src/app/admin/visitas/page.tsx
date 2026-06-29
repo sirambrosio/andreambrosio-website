@@ -9,7 +9,7 @@ function fillDays(data: Record<string, unknown>[], days: number) {
   const m = new Map(data.map((r) => [String(r.d), Number(r.n)]));
   const out: { label: string; n: number }[] = [];
   const now = new Date();
-  for (let i = days - 1; i >= 0; i--) { const dt = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10); out.push({ label: dt.slice(5), n: m.get(dt) ?? 0 }); }
+  for (let i = days - 1; i >= 0; i--) { const dt = new Date(now.getTime() - i * 86400000).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }); out.push({ label: dt.slice(5), n: m.get(dt) ?? 0 }); }
   return out;
 }
 
@@ -19,7 +19,7 @@ export default async function Visitas() {
   if (db) await ensureAdmin(db);
   const e: Record<string, unknown>[] = [];
   const [series, paths, locales, refs, countries] = db ? await Promise.all([
-    rows(db, `select to_char(ts,'YYYY-MM-DD') d, count(*) n from events where event='pageview' and ts > now() - interval '30 days' group by d`),
+    rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD') d, count(*) n from events where event='pageview' and ts > now() - interval '30 days' group by d`),
     rows(db, `select path, count(*) n from events where event='pageview' group by path order by n desc limit 15`),
     rows(db, `select locale, count(*) n from events where event='pageview' and locale<>'' group by locale order by n desc limit 10`),
     rows(db, `select ref, count(*) n from events where event='pageview' and ref is not null and ref<>'' group by ref order by n desc limit 10`),

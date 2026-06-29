@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 import { verifyPasswordWith, createSession, SESSION_COOKIE, SESSION_MAX_AGE } from '@/lib/admin-auth';
 import { getPool, ensureAdmin, effectivePasswordHash } from '@/lib/admin-data';
+import { rateLimit, clientIp } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: Request) {
+  if (!rateLimit(`login:${clientIp(req)}`, 8, 15 * 60 * 1000)) return NextResponse.json({ ok: false, error: 'rate' }, { status: 429 });
   let b: { email?: string; password?: string } = {};
   try { b = await req.json(); } catch { /* */ }
   const email = String(b.email ?? '').trim().toLowerCase();

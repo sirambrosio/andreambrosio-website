@@ -12,7 +12,7 @@ export default async function Eventos() {
   const e: Record<string, unknown>[] = [];
   const [byType, recent] = db ? await Promise.all([
     rows(db, `select event, count(*) n from events group by event order by n desc`),
-    rows(db, `select to_char(ts,'YYYY-MM-DD HH24:MI') t, event, path, source, country from events order by ts desc limit 50`),
+    rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, event, path, source, country from events order by ts desc limit 50`),
   ]) : [e, e];
   return (
     <Shell email={sess.email} title="Eventos">

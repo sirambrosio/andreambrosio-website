@@ -11,7 +11,7 @@ function fillDays(data: Record<string, unknown>[], days: number) {
   const out: { label: string; n: number }[] = [];
   const now = new Date();
   for (let i = days - 1; i >= 0; i--) {
-    const dt = new Date(now.getTime() - i * 86400000).toISOString().slice(0, 10);
+    const dt = new Date(now.getTime() - i * 86400000).toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' });
     out.push({ label: dt.slice(5), n: m.get(dt) ?? 0 });
   }
   return out;
@@ -28,7 +28,7 @@ export default async function Overview() {
     rows(db, `select count(*) n from events where event='pageview' and ts > now() - interval '1 day'`),
     rows(db, `select count(*) n from newsletter_leads`),
     rows(db, `select count(*) n from newsletter_leads where created_at > now() - interval '7 days'`),
-    rows(db, `select to_char(ts,'YYYY-MM-DD') d, count(*) n from events where event='pageview' and ts > now() - interval '14 days' group by d`),
+    rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD') d, count(*) n from events where event='pageview' and ts > now() - interval '14 days' group by d`),
     rows(db, `select count(*) n from events where event in ('product_click','contact_click')`),
   ]) : [e, e, e, e, e, e, e];
   const tPv = num(pv), tLeads = num(leads), tIntent = num(intent);
