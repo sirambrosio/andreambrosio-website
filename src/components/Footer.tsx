@@ -29,6 +29,7 @@ export function Footer({ locale }: { locale: Locale }) {
     { href: lh('/ensaios'), label: d.nav.ensaios },
     { href: lh('/empresas'), label: d.nav.empresas },
     { href: lh('/links'), label: 'Links' },
+    { href: lh('/agora'), label: ({ pt: 'Agora', en: 'Now', es: 'Ahora', zh: '现在', fr: 'Maintenant', de: 'Jetzt', ja: '現在', ru: 'Сейчас' } as Record<string, string>)[locale] || 'Agora' },
   ];
 
   const stats = [

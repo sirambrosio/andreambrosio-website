@@ -16,6 +16,7 @@ const NAV: { href: string; label: string; icon: React.ComponentType<{ size?: num
   { href: '/admin/funil', label: 'Funil', icon: GitBranch },
   { href: '/admin/ensaios', label: 'Ensaios', icon: FileText },
   { href: '/admin/eventos', label: 'Eventos', icon: Activity },
+  { href: '/admin/conteudo', label: 'Conteúdo', icon: FileText, group: 'Site' },
   { href: '/admin/links', label: 'Links', icon: Link2, group: 'Tracking' },
   { href: '/admin/assinantes', label: 'Assinantes', icon: Users, group: 'Newsletter' },
   { href: '/admin/newsletter', label: 'Campanhas', icon: Mail },
