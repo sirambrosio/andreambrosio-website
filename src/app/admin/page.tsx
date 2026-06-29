@@ -115,7 +115,7 @@ export default async function Overview() {
               </Card>
             </div>
             <Card title="Funil">
-              <Funnel stages={[{ label: 'Visitas', value: tPv }, { label: 'Intenção', value: tIntent }, { label: 'Inscrições', value: tLeads }]} />
+              <Funnel stages={[{ label: 'Visitas', value: tPv }, { label: 'Visitantes', value: num(visitors) }, { label: 'Intenção', value: tIntent }, { label: 'Inscrições', value: tLeads }]} />
             </Card>
           </div>
         </section>

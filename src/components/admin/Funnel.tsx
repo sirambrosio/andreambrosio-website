@@ -1,42 +1,43 @@
-/** Funil SVG: trapézios conectados que afunilam continuamente (largura ∝ valor). */
-export function Funnel({ stages }: { stages: { label: string; value: number }[] }) {
+/** Funil clássico segmentado: faixas coloridas que afunilam, cada etapa com rótulo, valor e conversão. */
+type Stage = { label: string; value: number };
+
+const COLORS = [
+  { bg: '#C9BCEC', fg: '#2E2747' }, // lavanda
+  { bg: '#BAD3F1', fg: '#1E3252' }, // azul
+  { bg: '#A6E1CA', fg: '#184030' }, // verde água
+  { bg: '#F4D88E', fg: '#473711' }, // âmbar
+  { bg: '#F3B89F', fg: '#4A2719' }, // pêssego
+  { bg: '#EFA3A3', fg: '#4A1F1F' }, // rosa
+];
+
+export function Funnel({ stages }: { stages: Stage[] }) {
   const N = stages.length;
   if (N === 0) return null;
-  const max = Math.max(1, ...stages.map((s) => s.value));
-  const BH = 76, GAP = 7;
-  const H = N * BH + (N - 1) * GAP;
-  const w = (v: number) => Math.max(13, (v / max) * 100);
+  const span = N > 1 ? 58 : 0; // afunilamento total (%)
 
   return (
-    <div className="relative w-full max-w-[440px] mx-auto py-2">
-      <svg viewBox={`0 0 100 ${H}`} preserveAspectRatio="none" className="w-full block" style={{ height: H * 1.7 }}>
-        <defs>
-          <linearGradient id="aa-funnel" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#E8D285" />
-            <stop offset="55%" stopColor="#C9A961" />
-            <stop offset="100%" stopColor="#8B764A" />
-          </linearGradient>
-        </defs>
-        {stages.map((s, i) => {
-          const y0 = i * (BH + GAP);
-          const wt = w(s.value);
-          const wb = i < N - 1 ? w(stages[i + 1].value) : Math.max(10, wt * 0.5);
-          const pts = `${50 - wt / 2},${y0} ${50 + wt / 2},${y0} ${50 + wb / 2},${y0 + BH} ${50 - wb / 2},${y0 + BH}`;
-          return <polygon key={i} points={pts} fill="url(#aa-funnel)" opacity={1 - i * 0.1} />;
-        })}
-      </svg>
-      <div className="absolute inset-0">
-        {stages.map((s, i) => {
-          const prev = i > 0 ? stages[i - 1].value : null;
-          const conv = prev && prev > 0 ? Math.min(100, (s.value / prev) * 100).toFixed(1) : null;
-          return (
-            <div key={i} className="absolute left-0 right-0 flex flex-col items-center justify-center text-center px-2" style={{ top: `${((i * (BH + GAP)) / H) * 100}%`, height: `${(BH / H) * 100}%` }}>
-              <div className="font-display font-light text-[1.7rem] leading-none text-ink drop-shadow-sm">{s.value.toLocaleString('pt-BR')}</div>
-              <div className="font-mono text-[9px] tracking-[0.18em] uppercase text-ink/75 mt-1.5">{s.label}</div>
+    <div className="flex flex-col items-center gap-1.5 py-1">
+      {stages.map((s, i) => {
+        const wTop = 100 - (i * span) / N;
+        const wBot = 100 - ((i + 1) * span) / N;
+        const inset = wTop > 0 ? ((1 - wBot / wTop) / 2) * 100 : 0;
+        const prev = i > 0 ? stages[i - 1].value : null;
+        const conv = prev && prev > 0 ? Math.min(100, (s.value / prev) * 100) : null;
+        const c = COLORS[i % COLORS.length];
+        return (
+          <div key={i} className="w-full flex justify-center" title={`${s.label}: ${s.value.toLocaleString('pt-BR')}${conv !== null ? ` · ${conv.toFixed(1)}% da etapa anterior` : ''}`}>
+            <div
+              style={{ width: `${wTop}%`, background: c.bg, color: c.fg, clipPath: `polygon(0 0, 100% 0, ${(100 - inset).toFixed(2)}% 100%, ${inset.toFixed(2)}% 100%)` }}
+              className="h-[60px] flex flex-col items-center justify-center px-6 text-center transition-[filter] duration-200 hover:brightness-[1.04]"
+            >
+              <span className="text-[12.5px] font-semibold leading-tight tracking-tight">{s.label}</span>
+              <span className="font-mono text-[11.5px] tabular-nums leading-tight mt-0.5 opacity-80">
+                {s.value.toLocaleString('pt-BR')}{conv !== null ? ` · ${conv.toFixed(0)}%` : ''}
+              </span>
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
