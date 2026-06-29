@@ -2,6 +2,7 @@ import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, num, ensureAdmin } from '@/lib/admin-data';
 import { Shell } from '@/components/admin/Shell';
 import { Stat, Card } from '@/components/admin/ui';
+import { MaintenanceButton } from '@/components/admin/MaintenanceButton';
 export const dynamic = 'force-dynamic';
 export default async function Saude() {
   const sess = await requireAdmin();
@@ -50,6 +51,12 @@ export default async function Saude() {
             ))}
           </ul>
           <p className="mt-4 text-[11px] text-text-dimmer">Mostra só se a variável existe — nunca o valor.</p>
+        </Card>
+      </div>
+      <div className="mt-6">
+        <Card title="Manutenção">
+          <p className="text-[13px] text-text-dim mb-4">Remove eventos com marcadores de teste (paths começando com /verify). Seguro: não toca em dados reais.</p>
+          <MaintenanceButton />
         </Card>
       </div>
     </Shell>
