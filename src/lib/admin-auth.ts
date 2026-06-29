@@ -58,13 +58,18 @@ export async function getSession() {
   const c = await cookies();
   const sess = verifySession(c.get(SESSION_COOKIE)?.value);
   if (!sess) return null;
-  try {
+  // Fail-closed: sessões que carregam token_version (`v`) só são aceitas se o DB
+  // confirmar que a versão bate. Se o DB estiver indisponível/ausente, NÃO dá pra
+  // checar revogação (logout/troca-de-senha bumpam token_version) → nega a sessão.
+  if (sess.v !== undefined) {
     const db = getPool();
-    if (db && sess.v !== undefined) {
-      const cur = await getTokenVersion(db);
-      if (Number(sess.v) !== cur) return null;
+    if (!db) return null;
+    try {
+      if (Number(sess.v) !== await getTokenVersion(db)) return null;
+    } catch {
+      return null;
     }
-  } catch { /* falha no DB não derruba sessão válida por HMAC */ }
+  }
   return sess;
 }
 

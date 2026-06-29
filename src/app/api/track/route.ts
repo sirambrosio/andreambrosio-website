@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
-import { rateLimit, clientIp, isBot, getCountry, deviceFromUA } from '@/lib/rate-limit';
+import { rateLimit, clientIp, isBot, getCountry, deviceFromUA, sameOrigin } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -51,10 +51,13 @@ export async function POST(req: Request) {
   // ignora bots/preview e limita flood por IP
   if (isBot(req.headers.get('user-agent') || '')) return new NextResponse(null, { status: 204 });
   if (!rateLimit(`track:${clientIp(req)}`, 200, 60000)) return new NextResponse(null, { status: 204 });
+  if (!sameOrigin(req)) return new NextResponse(null, { status: 204 });
   let b: Record<string, unknown> = {};
   try { b = await req.json(); } catch { /* corpo vazio */ }
   const event = s(b.event, 60);
   if (!event) return new NextResponse(null, { status: 204 });
+  const ALLOWED = new Set(['pageview', 'product_click', 'contact_click', 'newsletter_subscribe']);
+  if (!ALLOWED.has(event)) return new NextResponse(null, { status: 204 });
   const db = getPool();
   if (!db) return new NextResponse(null, { status: 204 });
   try {

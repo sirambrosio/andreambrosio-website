@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import crypto from 'crypto';
 import { Pool } from 'pg';
 
 export const dynamic = 'force-dynamic';
@@ -35,7 +36,8 @@ export default async function Painel({ searchParams }: { searchParams: Promise<{
   const { k } = await searchParams;
   const KEY = process.env.STATS_KEY;
 
-  if (!KEY || k !== KEY) {
+  const keyOk = !!KEY && !!k && k.length === KEY.length && crypto.timingSafeEqual(Buffer.from(k), Buffer.from(KEY));
+  if (!keyOk) {
     return (
       <div className="min-h-screen bg-bg text-text flex items-center justify-center px-6">
         <p className="font-mono text-[12px] tracking-[0.2em] uppercase text-text-dim">acesso negado</p>

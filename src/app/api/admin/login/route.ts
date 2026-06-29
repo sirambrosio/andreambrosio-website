@@ -15,7 +15,11 @@ export async function POST(req: Request) {
   const db = getPool();
   if (db) { try { await ensureAdmin(db); } catch { /* */ } }
   const hash = await effectivePasswordHash(db);
-  if (!adminEmail || !process.env.SESSION_SECRET || email !== adminEmail || !verifyPasswordWith(hash, String(b.password ?? ''))) {
+  // Sempre executa o scrypt (mesmo com e-mail errado) para não vazar, por timing,
+  // se o e-mail é válido (enumeração de usuário).
+  const passOk = verifyPasswordWith(hash, String(b.password ?? ''));
+  const emailOk = !!adminEmail && email === adminEmail;
+  if (!process.env.SESSION_SECRET || !emailOk || !passOk) {
     return NextResponse.json({ ok: false, error: 'invalid' }, { status: 401 });
   }
   if (db) { try { await db.query(`insert into admin_logins (ua) values ($1)`, [String(req.headers.get('user-agent') || '').slice(0, 200)]); } catch { /* */ } }

@@ -39,5 +39,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ slug: string }>
   } catch (e) {
     console.error('[track-link] lookup falhou', e);
   }
-  return NextResponse.redirect(target, 302);
+  let safe = HOME;
+  try { const u = new URL(target); if (u.protocol === 'http:' || u.protocol === 'https:') safe = target; } catch { /* alvo inválido → home */ }
+  return NextResponse.redirect(safe, 302);
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
-import { rateLimit, clientIp } from '@/lib/rate-limit';
+import { rateLimit, clientIp, sameOrigin } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -64,6 +64,7 @@ async function sendWelcome(email: string, locale: string) {
 
 export async function POST(req: Request) {
   if (!rateLimit(`sub:${clientIp(req)}`, 6, 60 * 60 * 1000)) return NextResponse.json({ ok: false, error: 'rate' }, { status: 429 });
+  if (!sameOrigin(req)) return NextResponse.json({ ok: false, error: 'origin' }, { status: 403 });
   let body: { email?: string; locale?: string; source?: string; company?: string } = {};
   try {
     body = await req.json();
@@ -75,7 +76,8 @@ export async function POST(req: Request) {
   if (body.company) return NextResponse.json({ ok: true });
 
   const email = String(body.email ?? '').trim().toLowerCase();
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+  const EMAIL_RE = /^[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/;
+  if (email.length > 254 || !EMAIL_RE.test(email)) {
     return NextResponse.json({ ok: false, error: 'invalid' }, { status: 400 });
   }
 
@@ -93,7 +95,9 @@ export async function POST(req: Request) {
        on conflict (email) do nothing`,
       [email, loc, String(body.source ?? 'site').slice(0, 48)],
     );
-    if ((r.rowCount ?? 0) > 0) await sendWelcome(email, loc);
+    // teto GLOBAL de envio (anti email-bombing): mesmo gravando o lead, só dispara welcome
+    // se o total de envios/hora estiver abaixo do limite.
+    if ((r.rowCount ?? 0) > 0 && rateLimit('sub:welcome:global', 100, 60 * 60 * 1000)) await sendWelcome(email, loc);
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ ok: false, error: 'server' }, { status: 500 });

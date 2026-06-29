@@ -12,7 +12,9 @@ export function rateLimit(key: string, max: number, windowMs: number): boolean {
 }
 
 export function clientIp(req: Request): string {
-  return req.headers.get('cf-connecting-ip') || (req.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'unknown';
+  // Atrás de Cloudflare/Coolify: confiar só nos headers da borda (cf-connecting-ip/x-real-ip),
+  // nunca no x-forwarded-for[0], que o cliente forja livremente para furar o rate-limit.
+  return (req.headers.get('cf-connecting-ip') || req.headers.get('x-real-ip') || 'unknown').split(',')[0].trim() || 'unknown';
 }
 
 const seen = new Map<string, number>();
@@ -32,7 +34,7 @@ export function isBot(ua: string): boolean {
 }
 
 export function getCountry(req: Request): string | null {
-  return (req.headers.get('cf-ipcountry') || req.headers.get('x-vercel-ip-country') || req.headers.get('x-country') || '').slice(0, 2).toUpperCase() || null;
+  return (req.headers.get('cf-ipcountry') || req.headers.get('x-vercel-ip-country') || '').slice(0, 2).toUpperCase() || null;
 }
 
 /** CSRF defense: aceita só requests do próprio domínio (Origin ausente = cliente nativo, permitido). */
