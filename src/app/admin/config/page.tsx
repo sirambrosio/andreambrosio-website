@@ -1,4 +1,5 @@
 import { requireAdmin } from '@/lib/admin-auth';
+import { getPool, ensureAdmin, getTokenVersion } from '@/lib/admin-data';
 import { Shell } from '@/components/admin/Shell';
 import { Card } from '@/components/admin/ui';
 import { ChangePassword } from '@/components/admin/ChangePassword';
@@ -19,6 +20,9 @@ function Status({ label, ok, note }: { label: string; ok: boolean; note: string 
 
 export default async function Config() {
   const sess = await requireAdmin();
+  const db = getPool();
+  if (db) await ensureAdmin(db);
+  const tv = db ? await getTokenVersion(db) : -1;
   return (
     <Shell email={sess.email} title="Configurações">
       <div className="grid lg:grid-cols-2 gap-6">
@@ -30,6 +34,10 @@ export default async function Config() {
         </Card>
         <Card title="Trocar senha">
           <ChangePassword />
+        </Card>
+        <Card title="Sessão">
+          <p className="text-[13px] text-text-dim mb-2">Versão do token (revogação): <span className="font-mono text-text">{tv}</span></p>
+          <p className="text-[12px] text-text-dimmer">Sair (no menu) encerra todas as sessões — incrementa a versão e invalida tokens antigos.</p>
         </Card>
       </div>
     </Shell>
