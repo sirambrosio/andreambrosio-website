@@ -12,10 +12,12 @@ export default async function Eventos({ searchParams }: { searchParams: Promise<
   const db = getPool();
   if (db) await ensureAdmin(db);
   const e: Record<string, unknown>[] = [];
-  const evClause = ev ? `where event = '${ev.replace(/[^a-z_]/gi, '')}'` : '';
+  const evSafe = ev.slice(0, 60);
   const [byType, recent] = db ? await Promise.all([
     rows(db, `select event, count(*) n from events group by event order by n desc`),
-    rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, event, path, source, country from events ${evClause} order by ts desc limit 80`),
+    evSafe
+      ? rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, event, path, source, country from events where event = $1 order by ts desc limit 80`, [evSafe])
+      : rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, event, path, source, country from events order by ts desc limit 80`),
   ]) : [e, e];
   return (
     <Shell email={sess.email} title="Eventos">

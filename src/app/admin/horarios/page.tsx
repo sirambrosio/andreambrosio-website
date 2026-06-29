@@ -26,7 +26,7 @@ export default async function Horarios() {
                 <div className="w-10 font-mono text-[10px] text-text-dim shrink-0">{DOW[dw]}</div>
                 {row.map((n, h) => (
                   <div key={h} className="flex-1 aspect-square rounded-[2px] border border-border/40" title={`${DOW[dw]} ${h}h · ${n} visitas`}
-                    style={{ backgroundColor: n > 0 ? `rgba(200,164,100,${(0.14 + (n / max) * 0.86).toFixed(3)})` : 'transparent' }} />
+                    style={{ backgroundColor: n > 0 ? `rgba(201,169,97,${(0.12 + (n / max) * 0.88).toFixed(3)})` : 'transparent' }} />
                 ))}
               </div>
             ))}

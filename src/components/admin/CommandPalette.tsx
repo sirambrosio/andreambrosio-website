@@ -1,13 +1,9 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { ADMIN_NAV } from '@/lib/admin-nav';
 
-const SECTIONS: [string, string][] = [
-  ['Visão geral', '/admin'], ['Ao Vivo', '/admin/ao-vivo'], ['Visitas', '/admin/visitas'], ['Funil', '/admin/funil'],
-  ['Aquisição', '/admin/aquisicao'], ['Geografia', '/admin/geografia'], ['Ensaios', '/admin/ensaios'], ['Eventos', '/admin/eventos'],
-  ['Metas', '/admin/metas'], ['Conteúdo', '/admin/conteudo'], ['Anotações', '/admin/anotacoes'], ['Links', '/admin/links'],
-  ['Assinantes', '/admin/assinantes'], ['Campanhas', '/admin/newsletter'], ['Acessos', '/admin/acessos'], ['Backup', '/admin/backup'], ['Configurações', '/admin/config'],
-];
+
 type SearchRes = { links: { slug: string; title?: string | null }[]; subscribers: { email: string }[] };
 
 export function CommandPalette() {
@@ -45,7 +41,7 @@ export function CommandPalette() {
   if (!open) return null;
   const go = (href: string) => { setOpen(false); router.push(href); };
   const ql = q.toLowerCase();
-  const secs = SECTIONS.filter(([l]) => l.toLowerCase().includes(ql));
+  const secs: [string, string][] = ADMIN_NAV.filter((n) => n.label.toLowerCase().includes(ql) || (n.alias || []).some((a) => a.includes(ql))).map((n) => [n.label, n.href]);
 
   return (
     <div className="fixed inset-0 z-[110] flex items-start justify-center pt-[12vh] px-4" role="dialog" aria-modal="true" aria-label="Busca">

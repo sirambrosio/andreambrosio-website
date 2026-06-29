@@ -2,7 +2,7 @@ import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, num, ensureAdmin, getConfig } from '@/lib/admin-data';
 import Link from 'next/link';
 import { Shell } from '@/components/admin/Shell';
-import { Stat, Card, Bars, Progress } from '@/components/admin/ui';
+import { Stat, Card, Bars, Progress, PageHeader } from '@/components/admin/ui';
 import { Funnel } from '@/components/admin/Funnel';
 
 export const dynamic = 'force-dynamic';
@@ -54,15 +54,20 @@ export default async function Overview() {
     clicks: Number((db && (await getConfig(db, 'goal_clicks'))) || 0),
   };
   const hasGoals = goals.subscribers > 0 || goals.pageviews > 0 || goals.clicks > 0;
+  const agora = new Date();
+  const hora = Number(agora.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: 'America/Sao_Paulo' }));
+  const saud = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
+  const dataFmt = agora.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'America/Sao_Paulo' });
 
   return (
     <Shell email={sess.email} title="Visão geral">
+      <PageHeader eyebrow="Painel · andreambrosio.com" title={`${saud}, Andre`} sub={`${dataFmt.charAt(0).toUpperCase() + dataFmt.slice(1)} — aqui está o panorama do seu site.`} />
       {!db && <p className="text-[13px] text-bronze mb-6">Banco não configurado.</p>}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-        <Link href="/admin/visitas"><Stat label="Pageviews" value={tPv} sub={`${num(pv1)} hoje`} delta={delta(num(pv30), num(pvPrev30))} /></Link>
-        <Link href="/admin/links"><Stat label="Cliques em links" value={num(linkClicks)} sub="tracker" delta={delta(num(clicks30), num(clicksPrev30))} /></Link>
+        <Stat href="/admin/visitas" label="Pageviews" value={tPv} sub={`${num(pv1)} hoje`} delta={delta(num(pv30), num(pvPrev30))} />
+        <Stat href="/admin/links" label="Cliques em links" value={num(linkClicks)} sub="tracker" delta={delta(num(clicks30), num(clicksPrev30))} />
         <Stat label="Inscritos" value={tLeads} sub={`+${num(leads7)} em 7d`} delta={delta(num(leads30), num(leadsPrev30))} />
-        <Link href="/admin/funil"><Stat label="Conversão" value={`${conv}%`} sub="inscritos / pageviews" /></Link>
+        <Stat href="/admin/funil" label="Conversão" value={`${conv}%`} sub="inscritos / pageviews" />
         <Stat label="Visitantes" value={num(visitors)} sub="sessões únicas" />
       </div>
       {hasGoals && (
