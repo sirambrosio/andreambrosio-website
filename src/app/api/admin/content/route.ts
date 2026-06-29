@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/admin-auth';
 import { getPool, ensureAdmin, getConfig, setConfig } from '@/lib/admin-data';
 import { sameOrigin } from '@/lib/rate-limit';
@@ -25,5 +26,6 @@ export async function POST(req: Request) {
   try { b = await req.json(); } catch { /* */ }
   await setConfig(db, 'now_content', String(b.content ?? '').slice(0, 20000));
   await setConfig(db, 'now_updated', new Date().toISOString().slice(0, 10));
+  revalidatePath('/[locale]/agora', 'page');
   return NextResponse.json({ ok: true });
 }
