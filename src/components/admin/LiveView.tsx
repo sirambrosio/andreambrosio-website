@@ -7,11 +7,16 @@ type Live = { active: number; pv30: number; feed: Feed[]; paths: { label: string
 
 export function LiveView() {
   const [d, setD] = useState<Live | null>(null);
+  const [err, setErr] = useState(false);
   useEffect(() => {
-    let on = true;
+    let on = true; let fails = 0;
     const load = async () => {
-      const r = await fetch('/api/admin/live').then((x) => x.json()).catch(() => null);
-      if (on && r?.ok) setD(r);
+      try {
+        const res = await fetch('/api/admin/live');
+        if (res.status === 401) { if (on) setErr(true); return; }
+        const r = await res.json();
+        if (on && r?.ok) { setD(r); setErr(false); fails = 0; }
+      } catch { fails += 1; if (on && fails >= 2) setErr(true); }
     };
     load();
     const id = setInterval(load, 10000);
@@ -19,6 +24,7 @@ export function LiveView() {
   }, []);
   return (
     <div>
+      {err && <div role="alert" className="mb-5 flex items-center gap-2 px-4 py-2.5 rounded-[10px] border border-bronze bg-surface text-[12px] text-bronze"><span className="w-1.5 h-1.5 rounded-full bg-bronze animate-pulse" />Sem conexão com o servidor — tentando reconectar…</div>}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <Stat label="Ativos agora · 5 min" value={d?.active ?? '—'} sub="visitantes únicos" />
         <Stat label="Pageviews · 30 min" value={d?.pv30 ?? '—'} sub="janela recente" />
@@ -40,7 +46,7 @@ export function LiveView() {
           )}
         </Card>
       </div>
-      <p className="mt-4 text-[11px] text-text-dimmer font-mono">atualiza a cada 10s</p>
+      <p className="mt-4 text-[11px] text-text-dimmer font-mono">{err ? 'reconectando…' : !d ? 'carregando…' : 'ao vivo · atualiza a cada 10s'}</p>
     </div>
   );
 }

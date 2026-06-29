@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import { confirmModal } from '@/lib/confirm';
+import { api } from '@/lib/admin-fetch';
+import { toast } from '@/lib/toast';
 import { Trash2, Search } from 'lucide-react';
 
 type Row = { email: string; locale: string | null; source: string | null; created_at: string };
@@ -16,8 +18,8 @@ export function SubscribersTable({ initial }: { initial: Row[] }) {
 
   async function del(email: string) {
     if (!(await confirmModal(`Excluir ${email}?`))) return;
-    const r = await fetch('/api/admin/subscribers', { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) });
-    if (r.ok) setList((l) => l.filter((x) => x.email !== email));
+    const { ok } = await api('/api/admin/subscribers', { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }), errorMsg: 'Falha ao excluir assinante.' });
+    if (ok) { setList((l) => l.filter((x) => x.email !== email)); toast('Assinante removido.', 'success'); }
   }
 
   return (

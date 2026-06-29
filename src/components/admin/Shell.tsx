@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { ConfirmHost } from './ConfirmHost';
+import { ToastHost } from './ToastHost';
 import { ADMIN_NAV } from '@/lib/admin-nav';
 import { CommandPalette } from './CommandPalette';
 import { Sun, Moon, Menu, X, LogOut, Search } from 'lucide-react';
@@ -18,6 +19,13 @@ export function Shell({ email, title, actions, children }: { email: string; titl
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKey); };
+  }, [open]);
   const isDark = mounted && resolvedTheme === 'dark';
 
   async function logout() {
@@ -64,15 +72,19 @@ export function Shell({ email, title, actions, children }: { email: string; titl
   return (
     <div className="min-h-screen bg-bg text-text flex">
       <ConfirmHost />
+      <ToastHost />
       <CommandPalette />
       {/* sidebar desktop */}
       <aside className="hidden lg:flex w-[240px] shrink-0 border-r border-border bg-surface flex-col fixed inset-y-0 left-0 print:hidden">{sidebar}</aside>
 
       {/* drawer mobile */}
       {open && (
-        <div className="lg:hidden fixed inset-0 z-50 flex">
-          <div className="absolute inset-0 bg-oled/50" onClick={() => setOpen(false)} />
-          <aside className="relative w-[260px] bg-surface border-r border-border">{sidebar}</aside>
+        <div className="lg:hidden fixed inset-0 z-50 flex" role="dialog" aria-modal="true" aria-label="Menu">
+          <div className="absolute inset-0 bg-oled/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <aside className="relative w-[260px] bg-surface border-r border-border">
+            <button onClick={() => setOpen(false)} aria-label="Fechar menu" className="absolute top-4 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full text-text-dim hover:text-text hover:bg-surface-alt transition-colors"><X size={18} /></button>
+            {sidebar}
+          </aside>
         </div>
       )}
 

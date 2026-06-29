@@ -15,7 +15,7 @@ export function MaintenanceButton() {
   return (
     <div className="flex items-center gap-4">
       <button onClick={run} disabled={busy} className="h-10 px-5 rounded-full border border-border-strong text-[13px] text-text-dim hover:text-text hover:border-champagne transition-colors disabled:opacity-60">Limpar eventos de teste</button>
-      {msg && <span className="text-[12px] text-text-dim">{msg}</span>}
+      {msg && <span role="status" aria-live="polite" className="text-[12px] text-text-dim">{msg}</span>}
     </div>
   );
 }

@@ -109,3 +109,8 @@ export function PageHeader({ eyebrow, title, sub }: { eyebrow?: string; title: s
     </div>
   );
 }
+
+/** Mapeia linhas do Postgres para itens de ranking (fallback robusto: null/vazio → "—"). */
+export function toRank(r: Record<string, unknown>[], key = 'label'): { label: string; n: number }[] {
+  return r.map((x) => ({ label: String(x[key] ?? '') || '—', n: Number(x.n) }));
+}

@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import { api } from '@/lib/admin-fetch';
+import { toast } from '@/lib/toast';
 
 type Goals = { subscribers: number; pageviews: number; clicks: number };
 
@@ -9,13 +11,14 @@ export function GoalsEditor({ initial }: { initial: Goals }) {
   const [msg, setMsg] = useState('');
   async function save() {
     setBusy(true); setMsg('');
-    const r = await fetch('/api/admin/goals', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(g) });
-    setMsg(r.ok ? 'Metas salvas.' : 'Falhou.'); setBusy(false);
+    const { ok } = await api('/api/admin/goals', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(g), errorMsg: 'Falha ao salvar metas.' });
+    setBusy(false);
+    if (ok) { setMsg('Metas salvas.'); toast('Metas salvas.', 'success'); setTimeout(() => setMsg(''), 3000); }
   }
   const field = (k: keyof Goals, label: string) => (
     <label className="block">
       <span className="block font-mono text-[10px] tracking-[0.2em] uppercase text-bronze mb-2">{label}</span>
-      <input type="number" min={0} value={g[k] || ''} onChange={(e) => setG({ ...g, [k]: Number(e.target.value) })}
+      <input type="number" min={0} value={String(g[k] ?? '')} onChange={(e) => setG({ ...g, [k]: Number(e.target.value) })}
         className="w-full h-11 px-4 rounded-[10px] border border-border-strong bg-bg text-[14px] text-text outline-none focus:border-champagne" />
     </label>
   );
@@ -29,7 +32,7 @@ export function GoalsEditor({ initial }: { initial: Goals }) {
       </div>
       <div className="flex items-center gap-4">
         <button onClick={save} disabled={busy} className="h-11 px-6 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold hover:opacity-90 disabled:opacity-60">Salvar metas</button>
-        {msg && <span className="text-[12px] text-text-dim">{msg}</span>}
+        {msg && <span role="status" aria-live="polite" className="text-[12px] text-text-dim">{msg}</span>}
       </div>
     </div>
   );

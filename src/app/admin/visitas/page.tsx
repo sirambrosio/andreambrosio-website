@@ -1,11 +1,10 @@
 import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, ensureAdmin, range } from '@/lib/admin-data';
 import { Shell } from '@/components/admin/Shell';
-import { Card, RankList, Bars } from '@/components/admin/ui';
+import { Card, RankList, Bars, toRank } from '@/components/admin/ui';
 import { PeriodSelector } from '@/components/admin/PeriodSelector';
 
 export const dynamic = 'force-dynamic';
-const rk = (r: Record<string, unknown>[], k: string) => r.map((x) => ({ label: String(x[k] ?? '—') || '—', n: Number(x.n) }));
 function fillDays(data: Record<string, unknown>[], days: number) {
   const m = new Map(data.map((r) => [String(r.d), Number(r.n)]));
   const out: { label: string; n: number }[] = [];
@@ -32,10 +31,10 @@ export default async function Visitas({ searchParams }: { searchParams: Promise<
     <Shell email={sess.email} title="Visitas" actions={<PeriodSelector current={rg.key} />}>
       <Card title={`Pageviews — ${rg.key === 'all' ? 'último ano' : `${rg.key} dias`}`}><Bars data={fillDays(series, rg.days)} /></Card>
       <div className="grid md:grid-cols-2 gap-6 mt-6">
-        <Card title="Páginas mais vistas"><RankList items={rk(paths, 'path')} /></Card>
-        <Card title="Por idioma"><RankList items={rk(locales, 'locale')} /></Card>
-        <Card title="Referenciadores"><RankList items={rk(refs, 'ref')} empty="sem referenciador externo" /></Card>
-        <Card title="Por país"><RankList items={rk(countries, 'country')} empty="sem dados de país ainda" /></Card>
+        <Card title="Páginas mais vistas"><RankList items={toRank(paths, 'path')} /></Card>
+        <Card title="Por idioma"><RankList items={toRank(locales, 'locale')} /></Card>
+        <Card title="Referenciadores"><RankList items={toRank(refs, 'ref')} empty="sem referenciador externo" /></Card>
+        <Card title="Por país"><RankList items={toRank(countries, 'country')} empty="sem dados de país ainda" /></Card>
       </div>
     </Shell>
   );

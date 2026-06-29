@@ -1,10 +1,9 @@
 import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, num, ensureAdmin } from '@/lib/admin-data';
 import { Shell } from '@/components/admin/Shell';
-import { Stat, Card, RankList } from '@/components/admin/ui';
+import { Stat, Card, RankList, toRank } from '@/components/admin/ui';
 import { PrintButton } from '@/components/admin/PrintButton';
 export const dynamic = 'force-dynamic';
-const map = (r: Record<string, unknown>[]) => r.map((x) => ({ label: String(x.label), n: Number(x.n) }));
 export default async function Relatorio() {
   const sess = await requireAdmin();
   const db = getPool();
@@ -34,9 +33,9 @@ export default async function Relatorio() {
         <Stat label="Cliques em links" value={num(clicks)} />
       </div>
       <div className="grid md:grid-cols-3 gap-6">
-        <Card title="Páginas mais vistas"><RankList items={map(pages)} /></Card>
-        <Card title="Países"><RankList items={map(countries)} /></Card>
-        <Card title="Origem do tráfego"><RankList items={map(refs)} /></Card>
+        <Card title="Páginas mais vistas"><RankList items={toRank(pages)} /></Card>
+        <Card title="Países"><RankList items={toRank(countries)} /></Card>
+        <Card title="Origem do tráfego"><RankList items={toRank(refs)} /></Card>
       </div>
     </Shell>
   );

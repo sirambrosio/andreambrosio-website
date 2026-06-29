@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, ensureAdmin } from '@/lib/admin-data';
 import { Shell } from '@/components/admin/Shell';
-import { Stat, Card, RankList, Bars } from '@/components/admin/ui';
+import { Stat, Card, RankList, Bars, toRank } from '@/components/admin/ui';
 
 export const dynamic = 'force-dynamic';
-const rk = (r: Record<string, unknown>[], k: string) => r.map((x) => ({ label: String(x[k] ?? '—') || '—', n: Number(x.n) }));
 function fillDays(data: Record<string, unknown>[], days: number) {
   const m = new Map(data.map((r) => [String(r.d), Number(r.n)]));
   const out: { label: string; n: number }[] = [];
@@ -58,9 +57,9 @@ export default async function LinkDetail({ params }: { params: Promise<{ slug: s
         </Card>
       </div>
       <div className="grid md:grid-cols-3 gap-6 mt-6">
-        <Card title="Por país"><RankList items={rk(countries, 'country')} empty="sem dados" /></Card>
-        <Card title="Referenciadores"><RankList items={rk(refs, 'ref')} empty="acesso direto" /></Card>
-        <Card title="Dispositivo"><RankList items={rk(devices, 'device')} empty="sem dados" /></Card>
+        <Card title="Por país"><RankList items={toRank(countries, 'country')} empty="sem dados" /></Card>
+        <Card title="Referenciadores"><RankList items={toRank(refs, 'ref')} empty="acesso direto" /></Card>
+        <Card title="Dispositivo"><RankList items={toRank(devices, 'device')} empty="sem dados" /></Card>
       </div>
     </Shell>
   );

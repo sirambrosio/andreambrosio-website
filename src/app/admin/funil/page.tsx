@@ -2,11 +2,10 @@ import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, num, ensureAdmin, range } from '@/lib/admin-data';
 import { PeriodSelector } from '@/components/admin/PeriodSelector';
 import { Shell } from '@/components/admin/Shell';
-import { Card, Stat, RankList } from '@/components/admin/ui';
+import { Card, Stat, RankList, toRank } from '@/components/admin/ui';
 import { Funnel } from '@/components/admin/Funnel';
 
 export const dynamic = 'force-dynamic';
-const rk = (r: Record<string, unknown>[], k: string) => r.map((x) => ({ label: String(x[k] ?? '—'), n: Number(x.n) }));
 
 export default async function FunilPage({ searchParams }: { searchParams: Promise<{ range?: string }> }) {
   const sess = await requireAdmin();
@@ -38,8 +37,8 @@ export default async function FunilPage({ searchParams }: { searchParams: Promis
         </div>
       </div>
       <div className="grid md:grid-cols-2 gap-6 mt-6">
-        <Card title="Cliques em produto"><RankList items={rk(prodBy, 'source')} empty="sem cliques ainda" /></Card>
-        <Card title="Cliques em contato"><RankList items={rk(contactBy, 'source')} empty="sem cliques ainda" /></Card>
+        <Card title="Cliques em produto"><RankList items={toRank(prodBy, 'source')} empty="sem cliques ainda" /></Card>
+        <Card title="Cliques em contato"><RankList items={toRank(contactBy, 'source')} empty="sem cliques ainda" /></Card>
       </div>
     </Shell>
   );

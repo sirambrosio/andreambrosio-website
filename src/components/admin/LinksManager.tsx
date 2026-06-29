@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { confirmModal } from '@/lib/confirm';
+import { api } from '@/lib/admin-fetch';
+import { toast } from '@/lib/toast';
 import Link from 'next/link';
 import { Copy, Trash2, ExternalLink, BarChart3, Check, Pencil, FileText, X } from 'lucide-react';
 
@@ -49,9 +51,9 @@ export function LinksManager({ initial }: { initial: Row[] }) {
   }
   async function saveEdit() {
     if (!edit) return;
-    if (!/^https?:\/\/.+/.test(edit.target)) return;
-    const r = await fetch('/api/admin/links', { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ slug: edit.slug, target: edit.target }) });
-    if (r.ok) { setList((l) => l.map((x) => (x.slug === edit.slug ? { ...x, target: edit.target } : x))); setEdit(null); }
+    if (!/^https?:\/\/.+/.test(edit.target)) { toast('URL inválida — use http(s).', 'error'); return; }
+    const { ok } = await api('/api/admin/links', { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ slug: edit.slug, target: edit.target }), errorMsg: 'Falha ao salvar link.' });
+    if (ok) { setList((l) => l.map((x) => (x.slug === edit.slug ? { ...x, target: edit.target } : x))); setEdit(null); toast('Link atualizado.', 'success'); }
   }
   async function del(s: string) {
     if (!(await confirmModal('Excluir este link? Os cliques registrados também serão apagados.'))) return;

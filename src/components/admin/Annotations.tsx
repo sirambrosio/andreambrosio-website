@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { confirmModal } from '@/lib/confirm';
+import { api } from '@/lib/admin-fetch';
+import { toast } from '@/lib/toast';
 
 type Item = { id: number; d: string; label: string };
 
@@ -17,13 +19,14 @@ export function Annotations() {
   async function add() {
     if (!d || !label.trim()) return;
     setBusy(true);
-    await fetch('/api/admin/annotations', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ d, label }) });
-    setLabel(''); setBusy(false); load();
+    const { ok } = await api('/api/admin/annotations', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ d, label }), errorMsg: 'Falha ao adicionar anotação.' });
+    setBusy(false);
+    if (ok) { setLabel(''); toast('Anotação adicionada.', 'success'); load(); }
   }
   async function del(id: number) {
     if (!(await confirmModal('Excluir esta anotação?'))) return;
-    await fetch(`/api/admin/annotations?id=${id}`, { method: 'DELETE' });
-    load();
+    const { ok } = await api(`/api/admin/annotations?id=${id}`, { method: 'DELETE', errorMsg: 'Falha ao excluir.' });
+    if (ok) { toast('Anotação removida.', 'success'); load(); }
   }
   return (
     <div>
