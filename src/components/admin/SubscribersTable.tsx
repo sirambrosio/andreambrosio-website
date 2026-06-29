@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { confirmModal } from '@/lib/confirm';
 import { Trash2, Search } from 'lucide-react';
 
 type Row = { email: string; locale: string | null; source: string | null; created_at: string };
@@ -14,7 +15,7 @@ export function SubscribersTable({ initial }: { initial: Row[] }) {
   }, [list, q]);
 
   async function del(email: string) {
-    if (!confirm(`Excluir ${email}?`)) return;
+    if (!(await confirmModal(`Excluir ${email}?`))) return;
     const r = await fetch('/api/admin/subscribers', { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) });
     if (r.ok) setList((l) => l.filter((x) => x.email !== email));
   }

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { ConfirmHost } from './ConfirmHost';
 import {
   LayoutDashboard, BarChart3, GitBranch, FileText, Activity, Link2, Sun, Moon,
   Users, Mail, ShieldCheck, Database, Settings, Menu, X, LogOut,
@@ -73,6 +74,7 @@ export function Shell({ email, title, actions, children }: { email: string; titl
 
   return (
     <div className="min-h-screen bg-bg text-text flex">
+      <ConfirmHost />
       {/* sidebar desktop */}
       <aside className="hidden lg:flex w-[240px] shrink-0 border-r border-border bg-surface flex-col fixed inset-y-0 left-0">{sidebar}</aside>
 

@@ -32,7 +32,7 @@ export function Funnel({ stages }: { stages: { label: string; value: number }[] 
           return (
             <div key={i} className="absolute left-0 right-0 flex flex-col items-center justify-center text-center px-2" style={{ top: `${((i * (BH + GAP)) / H) * 100}%`, height: `${(BH / H) * 100}%` }}>
               <div className="font-display font-light text-[1.7rem] leading-none text-ink drop-shadow-sm">{s.value.toLocaleString('pt-BR')}</div>
-              <div className="font-mono text-[9px] tracking-[0.18em] uppercase text-ink/75 mt-1.5">{s.label}{conv ? `  ·  ${conv}%` : ''}</div>
+              <div className="font-mono text-[9px] tracking-[0.18em] uppercase text-ink/75 mt-1.5">{s.label}</div>
             </div>
           );
         })}

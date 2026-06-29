@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { confirmModal } from '@/lib/confirm';
 
 export function Broadcast({ esp }: { esp: boolean }) {
   const [subject, setSubject] = useState('');
@@ -13,7 +14,7 @@ export function Broadcast({ esp }: { esp: boolean }) {
   async function send(asTest: boolean) {
     if (!subject || !html) { setMsg('Preencha assunto e conteúdo.'); return; }
     if (asTest && !test) { setMsg('Informe um e-mail de teste.'); return; }
-    if (!asTest && !confirm('Enviar para TODOS os assinantes?')) return;
+    if (!asTest && !(await confirmModal('Enviar para TODOS os assinantes? Esta ação envia a newsletter para toda a lista.'))) return;
     setBusy(true); setMsg('Enviando…');
     try {
       const r = await fetch('/api/admin/broadcast', {

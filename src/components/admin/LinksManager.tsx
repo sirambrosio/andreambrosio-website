@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { confirmModal } from '@/lib/confirm';
 import Link from 'next/link';
 import { Copy, Trash2, ExternalLink, BarChart3, Check, Pencil, FileText, X } from 'lucide-react';
 
@@ -39,7 +40,7 @@ export function LinksManager({ initial }: { initial: Row[] }) {
     setBusy(false);
   }
   async function fromEssays() {
-    if (!confirm('Gerar um link rastreável para cada ensaio?')) return;
+    if (!(await confirmModal('Gerar um link rastreável para cada ensaio?'))) return;
     setBusy(true); setMsg('');
     const r = await fetch('/api/admin/links/from-essays', { method: 'POST' });
     const d = await r.json().catch(() => ({}));
@@ -53,7 +54,7 @@ export function LinksManager({ initial }: { initial: Row[] }) {
     if (r.ok) { setList((l) => l.map((x) => (x.slug === edit.slug ? { ...x, target: edit.target } : x))); setEdit(null); }
   }
   async function del(s: string) {
-    if (!confirm('Excluir este link? Os cliques registrados também serão apagados.')) return;
+    if (!(await confirmModal('Excluir este link? Os cliques registrados também serão apagados.'))) return;
     const r = await fetch('/api/admin/links', { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ slug: s }) });
     if (r.ok) setList((l) => l.filter((x) => x.slug !== s));
   }
