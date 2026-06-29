@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyPasswordWith, createSession, SESSION_COOKIE, SESSION_MAX_AGE } from '@/lib/admin-auth';
-import { getPool, ensureAdmin, effectivePasswordHash } from '@/lib/admin-data';
+import { getPool, ensureAdmin, effectivePasswordHash, getTokenVersion } from '@/lib/admin-data';
 import { rateLimit, clientIp } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
@@ -20,6 +20,7 @@ export async function POST(req: Request) {
   }
   if (db) { try { await db.query(`insert into admin_logins (ua) values ($1)`, [String(req.headers.get('user-agent') || '').slice(0, 200)]); } catch { /* */ } }
   const res = NextResponse.json({ ok: true });
-  res.cookies.set(SESSION_COOKIE, createSession(adminEmail), { httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: SESSION_MAX_AGE });
+  const v = db ? await getTokenVersion(db) : 0;
+  res.cookies.set(SESSION_COOKIE, createSession(adminEmail, v), { httpOnly: true, secure: true, sameSite: 'lax', path: '/', maxAge: SESSION_MAX_AGE });
   return res;
 }

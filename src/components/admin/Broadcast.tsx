@@ -41,7 +41,7 @@ export function Broadcast({ esp }: { esp: boolean }) {
         <button disabled={busy} onClick={() => send(true)} className="h-10 px-5 rounded-full border border-border-strong text-[12px] font-mono uppercase tracking-[0.15em] text-text-dim hover:text-champagne hover:border-champagne transition-colors disabled:opacity-50">Teste</button>
         <button disabled={busy} onClick={() => send(false)} className="h-10 px-5 rounded-full bg-brand-gradient text-ink text-[12px] font-mono font-semibold uppercase tracking-[0.15em] hover:opacity-90 transition-opacity disabled:opacity-50">Enviar a todos</button>
       </div>
-      {msg && <p className="text-[12px] text-text-dim mt-3">{msg}</p>}
+      {msg && <p role="status" aria-live="polite" className="text-[12px] text-text-dim mt-3">{msg}</p>}
     </div>
   );
 }

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import {
-  LayoutDashboard, BarChart3, GitBranch, FileText, Activity, Link2,
+  LayoutDashboard, BarChart3, GitBranch, FileText, Activity, Link2, Sun, Moon,
   Users, Mail, ShieldCheck, Database, Settings, Menu, X, LogOut,
 } from 'lucide-react';
 
@@ -26,6 +27,10 @@ export function Shell({ email, title, actions, children }: { email: string; titl
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && resolvedTheme === 'dark';
 
   async function logout() {
     await fetch('/api/admin/logout', { method: 'POST' });
@@ -86,7 +91,7 @@ export function Shell({ email, title, actions, children }: { email: string; titl
             <button className="lg:hidden p-1.5 -ml-1.5 text-text-dim" onClick={() => setOpen(true)} aria-label="Menu"><Menu size={20} /></button>
             <h1 className="font-display font-light text-[1.375rem] text-text tracking-tight">{title}</h1>
           </div>
-          <div className="flex items-center gap-3">{actions}</div>
+          <div className="flex items-center gap-3">{actions}<button onClick={() => setTheme(isDark ? 'light' : 'dark')} aria-label="Tema" className="w-9 h-9 rounded-full border border-border-strong flex items-center justify-center text-text-dim hover:text-champagne hover:border-champagne transition-colors">{mounted && (isDark ? <Sun size={15} /> : <Moon size={15} />)}</button></div>
         </header>
         <main className="px-5 md:px-8 py-8 max-w-[1200px]">{children}</main>
       </div>

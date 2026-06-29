@@ -30,3 +30,7 @@ const BOT_RE = /bot|crawl|spider|slurp|preview|monitor|headless|lighthouse|faceb
 export function isBot(ua: string): boolean {
   return !ua || BOT_RE.test(ua);
 }
+
+export function getCountry(req: Request): string | null {
+  return (req.headers.get('cf-ipcountry') || req.headers.get('x-vercel-ip-country') || req.headers.get('x-country') || '').slice(0, 2).toUpperCase() || null;
+}

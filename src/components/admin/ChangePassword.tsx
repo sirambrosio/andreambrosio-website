@@ -26,7 +26,7 @@ export function ChangePassword() {
       <input type="password" value={nw} onChange={(e) => setNw(e.target.value)} placeholder="Nova senha" autoComplete="new-password"
         className="w-full h-11 px-4 mb-4 rounded-[10px] border border-border-strong bg-bg text-[14px] text-text placeholder:text-text-dimmer outline-none focus:border-champagne" />
       <button disabled={busy} className="h-11 px-6 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-60">Alterar senha</button>
-      {msg && <p className="text-[12px] text-text-dim mt-3">{msg}</p>}
+      {msg && <p role="status" aria-live="polite" className="text-[12px] text-text-dim mt-3">{msg}</p>}
     </form>
   );
 }

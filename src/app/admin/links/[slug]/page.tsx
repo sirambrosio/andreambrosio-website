@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import QRCode from 'qrcode';
 import Link from 'next/link';
 import { requireAdmin } from '@/lib/admin-auth';
 import { getPool, rows, ensureAdmin } from '@/lib/admin-data';
@@ -32,6 +33,9 @@ export default async function LinkDetail({ params }: { params: Promise<{ slug: s
     rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD HH24:MI') t, country, ref, device from link_clicks where link_id=$1 order by ts desc limit 20`, [id]),
   ]) : [e, e, e, e, e];
 
+  const shortUrl = `https://track.andreambrosio.com/${slug}`;
+  const qrSvg = await QRCode.toString(shortUrl, { type: 'svg', margin: 1, color: { dark: '#151A1A', light: '#00000000' } });
+
   return (
     <Shell email={sess.email} title={`Link /${slug}`} actions={<Link href="/admin/links" className="font-mono text-[11px] tracking-[0.15em] uppercase text-text-dim hover:text-champagne">← Links</Link>}>
       <div className="mb-6 text-[13px] text-text-dim">→ <a href={link?.target} target="_blank" rel="noopener" className="hover:text-champagne break-all">{link?.target}</a></div>
@@ -41,7 +45,18 @@ export default async function LinkDetail({ params }: { params: Promise<{ slug: s
         <Stat label="Referenciadores" value={refs.length} />
         <Stat label="Link curto" value={`/${slug}`} />
       </div>
-      <Card title="Cliques — últimos 30 dias"><Bars data={fillDays(series, 30)} /></Card>
+      <div className="grid md:grid-cols-[1fr_280px] gap-6">
+        <Card title="Cliques — últimos 30 dias"><Bars data={fillDays(series, 30)} /></Card>
+        <Card title="QR code">
+          <div className="flex items-center gap-4">
+            <div className="w-[120px] h-[120px] shrink-0 rounded-[10px] border border-border p-2 bg-cream [&>svg]:w-full [&>svg]:h-full" dangerouslySetInnerHTML={{ __html: qrSvg }} />
+            <div className="min-w-0">
+              <div className="font-mono text-[11px] text-text-dim mb-3 break-all">{shortUrl}</div>
+              <a href={`/api/admin/links/qr?slug=${slug}`} className="inline-flex h-9 px-4 items-center rounded-full border border-border-strong text-[12px] font-mono uppercase tracking-[0.15em] text-text-dim hover:text-champagne hover:border-champagne transition-colors">Baixar PNG</a>
+            </div>
+          </div>
+        </Card>
+      </div>
       <div className="grid md:grid-cols-3 gap-6 mt-6">
         <Card title="Por país"><RankList items={rk(countries, 'country')} empty="sem dados" /></Card>
         <Card title="Referenciadores"><RankList items={rk(refs, 'ref')} empty="acesso direto" /></Card>

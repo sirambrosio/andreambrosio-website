@@ -68,7 +68,7 @@ export function LinksManager({ initial }: { initial: Row[] }) {
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Título (opcional)" className="h-11 px-4 rounded-[10px] border border-border-strong bg-bg text-[13px] text-text placeholder:text-text-dimmer outline-none focus:border-champagne flex-1 min-w-[160px]" />
           <button disabled={busy} className="h-11 px-6 rounded-full bg-brand-gradient text-ink text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-60">Criar</button>
         </div>
-        {msg && <p className="text-[12px] text-text-dim mt-3">{msg}</p>}
+        {msg && <p role="status" aria-live="polite" className="text-[12px] text-text-dim mt-3">{msg}</p>}
       </form>
 
       <div className="rounded-[16px] border border-border overflow-x-auto">

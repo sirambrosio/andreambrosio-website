@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { getPool, getTokenVersion } from '@/lib/admin-data';
 
 export const SESSION_COOKIE = 'aa_admin';
 export const SESSION_MAX_AGE = 60 * 60 * 24 * 30; // 30 dias
@@ -27,15 +28,15 @@ export function verifyPassword(password: string): boolean {
   return verifyPasswordWith(process.env.ADMIN_PASSWORD_HASH || '', password);
 }
 
-export function createSession(email: string): string {
+export function createSession(email: string, v = 0): string {
   const secret = process.env.SESSION_SECRET || '';
   if (!secret) throw new Error('SESSION_SECRET ausente');
-  const payload = Buffer.from(JSON.stringify({ email, exp: Date.now() + SESSION_MAX_AGE * 1000 })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({ email, exp: Date.now() + SESSION_MAX_AGE * 1000, v })).toString('base64url');
   const sig = crypto.createHmac('sha256', secret).update(payload).digest('base64url');
   return `${payload}.${sig}`;
 }
 
-export function verifySession(token: string | undefined | null): { email: string } | null {
+export function verifySession(token: string | undefined | null): { email: string; v?: number } | null {
   if (!token) return null;
   const secret = process.env.SESSION_SECRET || '';
   if (!secret) return null;
@@ -47,7 +48,7 @@ export function verifySession(token: string | undefined | null): { email: string
     if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
     const p = JSON.parse(Buffer.from(payload, 'base64url').toString());
     if (!p.exp || p.exp < Date.now()) return null;
-    return { email: String(p.email) };
+    return { email: String(p.email), v: p.v };
   } catch {
     return null;
   }
@@ -55,7 +56,16 @@ export function verifySession(token: string | undefined | null): { email: string
 
 export async function getSession() {
   const c = await cookies();
-  return verifySession(c.get(SESSION_COOKIE)?.value);
+  const sess = verifySession(c.get(SESSION_COOKIE)?.value);
+  if (!sess) return null;
+  try {
+    const db = getPool();
+    if (db && sess.v !== undefined) {
+      const cur = await getTokenVersion(db);
+      if (Number(sess.v) !== cur) return null;
+    }
+  } catch { /* falha no DB não derruba sessão válida por HMAC */ }
+  return sess;
 }
 
 export async function requireAdmin() {

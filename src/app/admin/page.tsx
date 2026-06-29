@@ -22,7 +22,7 @@ export default async function Overview() {
   const db = getPool();
   if (db) await ensureAdmin(db);
   const e: Record<string, unknown>[] = [];
-  const [pv, pv7, pv1, leads, leads7, series, intent] = db ? await Promise.all([
+  const [pv, pv7, pv1, leads, leads7, series, intent, visitors] = db ? await Promise.all([
     rows(db, `select count(*) n from events where event='pageview'`),
     rows(db, `select count(*) n from events where event='pageview' and ts > now() - interval '7 days'`),
     rows(db, `select count(*) n from events where event='pageview' and ts > now() - interval '1 day'`),
@@ -30,7 +30,8 @@ export default async function Overview() {
     rows(db, `select count(*) n from newsletter_leads where created_at > now() - interval '7 days'`),
     rows(db, `select to_char(ts at time zone 'America/Sao_Paulo','YYYY-MM-DD') d, count(*) n from events where event='pageview' and ts > now() - interval '14 days' group by d`),
     rows(db, `select count(*) n from events where event in ('product_click','contact_click')`),
-  ]) : [e, e, e, e, e, e, e];
+    rows(db, `select count(distinct sid) n from events where event='pageview' and sid is not null`),
+  ]) : [e, e, e, e, e, e, e, e];
   const tPv = num(pv), tLeads = num(leads), tIntent = num(intent);
   const conv = tPv > 0 ? ((tLeads / tPv) * 100).toFixed(2) : '0';
 
@@ -41,7 +42,7 @@ export default async function Overview() {
         <Stat label="Pageviews" value={tPv} sub={`${num(pv1)} hoje · ${num(pv7)} em 7d`} />
         <Stat label="Inscritos" value={tLeads} sub={`+${num(leads7)} em 7d`} />
         <Stat label="Conversão" value={`${conv}%`} sub="inscritos / pageviews" />
-        <Stat label="Intenção" value={tIntent} sub="cliques produto/contato" />
+        <Stat label="Visitantes" value={num(visitors)} sub="sessões únicas" />
       </div>
       <div className="grid lg:grid-cols-2 gap-6">
         <Card title="Visitas — últimos 14 dias"><Bars data={fillDays(series, 14)} /></Card>

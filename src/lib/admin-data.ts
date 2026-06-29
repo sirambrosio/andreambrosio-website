@@ -36,3 +36,11 @@ export async function effectivePasswordHash(db: Pool | null): Promise<string> {
   if (db) { try { const o = await getConfig(db, 'password_hash'); if (o) return o; } catch { /* */ } }
   return process.env.ADMIN_PASSWORD_HASH || '';
 }
+
+export async function getTokenVersion(db: Pool): Promise<number> {
+  try { const v = await getConfig(db, 'token_version'); return v ? Number(v) : 0; } catch { return 0; }
+}
+export async function bumpTokenVersion(db: Pool): Promise<void> {
+  const cur = await getTokenVersion(db);
+  await setConfig(db, 'token_version', String(cur + 1));
+}

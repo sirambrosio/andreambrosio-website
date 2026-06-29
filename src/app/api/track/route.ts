@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
-import { rateLimit, clientIp, isBot } from '@/lib/rate-limit';
+import { rateLimit, clientIp, isBot, getCountry } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,12 +30,14 @@ async function ensure(p: Pool) {
        locale text,
        source text,
        ref text,
-       country text
+       country text,
+       sid text
      )`,
   );
   await p.query(`create index if not exists events_ts_idx on events (ts)`);
   await p.query(`create index if not exists events_event_idx on events (event)`);
   try { await p.query(`alter table events add column if not exists country text`); } catch { /* ok */ }
+  try { await p.query(`alter table events add column if not exists sid text`); } catch { /* ok */ }
   ready = true;
 }
 
@@ -54,10 +56,9 @@ export async function POST(req: Request) {
   if (!db) return new NextResponse(null, { status: 204 });
   try {
     await ensure(db);
-    const country = (req.headers.get('cf-ipcountry') || '').slice(0, 2) || null;
     await db.query(
-      `insert into events (event, path, locale, source, ref, country) values ($1,$2,$3,$4,$5,$6)`,
-      [event, s(b.path, 200), s(b.locale, 8), s(b.source, 60), s(b.ref, 120), country],
+      `insert into events (event, path, locale, source, ref, country, sid) values ($1,$2,$3,$4,$5,$6,$7)`,
+      [event, s(b.path, 200), s(b.locale, 8), s(b.source, 60), s(b.ref, 120), getCountry(req), s(b.sid, 16)],
     );
   } catch (e) { console.error('[track] insert falhou', e); }
   return new NextResponse(null, { status: 204 });
