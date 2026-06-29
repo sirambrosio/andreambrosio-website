@@ -14,6 +14,7 @@ export async function ensureAdmin(db: Pool) {
   await db.query(`create table if not exists admin_logins (id bigserial primary key, ts timestamptz not null default now(), ua text)`);
   await db.query(`create table if not exists admin_config (key text primary key, value text, updated_at timestamptz not null default now())`);
   try { await db.query(`alter table events add column if not exists country text`); } catch { /* ok */ }
+  for (const c of ['utm_source', 'utm_medium', 'utm_campaign', 'device', 'sid']) { try { await db.query(`alter table events add column if not exists ${c} text`); } catch { /* ok */ } }
   await db.query(`create table if not exists links (id bigserial primary key, slug text unique not null, target text not null, title text, clicks int not null default 0, created_at timestamptz not null default now())`);
   await db.query(`create table if not exists link_clicks (id bigserial primary key, link_id bigint not null, ts timestamptz not null default now(), country text, ref text, device text)`);
   await db.query(`create table if not exists annotations (id bigserial primary key, d date not null, label text not null, created_at timestamptz not null default now())`);

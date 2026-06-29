@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Pool } from 'pg';
-import { rateLimit, clientIp, isBot, getCountry } from '@/lib/rate-limit';
+import { rateLimit, clientIp, isBot, getCountry, deviceFromUA } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -38,6 +38,9 @@ async function ensure(p: Pool) {
   await p.query(`create index if not exists events_event_idx on events (event)`);
   try { await p.query(`alter table events add column if not exists country text`); } catch { /* ok */ }
   try { await p.query(`alter table events add column if not exists sid text`); } catch { /* ok */ }
+  for (const c of ['utm_source', 'utm_medium', 'utm_campaign', 'device']) {
+    try { await p.query(`alter table events add column if not exists ${c} text`); } catch { /* ok */ }
+  }
   ready = true;
 }
 
@@ -57,8 +60,8 @@ export async function POST(req: Request) {
   try {
     await ensure(db);
     await db.query(
-      `insert into events (event, path, locale, source, ref, country, sid) values ($1,$2,$3,$4,$5,$6,$7)`,
-      [event, s(b.path, 200), s(b.locale, 8), s(b.source, 60), s(b.ref, 120), getCountry(req), s(b.sid, 16)],
+      `insert into events (event, path, locale, source, ref, country, sid, utm_source, utm_medium, utm_campaign, device) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+      [event, s(b.path, 200), s(b.locale, 8), s(b.source, 60), s(b.ref, 120), getCountry(req), s(b.sid, 16), s(b.utm_source, 60), s(b.utm_medium, 60), s(b.utm_campaign, 60), deviceFromUA(req.headers.get('user-agent') || '')],
     );
   } catch (e) { console.error('[track] insert falhou', e); }
   return new NextResponse(null, { status: 204 });

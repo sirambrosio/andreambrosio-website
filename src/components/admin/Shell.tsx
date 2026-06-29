@@ -8,7 +8,7 @@ import { ConfirmHost } from './ConfirmHost';
 import { CommandPalette } from './CommandPalette';
 import {
   LayoutDashboard, BarChart3, GitBranch, FileText, Activity, Link2, Sun, Moon,
-  Users, Mail, ShieldCheck, Database, Settings, Menu, X, LogOut, Radio, Compass, Globe, Target, StickyNote, Search,
+  Users, Mail, ShieldCheck, Database, Settings, Menu, X, LogOut, Radio, Compass, Globe, Target, StickyNote, Search, Clock, Repeat, Printer, HeartPulse,
 } from 'lucide-react';
 
 const NAV: { href: string; label: string; icon: React.ComponentType<{ size?: number }> ; group?: string; dot?: boolean }[] = [
@@ -18,6 +18,8 @@ const NAV: { href: string; label: string; icon: React.ComponentType<{ size?: num
   { href: '/admin/funil', label: 'Funil', icon: GitBranch },
   { href: '/admin/aquisicao', label: 'Aquisição', icon: Compass },
   { href: '/admin/geografia', label: 'Geografia', icon: Globe },
+  { href: '/admin/horarios', label: 'Horários', icon: Clock },
+  { href: '/admin/retencao', label: 'Retenção', icon: Repeat },
   { href: '/admin/ensaios', label: 'Ensaios', icon: FileText },
   { href: '/admin/eventos', label: 'Eventos', icon: Activity },
   { href: '/admin/metas', label: 'Metas', icon: Target },
@@ -26,7 +28,9 @@ const NAV: { href: string; label: string; icon: React.ComponentType<{ size?: num
   { href: '/admin/links', label: 'Links', icon: Link2, group: 'Tracking' },
   { href: '/admin/assinantes', label: 'Assinantes', icon: Users, group: 'Newsletter' },
   { href: '/admin/newsletter', label: 'Campanhas', icon: Mail },
-  { href: '/admin/acessos', label: 'Acessos', icon: ShieldCheck, group: 'Sistema' },
+  { href: '/admin/relatorio', label: 'Relatório', icon: Printer, group: 'Sistema' },
+  { href: '/admin/saude', label: 'Saúde', icon: HeartPulse },
+  { href: '/admin/acessos', label: 'Acessos', icon: ShieldCheck },
   { href: '/admin/backup', label: 'Backup', icon: Database },
   { href: '/admin/config', label: 'Configurações', icon: Settings },
 ];
@@ -85,7 +89,7 @@ export function Shell({ email, title, actions, children }: { email: string; titl
       <ConfirmHost />
       <CommandPalette />
       {/* sidebar desktop */}
-      <aside className="hidden lg:flex w-[240px] shrink-0 border-r border-border bg-surface flex-col fixed inset-y-0 left-0">{sidebar}</aside>
+      <aside className="hidden lg:flex w-[240px] shrink-0 border-r border-border bg-surface flex-col fixed inset-y-0 left-0 print:hidden">{sidebar}</aside>
 
       {/* drawer mobile */}
       {open && (
@@ -95,9 +99,9 @@ export function Shell({ email, title, actions, children }: { email: string; titl
         </div>
       )}
 
-      <div className="flex-1 lg:ml-[240px] min-w-0">
+      <div className="flex-1 lg:ml-[240px] min-w-0 print:ml-0">
         {/* header */}
-        <header className="h-16 border-b border-border bg-bg/90 backdrop-blur sticky top-0 z-30 flex items-center justify-between px-5 md:px-8">
+        <header className="h-16 border-b border-border bg-bg/90 backdrop-blur sticky top-0 z-30 flex items-center justify-between px-5 md:px-8 print:hidden">
           <div className="flex items-center gap-3">
             <button className="lg:hidden p-1.5 -ml-1.5 text-text-dim" onClick={() => setOpen(true)} aria-label="Menu"><Menu size={20} /></button>
             <h1 className="font-display font-light text-[1.375rem] text-text tracking-tight">{title}</h1>

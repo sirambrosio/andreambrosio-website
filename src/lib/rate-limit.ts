@@ -41,3 +41,11 @@ export function sameOrigin(req: Request): boolean {
   if (!o) return true;
   try { return new URL(o).hostname.endsWith('andreambrosio.com'); } catch { return false; }
 }
+
+/** Deriva tipo de dispositivo do user-agent (sem libs). */
+export function deviceFromUA(ua: string): string {
+  const u = (ua || '').toLowerCase();
+  if (/ipad|tablet|playbook|silk|kindle/.test(u) || (/android/.test(u) && !/mobile/.test(u))) return 'tablet';
+  if (/mobi|iphone|ipod|android|blackberry|opera mini|iemobile|phone/.test(u)) return 'mobile';
+  return 'desktop';
+}

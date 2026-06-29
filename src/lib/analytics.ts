@@ -22,6 +22,8 @@ function sid(): string {
 export function track(event: string, props?: Props) {
   if (typeof window === 'undefined') return;
   try {
+    const qs = new URLSearchParams(location.search);
+    const utm = (k: string) => { const v = qs.get('utm_' + k); return v ? v.slice(0, 60) : undefined; };
     const payload = {
       event,
       path: location.pathname,
@@ -29,6 +31,9 @@ export function track(event: string, props?: Props) {
       source: props?.source != null ? String(props.source) : undefined,
       sid: sid(),
       ref: document.referrer ? (() => { try { return new URL(document.referrer).hostname; } catch { return undefined; } })() : undefined,
+      utm_source: utm('source'),
+      utm_medium: utm('medium'),
+      utm_campaign: utm('campaign'),
     };
     const body = JSON.stringify(payload);
     if (navigator.sendBeacon) {
