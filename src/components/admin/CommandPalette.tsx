@@ -40,8 +40,9 @@ export function CommandPalette() {
 
   if (!open) return null;
   const go = (href: string) => { setOpen(false); router.push(href); };
-  const ql = q.toLowerCase();
-  const secs: [string, string][] = ADMIN_NAV.filter((n) => n.label.toLowerCase().includes(ql) || (n.alias || []).some((a) => a.includes(ql))).map((n) => [n.label, n.href]);
+  const norm = (x: string) => x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const ql = norm(q);
+  const secs: [string, string][] = ADMIN_NAV.filter((n) => norm(n.label).includes(ql) || (n.alias || []).some((a) => norm(a).includes(ql))).map((n) => [n.label, n.href]);
 
   return (
     <div className="fixed inset-0 z-[110] flex items-start justify-center pt-[12vh] px-4" role="dialog" aria-modal="true" aria-label="Busca">
